@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Gadgetize - Cửa Hàng Điện Tử</title>
+  
+  <link rel="stylesheet" href="styles/css/all.min.css">
+  <link rel="stylesheet" href="styles/css/jquery-ui.min.css">
+  <link rel="stylesheet" href="styles/css/jquery-ui.theme.css">
+  <link rel="stylesheet" href="styles/css/bootstrap.min.css"> 
+  <link rel="stylesheet" href="styles/css/owl.carousel.css">
+  <link rel="stylesheet" href="styles/css/owl.theme.default.css">
+  <link rel="stylesheet" href="styles/css/style.css">
+</head>
+<body>
+
+  <div class="top-bar bg-top">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-lg-6 col-md-6 col-12 top-bar__left">
+          <p class="mb-0">Chào mừng đến với Cửa Hàng Điện Tử Gadgetize</p>
+        </div>
+        <div class="col-lg-6 col-md-6 col-12 top-bar__right text-md-end">
+          <span class="me-3"><i class="fa-solid fa-phone me-1"></i>0123 456 789</span>
+          <span><i class="fa-solid fa-envelope me-1"></i>demo@gmail.com</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <header class="site-header bg-white" id="header">
+    
+    <div class="slide-in-menu">
+      <div class="closing-btn text-end p-3">
+        <button id="btn-closing" class="btn btn-light">
+          Đóng <i class="fa-solid fa-close"></i>
+        </button>
+      </div>
+      <div class="search-form p-3">
+        <div class="input-group">
+          <input type="text" class="form-control" placeholder="Tìm kiếm">
+          <button class="btn btn-primary"><i class="fa-solid fa-search"></i></button>
+        </div>
+      </div>
+      <nav class="slide-in-menu-list">
+        <ul class="list-unstyled p-3">
+          <li><a href="#">Đăng Nhập / Đăng ký</a></li>
+          <li><a href="#">Trang chủ</a></li>
+          <li><a href="#">Cửa hàng</a></li>
+          <li><a href="#">Blog</a></li>
+          <li><a href="#">Yêu thích</a></li>
+          <li><a href="#">Liên hệ</a></li>
+        </ul>
+      </nav>
+    </div>
+
+    <div class="container py-3">
+      <div class="row align-items-center">
+        <div class="col-xl-3 col-lg-12 col-12 logo-section">
+          <div class="row align-items-center">
+            <div class="col-3 d-xl-none">
+              <button class="btn-icon" id="btn-slide-menu-op"><i class="fa-solid fa-bars"></i></button>
+            </div>
+            <div class="col-6 col-xl-12 text-center text-xl-start">
+              <a href="index.html">
+                <img src="images/logo.png" alt="Gadgetize Logo" class="img-fluid">
+              </a>
+            </div>
+            <div class="col-3 d-xl-none text-end">
+              <button class="btn-icon"><i class="fa-solid fa-cart-shopping"></i></button>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-xl-6 search-section d-none d-xl-block">
+          <div class="search-bar d-flex align-items-center border rounded">
+            <div class="search-label px-3 border-end">
+              Tất cả danh mục <i class="fa-solid fa-angle-down ms-1"></i>
+            </div>
+            <input type="text" class="form-control border-0 shadow-none" placeholder="Tìm kiếm sản phẩm...">
+            <button class="search-btn btn btn-primary px-4">Tìm kiếm</button>
+          </div>
+        </div>
+
+        <div class="col-xl-3 header-actions d-none d-xl-block">
+          <ul class="d-flex justify-content-end align-items-center list-unstyled mb-0 gap-4">
+            <li>
+              <a href="#" class="d-flex align-items-center text-dark text-decoration-none">
+                <i class="fa-regular fa-user fs-4 me-2"></i>
+                <div class="action-text">
+                  <span class="d-block fs-7 text-muted">Đăng nhập</span>
+                  <strong class="d-block">Tài khoản</strong>
+                </div>
+              </a>
+            </li>
+            <li>
+              <a href="#" class="text-dark"><i class="fa-regular fa-heart fs-4"></i></a>
+            </li>
+            <li>
+              <a href="#" class="d-flex align-items-center text-dark text-decoration-none">
+                <i class="fa-solid fa-cart-shopping fs-4 me-2"></i>
+                <div class="action-text">
+                  <span class="d-block fs-7 text-muted">Giỏ hàng</span>
+                  <strong class="d-block text-danger">32.500.000₫</strong>
+                </div>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="container-line border-bottom"></div> 
+
+  <nav class="main-nav bg-white" id="menu">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-xl-3 category-wrapper position-relative">
+          <div class="category-btn bg-primary text-white p-3 d-flex align-items-center cursor-pointer" id="btn-cate">
+            <i class="fa-solid fa-bars me-2"></i>
+            <span class="text-uppercase fw-bold">Tất cả danh mục</span>
+          </div>
+          <div class="categories-dropdown position-absolute w-100 bg-white border shadow-sm" style="display: none; z-index: 99;">
+            <ul class="list-unstyled mb-0">
+              <li><a href="#" class="d-block p-2 border-bottom text-dark text-decoration-none">Máy Tính & PC Cao Cấp</a></li>
+              <li><a href="#" class="d-block p-2 border-bottom text-dark text-decoration-none">Laptop & Máy Tính Bảng</a></li>
+              <li><a href="#" class="d-block p-2 text-dark text-decoration-none">Thiết Bị Điện Tử Khác...</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="col-xl-6 col-nav d-none d-xl-block">
+          <ul class="d-flex list-unstyled mb-0 gap-4 fw-medium">
+            <li><a href="#" class="text-dark text-decoration-none">Trang chủ</a></li>
+            <li><a href="products.html" class="text-dark text-decoration-none">Sản phẩm</a></li>
+            <li><a href="#" class="text-dark text-decoration-none">Blog</a></li>
+            <li><a href="#" class="text-dark text-decoration-none">Liên hệ</a></li>
+          </ul>
+        </div>
+
+        <div class="col-xl-3 discount-label d-flex align-items-center justify-content-end">
+          <img src="images/discount-1.png" alt="Discount" class="me-2">
+          <p class="mb-0 fw-bold text-danger">Ưu Đãi 500.000₫ Đơn Đầu</p>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container-line border-bottom"></div>
+
+  <main>
+    
+    <section class="hero-section bg-white pt-4">
+      <div class="container" id="banner-cont">
+        <div class="row g-4">
+          <div class="col-lg-8">
+            <div class="carousel slide h-100" id="main-banner" data-bs-ride="carousel">
+              <div class="carousel-indicators">
+                <button data-bs-target="#main-banner" data-bs-slide-to="0" class="active"></button>
+                <button data-bs-target="#main-banner" data-bs-slide-to="1"></button>
+                <button data-bs-target="#main-banner" data-bs-slide-to="2"></button>
+              </div>
+              <div class="carousel-inner h-100 rounded overflow-hidden">
+                <div class="carousel-item active h-100">
+                  <img src="images/slider-1.png" class="w-100 h-100 object-fit-cover" alt="Banner 1">
+                </div>
+                </div>
+            </div>
+          </div>
+          <div class="col-lg-4 d-flex flex-column gap-4">
+            <div class="side-banner rounded overflow-hidden position-relative">
+              <img src="images/sm-slider-1.png" class="w-100" alt="Banner Phụ 1">
+            </div>
+            <div class="side-banner rounded overflow-hidden position-relative">
+              <img src="images/sm-slider-2.png" class="w-100" alt="Banner Phụ 2">
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="category-carousel-section bg-white py-5">
+      <div class="container">
+        <div class="owl-carousel owl-theme" id="owl-cate">
+          <div class="item">
+            <a href="#" class="text-decoration-none text-center d-block">
+              <div class="bg-light rounded-circle p-4 mb-3 mx-auto" style="width: 120px; height: 120px;">
+                  <img src="images/cate-1.png" alt="Laptop" class="img-fluid">
+              </div>
+              <h6 class="text-dark fw-bold mb-1">Laptop</h6>
+              <p class="text-muted small">10+ Sản phẩm</p>
+            </a>
+          </div>
+          </div>
+      </div>
+    </section>
+
+    <section class="featured-products py-5">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-3 d-none d-lg-block">
+            <img src="images/horizontal-banner.png" class="w-100 rounded" alt="Khuyến mãi">
+          </div>
+          
+          <div class="col-xl-9 col-lg-12">
+            <div class="d-flex justify-content-between align-items-center border-bottom pb-3 mb-4 bg-white p-3 rounded shadow-sm">
+              <h3 class="mb-0 fw-bold">Sản phẩm nổi bật</h3>
+              <ul class="nav nav-pills" role="tablist">
+                <li class="nav-item" role="presentation">
+                  <button class="nav-link active" id="featured-all-tab" data-bs-toggle="pill" data-bs-target="#featured-all" type="button" role="tab">Tất cả</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                  <button class="nav-link" id="featured-laptop-tab" data-bs-toggle="pill" data-bs-target="#featured-laptop" type="button" role="tab">Laptop</button>
+                </li>
+              </ul>
+            </div>
+
+            <div class="tab-content">
+              <div class="tab-pane fade show active" id="featured-all" role="tabpanel">
+                <div class="row g-4">
+                  <div class="col-lg-4 col-md-6 col-12">
+                    <div class="product-card bg-white p-3 rounded shadow-sm border position-relative h-100 d-flex flex-column">
+                      <span class="badge bg-danger position-absolute top-0 start-0 m-3">-20%</span>
+                      <div class="product-card__img mb-3 text-center">
+                        <img src="images/pr-1.png" class="img-fluid" alt="Tai Nghe Razer Electra">
+                      </div>
+                      <h4 class="product-card__title fs-6 fw-bold">Tai Nghe Razer Electra</h4>
+                      <div class="product-card__review text-warning small mb-2">
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <span class="text-muted ms-1">(1 đánh giá)</span>
+                      </div>
+                      <div class="product-card__price mt-auto mb-3">
+                        <span class="text-muted text-decoration-line-through me-2">1.500.000₫</span>
+                        <span class="text-danger fw-bold fs-5">1.200.000₫</span>
+                      </div>
+                      <button class="btn btn-outline-primary w-100 product-card__btn">Thêm vào giỏ</button>
+                    </div>
+                  </div>
+                  -->
+                </div>
+              </div>
+              
+              <div class="tab-pane fade" id="featured-laptop" role="tabpanel">
+                <div class="row g-4">
+                    </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="promo-banner bg-success text-white py-5 my-5">
+      <div class="container">
+        <div class="row align-items-center">
+          <div class="col-md-4 text-center text-md-start mb-4 mb-md-0">
+            <h2 class="fw-bold">Siêu Ưu Đãi Đang Chờ Bạn!</h2>
+            <p class="fs-5">Mua Ngay - Ưu Đãi Cực Sốc!</p>
+          </div>
+          <div class="col-md-4 text-center">
+            <img src="images/banner-sale-pr.png" alt="Sản phẩm khuyến mãi" class="img-fluid max-h-200">
+          </div>
+          <div class="col-md-4 text-center text-md-end">
+            <img src="images/banner-sale.png" alt="Sale tag" class="img-fluid max-h-150">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="brands-section bg-white py-4 border-top border-bottom">
+      <div class="container">
+        <div class="owl-carousel owl-theme" id="brands">
+          <div class="brand-item text-center">
+            <img src="images/brand-1.png" alt="Thương hiệu 1" class="img-fluid opacity-50 hover-opacity-100 transition">
+          </div>
+          </div>
+      </div>
+    </section>
+
+    <section class="blog-section py-5">
+      <div class="container">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+          <h3 class="fw-bold mb-0">Bài Viết Mới Nhất</h3>
+          <a href="#" class="text-primary text-decoration-none fw-medium">Xem tất cả <i class="fa-solid fa-arrow-right ms-1"></i></a>
+        </div>
+        <div class="row g-4">
+          <div class="col-lg-3 col-md-6">
+            <div class="blog-card bg-white rounded overflow-hidden shadow-sm h-100">
+              <a href="#" class="text-decoration-none text-dark d-flex flex-column h-100">
+                <img src="images/blog-1.png" class="w-100" alt="Blog 1">
+                <div class="p-3 d-flex flex-column flex-grow-1">
+                  <p class="text-muted small mb-2"><i class="fa-regular fa-calendar me-2"></i>24 Tháng 07, 2025</p>
+                  <h5 class="fs-6 fw-bold mb-3">Nâng Tầm Trải Nghiệm Nghe Với Âm Thanh Hi-Res...</h5>
+                  <span class="text-primary mt-auto fw-medium">Xem thêm <i class="fa-solid fa-arrow-right ms-1"></i></span>
+                </div>
+              </a>
+            </div>
+          </div>
+           -->
+        </div>
+      </div>
+    </section>
+
+    <section class="services-section bg-white py-5 border-top">
+      <div class="container">
+        <div class="row text-center g-4 justify-content-center">
+          <div class="col-6 col-md-4 col-lg-2">
+            <img src="images/service-1.png" alt="Đổi trả" class="mb-3" style="height: 50px;">
+            <h6 class="fw-bold mb-1">Đổi Trả Dễ Dàng</h6>
+            <p class="text-muted small mb-0">Trong vòng 7 ngày</p>
+          </div>
+          <div class="col-6 col-md-4 col-lg-2">
+            <img src="images/service-2.png" alt="Freeship" class="mb-3" style="height: 50px;">
+            <h6 class="fw-bold mb-1">Miễn Phí Giao Hàng</h6>
+            <p class="text-muted small mb-0">Cho đơn từ 500k</p>
+          </div>
+           -->
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer pt-5 pb-3 bg-dark text-light">
+    <div class="container">
+      <div class="row g-4 mb-4">
+        <div class="col-lg-4 pe-lg-5">
+          <img src="images/logo.png" alt="Gadgetize" class="mb-4 bg-white p-2 rounded">
+          <p class="text-secondary small">Hệ thống phân phối đồ điện tử chính hãng hàng đầu. Cam kết mang lại trải nghiệm mua sắm tuyệt vời nhất cho khách hàng.</p>
+          <div class="social-icons d-flex gap-2 mt-4">
+            <a href="#" class="btn btn-outline-secondary rounded-circle"><i class="fa-brands fa-facebook-f"></i></a>
+            <a href="#" class="btn btn-outline-secondary rounded-circle"><i class="fa-brands fa-twitter"></i></a>
+            <a href="#" class="btn btn-outline-secondary rounded-circle"><i class="fa-brands fa-instagram"></i></a>
+          </div>
+        </div>
+        
+        <div class="col-lg-2 col-md-4">
+          <h5 class="text-uppercase fw-bold mb-4 fs-6">Danh Mục</h5>
+          <ul class="list-unstyled d-flex flex-column gap-2 small">
+            <li><a href="#" class="text-secondary text-decoration-none custom-hover">Laptop & PC</a></li>
+            <li><a href="#" class="text-secondary text-decoration-none custom-hover">Điện thoại</a></li>
+            <li><a href="#" class="text-secondary text-decoration-none custom-hover">Phụ kiện</a></li>
+          </ul>
+        </div>
+        
+        <div class="col-lg-2 col-md-4">
+          <h5 class="text-uppercase fw-bold mb-4 fs-6">Hỗ Trợ</h5>
+          <ul class="list-unstyled d-flex flex-column gap-2 small">
+            <li><a href="#" class="text-secondary text-decoration-none custom-hover">Chính sách bảo hành</a></li>
+            <li><a href="#" class="text-secondary text-decoration-none custom-hover">Tra cứu đơn hàng</a></li>
+            <li><a href="#" class="text-secondary text-decoration-none custom-hover">Liên hệ</a></li>
+          </ul>
+        </div>
+
+        <div class="col-lg-4 col-md-4">
+          <h5 class="text-uppercase fw-bold mb-4 fs-6">Đăng Ký Nhận Tin</h5>
+          <div class="input-group mb-4">
+            <input type="email" class="form-control bg-dark border-secondary text-light shadow-none" placeholder="Email của bạn...">
+            <button class="btn btn-primary">Đăng ký</button>
+          </div>
+          <ul class="list-unstyled d-flex flex-column gap-3 small text-secondary">
+            <li><i class="fa-solid fa-location-dot me-2"></i> Quận Bình Thạnh, TP HCM</li>
+            <li><i class="fa-solid fa-envelope me-2"></i> info@gadgetize.com</li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="border-top border-secondary pt-3 d-flex flex-column flex-md-row justify-content-between align-items-center">
+        <p class="mb-0 small text-secondary">&copy; 2025 Gadgetize Store. All rights reserved.</p>
+        <div class="payment-methods mt-2 mt-md-0 d-flex gap-2">
+          <img src="images/payment-1.png" alt="Visa" style="height: 24px;">
+          <img src="images/payment-2.png" alt="Mastercard" style="height: 24px;">
+          <img src="images/payment-3.png" alt="Paypal" style="height: 24px;">
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/jquery-3.7.1.min.js"></script>
+  <script src="js/jquery-ui.min.js"></script>
+  <script src="js/bootstrap.bundle.min.js"></script>
+  <script src="js/owl.carousel.min.js"></script>
+  <script src="js/script.js"></script>
+</body>
+</html>
