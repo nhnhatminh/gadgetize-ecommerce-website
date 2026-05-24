@@ -1,0 +1,129 @@
+.product-gallery-main {
+  min-height: 420px;
+}
+
+.gallery-wrapper {
+  min-height: 100%;
+}
+
+.product-gallery-main img {
+  max-height: 400px;
+  object-fit: contain;
+}
+
+.thumb-item {
+  width: 80px !important;
+  height: 80px;
+  border: 2px solid transparent;
+  transition:
+    border-color var(--transition-speed),
+    background-color var(--transition-speed);
+}
+
+.thumb-item.active,
+.thumb-item:hover {
+  border-color: var(--primary-color);
+  background-color: var(--white) !important;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.thumb-item img {
+  max-width: 60%;
+  max-height: 60%;
+  object-fit: contain;
+}
+
+/* color swatch detail */
+.color-swatch-detail {
+  position: relative;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+}
+
+.color-swatch-detail input {
+  position: absolute;
+  opacity: 0;
+}
+
+.color-swatch-detail span {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  border: 1px solid var(--light-grey);
+}
+
+.color-swatch-detail input:checked ~ span {
+  box-shadow:
+    0 0 0 2px var(--white),
+    0 0 0 2px var(--primary-color);
+}
+
+/* action buttons */
+.quantity-selector .btn {
+  color: var(--text-main);
+}
+
+.quantity-selector .btn:hover {
+  color: var(--primary-color);
+}
+
+.btn-outline-success {
+  color: var(--primary-color);
+  border-color: var(--primary-color);
+  transition: all var(--transition-speed);
+}
+
+.btn-outline-success:hover {
+  background-color: var(--primary-color);
+  color: var(--white);
+}
+
+/* share icons */
+.share-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border: 1px solid var(--primary-color);
+  color: var(--primary-color);
+  border-radius: 4px;
+  text-decoration: none;
+  transition: all var(--transition-speed);
+  font-size: 0.875rem;
+}
+
+.share-icon:hover {
+  background-color: var(--primary-color);
+  color: var(--white);
+}
+
+/* product description tabs override */
+.product-description-tabs .nav-tabs {
+  border-bottom: 1px solid var(--light-grey);
+  gap: 40px; /* tao khoang cach giua cac tab */
+}
+
+.product-description-tabs .nav-link {
+  font-family: "Jamjuree-sb", sans-serif;
+  font-size: var(--font-size-p);
+  color: var(--text-main);
+  border: none;
+  border-bottom: 2px solid transparent;
+  padding: 12px 0; /* bo padding hai ben de duong vien day duoi text */
+  background: transparent;
+  transition: all var(--transition-speed);
+}
+
+.product-description-tabs .nav-link:hover {
+  color: var(--primary-color);
+}
+
+.product-description-tabs .nav-link.active {
+  color: var(--primary-color);
+  border-bottom-color: var(
+    --primary-color
+  ); /* chi hien thi vien duoi mau xanh */
+}

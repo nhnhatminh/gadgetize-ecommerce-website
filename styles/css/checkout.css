@@ -1,0 +1,78 @@
+.checkout-wrapper {
+  font-family: "Jamjuree-r", sans-serif;
+}
+
+.checkout-content-inner,
+.checkout-summary-inner {
+  max-width: 600px;
+}
+
+.checkout-right {
+  background-color: #fafafa;
+}
+
+.checkout-left .form-control,
+.checkout-left .form-select {
+  border-radius: 6px;
+  border-color: var(--light-grey);
+  color: var(--text-main);
+}
+
+.checkout-left .form-control:focus,
+.checkout-left .form-select:focus {
+  border-color: #0a58ca;
+  box-shadow: 0 0 0 1px #0a58ca;
+}
+
+.checkout-left .form-control::placeholder {
+  color: var(--text-muted);
+}
+
+.form-check-input {
+  width: 1.1rem;
+  height: 1.1rem;
+  border-color: var(--light-grey);
+  cursor: pointer;
+}
+
+.form-check-input:checked {
+  background-color: #0a58ca;
+  border-color: #0a58ca;
+}
+
+.bg-light-gray-custom {
+  background-color: #f6f6f6;
+}
+
+.payment-methods-box {
+  border-color: var(--light-grey);
+}
+
+.payment-methods-box .form-check-input:checked {
+  background-color: #0a58ca;
+  border-color: #0a58ca;
+}
+
+.btn-checkout-submit {
+  background-color: #0a58ca;
+  border-color: #0a58ca;
+  transition: opacity var(--transition-speed);
+}
+
+.btn-checkout-submit:hover {
+  opacity: 0.9;
+  color: var(--white);
+}
+
+.summary-product-img {
+  width: 64px;
+  height: 64px;
+  border-color: var(--light-grey) !important;
+}
+
+.summary-product-img .badge {
+  font-family: "Jamjuree-md", sans-serif;
+  font-size: 0.75rem;
+  padding: 4px 6px;
+  background-color: rgba(115, 115, 115, 0.9) !important;
+}

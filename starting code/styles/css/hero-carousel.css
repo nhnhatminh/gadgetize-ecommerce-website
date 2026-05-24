@@ -1,0 +1,163 @@
+/* ==========================================================================
+   HERO BANNERS & CAROUSEL COMPONENT
+   ========================================================================== */
+:root {
+  --yellow-color: #ffea00;
+  --light-grey-color: #eaeaec;
+}
+
+.text-yellow {
+  color: var(--yellow-color) !important;
+}
+
+/* --- Main Slider (Banner Lớn) --- */
+.hero-main {
+  min-height: 420px;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+}
+.hero-main-bg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+}
+.hero-main-content {
+  position: absolute;
+  top: 50%;
+  left: 8%;
+  transform: translateY(-50%);
+  z-index: 2;
+  color: var(--white);
+  max-width: 60%;
+}
+.hero-main-badge {
+  font-family: "Jamjuree-sb";
+  font-size: 16px;
+  color: var(--yellow-color);
+  display: block;
+  margin-bottom: 12px;
+  text-transform: uppercase;
+}
+.hero-main-title {
+  font-family: "Jamjuree-b";
+  font-size: 40px;
+  line-height: 1.2;
+  margin-bottom: 16px;
+}
+.hero-main-subtitle {
+  font-family: "Jamjuree-md";
+  font-size: 16px;
+  margin-bottom: 24px;
+}
+.hero-main-btn {
+  font-family: "Jamjuree-sb";
+  color: var(--text-main);
+  background-color: var(--white);
+  padding: 12px 36px;
+  border-radius: 8px;
+  font-size: 16px;
+  transition: transform 0.3s;
+}
+.hero-main-btn:hover {
+  transform: scale(1.05);
+}
+
+/* Pagination (Chấm gạch ngang) */
+.hero-main-indicators {
+  margin-bottom: 16px;
+}
+.hero-main-indicators button {
+  width: 32px !important;
+  height: 4px !important;
+  border-radius: 2px;
+  background-color: rgba(255, 255, 255, 0.5) !important;
+  border: none !important;
+  margin: 0 4px !important;
+}
+.hero-main-indicators button.active {
+  background-color: var(--white) !important;
+}
+
+/* --- Side Banners (Banner Nhỏ) --- */
+.hero-side {
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+  min-height: 200px;
+}
+.hero-side-content {
+  position: absolute;
+  top: 50%;
+  left: 8%;
+  transform: translateY(-50%);
+  z-index: 2;
+  color: var(--white);
+  max-width: 65%;
+}
+.hero-side-title {
+  font-family: "Jamjuree-sb";
+  font-size: 20px;
+  line-height: 1.3;
+  margin-bottom: 8px;
+}
+.hero-side-desc {
+  font-family: "Jamjuree-r";
+  font-size: 14px;
+  margin-bottom: 0;
+}
+
+/* --- Category Carousel (Hình tròn) --- */
+.category-item {
+  text-decoration: none;
+}
+.category-item-circle {
+  width: 130px;
+  height: 130px;
+  background-color: var(--light-grey-color);
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+  padding: 24px;
+}
+.category-item-circle img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transition: transform 0.3s ease;
+}
+
+/* Hover Effects */
+.category-item:hover .category-item-circle {
+  box-shadow: 0 12px 20px rgba(0, 0, 0, 0.08);
+  transform: translateY(-5px);
+}
+.category-item:hover .category-item-circle img {
+  transform: scale(1.1);
+}
+
+/* Responsive cơ bản */
+@media screen and (max-width: 1199px) {
+  .hero-main-title {
+    font-size: 32px;
+  }
+  .category-item-circle {
+    width: 110px;
+    height: 110px;
+  }
+}
+@media screen and (max-width: 767px) {
+  .hero-main-title {
+    font-size: 24px;
+  }
+  .hero-main-content {
+    left: 5%;
+    max-width: 80%;
+  }
+}

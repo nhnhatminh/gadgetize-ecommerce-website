@@ -1,0 +1,171 @@
+/* ==========================================================================
+   HERO BANNERS COMPONENT
+   ========================================================================== */
+
+#banner-container {
+  padding-top: 30px;
+  padding-bottom: 30px;
+}
+
+/* --- Main Banner --- */
+.left-banner #main-banner .carousel-indicators [data-bs-target] {
+  width: 30px;
+  height: 4px;
+  border: 0;
+  border-radius: 2px;
+  background-color: var(--white);
+  opacity: 0.5;
+}
+
+.left-banner #main-banner .carousel-indicators .active {
+  opacity: 1;
+}
+
+.left-banner
+  #main-banner
+  .carousel-inner
+  .carousel-item
+  .hero-carousel-caption {
+  text-align: left;
+  position: absolute;
+  top: 20%;
+  left: 7%;
+  right: auto;
+  bottom: auto;
+  padding: 0;
+}
+
+.hero-carousel-caption .top-slider-label {
+  font-family: "Jamjuree-sb", sans-serif;
+  font-size: var(--font-size-h6);
+  color: var(--yellow);
+  margin-bottom: 4px;
+}
+
+.hero-carousel-caption h3 {
+  font-family: "Jamjuree-r", sans-serif;
+  font-size: var(--font-size-h3);
+  font-weight: 700;
+  color: var(--white);
+  margin: 4px 0;
+  letter-spacing: 4%;
+}
+
+.hero-carousel-caption h3 span {
+  color: var(--yellow);
+}
+
+.hero-carousel-caption .bottom-slider-label {
+  font-family: "Jamjuree-r", sans-serif;
+  font-weight: 600;
+  font-size: 18px;
+  color: var(--white);
+  margin-top: 14px;
+  margin-bottom: 28px;
+}
+
+.btn-shop-now {
+  padding: 10px 32px;
+  background-color: var(--white);
+  color: var(--text-main);
+  font-family: "Jamjuree-sb", sans-serif;
+  font-size: var(--font-size-p);
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  transition: transform var(--transition-speed);
+}
+
+.btn-shop-now:hover {
+  transform: scale(1.05);
+}
+
+/* --- Right Banners --- */
+.right-banner {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.hero-side-item {
+  height: 48%; /* Chia không gian cho 2 khối */
+}
+
+.right-banner .carousel-item .hero-side-caption {
+  text-align: left;
+  position: absolute;
+  top: 18%;
+  left: 7%;
+  right: auto;
+  bottom: auto;
+  padding: 0;
+}
+
+.hero-side-caption h3 {
+  font-family: "Jamjuree-sb", sans-serif;
+  font-size: var(--font-size-h5);
+  color: var(--white);
+  margin-bottom: 16px;
+  line-height: 1.3;
+}
+
+.hero-side-caption p {
+  font-family: "Jamjuree-md", sans-serif;
+  font-size: var(--font-size-p);
+  color: var(--white);
+  margin: 0;
+}
+
+/* --- Category Carousel --- */
+.category-container {
+  padding-bottom: 50px;
+}
+
+.category-container #owl-category .category-item a {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+}
+
+.category-container #owl-category .category-item a .grey-bg {
+  height: 135px;
+  width: 135px;
+  background-color: var(--secondary-color);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  transition:
+    transform var(--transition-speed),
+    box-shadow var(--transition-speed);
+}
+
+.category-container #owl-category .category-item a:hover .grey-bg {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.05);
+}
+
+.category-container #owl-category .category-item a .grey-bg img {
+  width: 70%;
+}
+
+.category-container #owl-category .category-item a .category-label {
+  text-align: center;
+}
+
+.category-container #owl-category .category-item a .category-label h6 {
+  font-family: "Jamjuree-md", sans-serif;
+  font-size: var(--font-size-p);
+  color: var(--text-main);
+  padding: 16px 0 8px 0;
+  margin: 0;
+}
+
+.category-container #owl-category .category-item a .category-label p {
+  font-family: "Jamjuree-r", sans-serif;
+  font-size: var(--font-size-des);
+  color: var(--text-muted);
+  margin: 0;
+}
