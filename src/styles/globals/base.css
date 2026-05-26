@@ -1,32 +1,25 @@
-/* ==========================================================================
-   1. FONTS
-   ========================================================================== */
 @font-face {
   font-family: "Jamjuree-r";
-  src: url("../fonts/BaiJamjuree-Regular.ttf");
+  src: url("/fonts/BaiJamjuree-Regular.ttf");
 }
 @font-face {
   font-family: "Jamjuree-b";
-  src: url("../fonts/BaiJamjuree-Bold.ttf");
+  src: url("/fonts/BaiJamjuree-Bold.ttf");
 }
 @font-face {
   font-family: "Jamjuree-sb";
-  src: url("../fonts/BaiJamjuree-SemiBold.ttf");
+  src: url("/fonts/BaiJamjuree-SemiBold.ttf");
 }
 @font-face {
   font-family: "Jamjuree-md";
-  src: url("../fonts/BaiJamjuree-Medium.ttf");
+  src: url("/fonts/BaiJamjuree-Medium.ttf");
 }
 @font-face {
   font-family: "Jamjuree-l";
-  src: url("../fonts/BaiJamjuree-Light.ttf");
+  src: url("/fonts/BaiJamjuree-Light.ttf");
 }
 
-/* ==========================================================================
-   2. DESIGN SYSTEM VARIABLES (COLOR & TYPOGRAPHY)
-   ========================================================================== */
 :root {
-  /* --- Colors (Figma Palette) --- */
   --dark-green: #006937;
   --light-green: #45b580;
   --green: #00ff86;
@@ -40,27 +33,24 @@
   --red: #dd3842;
   --yellow: #ffe603;
 
-  /* Semantic Colors Mapping */
   --primary-color: var(--dark-green);
   --secondary-color: var(--light-grey);
   --text-main: var(--black);
   --text-muted: var(--grey);
   --danger-color: var(--red);
   --warning-color: var(--yellow);
-  --bg-main: var(--light-grey); /* Nền tổng thể */
+  --bg-main: var(--light-grey);
 
-  /* --- Typography (Figma Specs - 1rem = 16px) --- */
-  --font-size-h1: 3.8125rem; /* 61px */
-  --font-size-h2: 3.0625rem; /* 49px */
-  --font-size-h3: 2.4375rem; /* 39px */
-  --font-size-h4: 1.9375rem; /* 31px */
-  --font-size-h5: 1.5625rem; /* 25px */
-  --font-size-h6: 1.25rem; /* 20px */
-  --font-size-p: 1rem; /* 16px */
-  --font-size-des: 0.8125rem; /* 13px */
+  --font-size-h1: 3.8125rem;
+  --font-size-h2: 3.0625rem;
+  --font-size-h3: 2.4375rem;
+  --font-size-h4: 1.9375rem;
+  --font-size-h5: 1.5625rem;
+  --font-size-h6: 1.25rem;
+  --font-size-p: 1rem;
+  --font-size-des: 0.8125rem;
 
-  /* Font Weights */
-  --fw-regular: 400; /* Jamjuree-r */
+  --fw-regular: 400;
   --fw-medium: 500; /* Jamjuree-md */
   --fw-semibold: 600; /* Jamjuree-sb */
   --fw-bold: 700; /* Jamjuree-b */
