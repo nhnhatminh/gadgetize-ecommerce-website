@@ -1,4 +1,4 @@
-.auth-container {
+.auth-page-container {
   background-color: var(--bg-main);
   font-family: "Jamjuree-r", sans-serif;
 }
@@ -57,7 +57,6 @@
 
 .auth-form .form-control::placeholder {
   color: var(--text-muted);
-  font-size: var(--font-size-p);
 }
 
 .form-check-input {
