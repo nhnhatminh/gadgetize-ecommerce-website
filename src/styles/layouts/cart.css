@@ -1,4 +1,8 @@
-/* cart layout and items */
+.cart-page-wrapper {
+  background-color: var(--bg-main);
+  min-height: 100vh;
+}
+
 .cart-header {
   font-family: "Jamjuree-sb", sans-serif;
 }
@@ -25,7 +29,6 @@
   outline: none;
 }
 
-/* remove button styling */
 .btn-remove {
   background-color: var(--danger-color);
   width: 40px;
@@ -39,11 +42,10 @@
 }
 
 .btn-remove:hover {
-  background-color: #c82333; /* do dam hon khi hover */
+  background-color: #c82333;
   color: var(--white);
 }
 
-/* cart action buttons */
 .btn-cart-action {
   background-color: var(--primary-color);
   border: 1px solid var(--primary-color);
@@ -55,41 +57,25 @@
   color: var(--white);
 }
 
-/* responsive adjustments */
-@media (max-width: 767px) {
-  .cart-item {
-    position: relative;
-  }
-  .btn-remove {
-    position: absolute;
-    top: 24px;
-    right: 0;
-  }
-}
-
-.free-shipping-notice {
-  border-top-color: var(--primary-color) !important;
-}
-
-.shipping-icon {
-  background-color: var(--primary-color);
-  width: 24px;
-  height: 24px;
-  font-size: 10px;
-}
-
-.shipping-calculator-form .form-label,
-.discount-code-block .form-label {
+.cart-note-wrapper textarea.form-control {
   font-family: "Jamjuree-r", sans-serif;
   font-size: var(--font-size-p);
+  resize: none;
+  color: var(--text-main);
+  transition:
+    border-color var(--transition-speed),
+    box-shadow var(--transition-speed);
+}
+
+.cart-note-wrapper textarea.form-control:focus {
+  outline: none;
+  box-shadow: inset 0 0 0 1px var(--primary-color);
 }
 
 .shipping-calculator-form .form-select,
 .shipping-calculator-form .form-control,
 .discount-code-block .form-control {
   font-family: "Jamjuree-r", sans-serif;
-  font-size: var(--font-size-des);
-  padding: 10px 16px;
   border-color: var(--light-grey);
 }
 
@@ -98,12 +84,6 @@
 .discount-code-block .form-control:focus {
   border-color: var(--primary-color);
   box-shadow: none;
-}
-
-.btn-primary-custom {
-  background-color: var(--primary-color);
-  border-color: var(--primary-color);
-  transition: all var(--transition-speed);
 }
 
 .btn-primary-custom:hover {
@@ -120,7 +100,6 @@
 .checkout-block .btn-outline-secondary {
   border-color: var(--light-grey);
   background-color: transparent;
-  transition: all var(--transition-speed);
 }
 
 .checkout-block .btn-outline-secondary:hover {
@@ -128,25 +107,14 @@
   background-color: var(--light-grey);
 }
 
-.cart-note-wrapper {
-  margin-top: 80px;
-}
-
-.cart-note-wrapper textarea.form-control {
-  font-family: "Jamjuree-r", sans-serif;
-  font-size: var(--font-size-p);
-  resize: none;
-  color: var(--text-main);
-  transition:
-    border-color var(--transition-speed),
-    box-shadow var(--transition-speed);
-}
-
-.cart-note-wrapper textarea.form-control::placeholder {
-  color: var(--text-muted);
-}
-
-.cart-note-wrapper textarea.form-control:focus {
-  outline: none;
-  box-shadow: inset 0 0 0 1px var(--primary-color);
+@media (max-width: 767px) {
+  .cart-item {
+    position: relative;
+  }
+  .remove-btn-container {
+    position: absolute;
+    top: 24px;
+    right: 0;
+    width: auto;
+  }
 }
