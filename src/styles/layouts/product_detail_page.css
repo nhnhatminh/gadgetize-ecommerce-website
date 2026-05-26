@@ -1,5 +1,5 @@
-.product-gallery-main {
-  min-height: 420px;
+.product-detail-page-wrapper {
+  background-color: var(--bg-main);
 }
 
 .gallery-wrapper {
@@ -33,7 +33,6 @@
   object-fit: contain;
 }
 
-/* color swatch detail */
 .color-swatch-detail {
   position: relative;
   width: 28px;
@@ -60,7 +59,6 @@
     0 0 0 2px var(--primary-color);
 }
 
-/* action buttons */
 .quantity-selector .btn {
   color: var(--text-main);
 }
@@ -80,7 +78,6 @@
   color: var(--white);
 }
 
-/* share icons */
 .share-icon {
   display: flex;
   align-items: center;
@@ -100,10 +97,9 @@
   color: var(--white);
 }
 
-/* product description tabs override */
 .product-description-tabs .nav-tabs {
   border-bottom: 1px solid var(--light-grey);
-  gap: 40px; /* tao khoang cach giua cac tab */
+  gap: 40px;
 }
 
 .product-description-tabs .nav-link {
@@ -112,7 +108,7 @@
   color: var(--text-main);
   border: none;
   border-bottom: 2px solid transparent;
-  padding: 12px 0; /* bo padding hai ben de duong vien day duoi text */
+  padding: 12px 0;
   background: transparent;
   transition: all var(--transition-speed);
 }
@@ -123,7 +119,5 @@
 
 .product-description-tabs .nav-link.active {
   color: var(--primary-color);
-  border-bottom-color: var(
-    --primary-color
-  ); /* chi hien thi vien duoi mau xanh */
+  border-bottom-color: var(--primary-color);
 }
