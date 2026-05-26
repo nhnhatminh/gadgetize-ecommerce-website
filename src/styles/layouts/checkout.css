@@ -1,4 +1,4 @@
-.checkout-wrapper {
+.checkout-page-container {
   font-family: "Jamjuree-r", sans-serif;
 }
 
@@ -16,6 +16,7 @@
   border-radius: 6px;
   border-color: var(--light-grey);
   color: var(--text-main);
+  font-size: var(--font-size-p);
 }
 
 .checkout-left .form-control:focus,
