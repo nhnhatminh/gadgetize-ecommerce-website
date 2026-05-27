@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "../../styles/layouts/checkout.css";
+import "../styles/layouts/checkout.css";
 
 export default function Checkout({ navigate }) {
   const [emailOrPhone, setEmailOrPhone] = useState("");

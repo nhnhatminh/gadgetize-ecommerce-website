@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "../../styles/layouts/auth.css";
+import "../styles/layouts/auth.css";
 
 export default function Auth({ navigate }) {
   const [activeTab, setActiveTab] = useState("login");
