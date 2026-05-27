@@ -44,7 +44,7 @@ export default function ProductDetail({ navigate }) {
     {
       id: 1,
       name: "Thiết Bị Âm Thanh Cao Cấp",
-      price: 1500000,
+      newPrice: 1500000,
       oldPrice: 1200000,
       image: "/images/pr-1.png",
       discount: 20,
@@ -56,7 +56,7 @@ export default function ProductDetail({ navigate }) {
     {
       id: 2,
       name: "Thiết Bị Âm Thanh Cao Cấp",
-      price: 1500000,
+      newPrice: 1500000,
       oldPrice: 1200000,
       image: "/images/pr-1.png",
       discount: 20,
@@ -68,7 +68,7 @@ export default function ProductDetail({ navigate }) {
     {
       id: 3,
       name: "Thiết Bị Âm Thanh Cao Cấp",
-      price: 1500000,
+      newPrice: 1500000,
       oldPrice: 1200000,
       image: "/images/pr-1.png",
       discount: 20,
@@ -80,7 +80,7 @@ export default function ProductDetail({ navigate }) {
     {
       id: 4,
       name: "Thiết Bị Âm Thanh Cao Cấp",
-      price: 1500000,
+      newPrice: 1500000,
       oldPrice: 1200000,
       image: "/images/pr-1.png",
       discount: 20,
@@ -92,7 +92,7 @@ export default function ProductDetail({ navigate }) {
     {
       id: 5,
       name: "Thiết Bị Âm Thanh Cao Cấp",
-      price: 1500000,
+      newPrice: 1500000,
       oldPrice: 1200000,
       image: "/images/pr-1.png",
       discount: 20,
@@ -104,7 +104,7 @@ export default function ProductDetail({ navigate }) {
     {
       id: 6,
       name: "Thiết Bị Âm Thanh Cao Cấp",
-      price: 1500000,
+      newPrice: 1500000,
       oldPrice: 1200000,
       image: "/images/pr-1.png",
       discount: 20,

@@ -59,7 +59,7 @@ export default function ProductCard({ product, layoutMode = "horizontal" }) {
           </span>
         )}
         <span className="new-price text-dark">
-          {newPrice.toLocaleString("vi-VN")}₫
+          {(newPrice || 0).toLocaleString("vi-VN")}₫
         </span>
       </div>
 
