@@ -144,3 +144,25 @@
   color: var(--danger-color);
   font-size: 1.25rem;
 }
+
+.slide-in-menu {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  width: 320px;
+  background-color: var(--white);
+  z-index: 9999;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+  transition: transform var(--transition-speed) ease-in-out;
+  transform: translateX(-100%);
+}
+
+.slide-in-menu.active {
+  transform: translateX(0);
+}
+
+@media (min-width: 992px) {
+  .slide-in-menu {
+    display: none !important;
+  }
+}

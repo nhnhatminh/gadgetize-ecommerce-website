@@ -102,7 +102,7 @@ export default function Header({ navigate, currentPage }) {
                 className="nav-category-btn d-flex align-items-center"
                 onClick={() => setIsCategoryOpen(!isCategoryOpen)}
               >
-                <i class="fa-solid fa-bars me-2"></i>
+                <i className="fa-solid fa-bars me-2"></i>
                 <span>Tất Cả Danh Mục</span>
               </div>
             </div>
@@ -175,10 +175,7 @@ export default function Header({ navigate, currentPage }) {
         </div>
       </div>
 
-      <div
-        className={`slide-in-menu ${isMobileMenuOpen ? "active" : ""}`}
-        style={{ left: isMobileMenuOpen ? "0" : "-400px" }}
-      >
+      <div className={`slide-in-menu ${isMobileMenuOpen ? "active" : ""}`}>
         <div className="p-4 d-flex flex-column h-100">
           <div className="d-flex justify-content-between align-items-center mb-4">
             <h5 className="fw-bold mb-0">Menu</h5>
