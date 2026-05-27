@@ -211,7 +211,7 @@ export default function Products({ navigate }) {
               {filteredProducts.length > 0 ? (
                 filteredProducts.map((prod) => (
                   <div
-                    className="col-xl-4 col-md-6"
+                    className="col-xl-3 col-md-4"
                     key={prod.id}
                     onClick={() => navigate("product-detail")}
                   >

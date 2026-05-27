@@ -108,3 +108,8 @@
 .fs-8 {
   font-size: 0.75rem !important;
 }
+
+.showcase-filter .nav-link.active {
+  background-color: transparent !important;
+  color: var(--primary-color) !important;
+}

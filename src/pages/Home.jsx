@@ -355,7 +355,7 @@ export default function Home({ navigate }) {
                     (tab) => (
                       <li className="nav-item" key={tab}>
                         <button
-                          className={`nav-link rounded-pill px-3 py-1 text-des fw-medium border-0 ${activeTab === tab ? "active bg-success text-white" : "text-muted bg-transparent"}`}
+                          className={`nav-link rounded-pill px-3 py-1 text-des fw-medium border-0 ${activeTab === tab ? "active" : "text-muted bg-transparent"}`}
                           onClick={() => setActiveTab(tab)}
                         >
                           {tab === "all"
@@ -395,7 +395,7 @@ export default function Home({ navigate }) {
                 (tab) => (
                   <li className="nav-item" key={tab}>
                     <button
-                      className={`nav-link rounded-pill px-3 py-1 text-des fw-medium border-0 ${activePopularTab === tab ? "active bg-success text-white" : "text-muted bg-transparent"}`}
+                      className={`nav-link rounded-pill px-3 py-1 text-des fw-medium border-0 ${activePopularTab === tab ? "active" : "text-muted bg-transparent"}`}
                       onClick={() => setActivePopularTab(tab)}
                     >
                       {tab === "all"
