@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import ProductCard from "../../components/common/ProductCard";
-import "../styles/layouts/products_page.css";
+import FilterSidebar from "../../components/products/FilterSidebar";
+import ProductsToolbar from "../../components/products/ProductsToolbar";
+import "../../styles/layouts/products_page.css";
 
 export default function Products({ navigate }) {
   const [priceRange, setPriceRange] = useState(5000000);
@@ -113,99 +115,21 @@ export default function Products({ navigate }) {
 
       <div className="container py-5">
         <div className="row g-4">
-          <aside className="col-lg-3">
-            <div className="filter-sidebar bg-white rounded-4 p-4 shadow-sm mb-4">
-              <h5 className="fw-bold text-dark mb-4 pb-2 border-bottom">
-                Danh Mục
-              </h5>
-              <ul className="sidebar-category-list d-flex flex-column gap-2">
-                {categories.map((cat) => (
-                  <li
-                    key={cat.id}
-                    className={`cursor-pointer text-p ${selectedCategory === cat.id ? "text-success fw-semibold" : "text-dark"}`}
-                    onClick={() => setSelectedCategory(cat.id)}
-                  >
-                    {cat.name}
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            <div className="filter-sidebar bg-white rounded-4 p-4 shadow-sm mb-4">
-              <h5 className="fw-bold text-dark mb-4 pb-2 border-bottom">
-                Lọc Theo Giá
-              </h5>
-              <div className="price-range-selector">
-                <input
-                  type="range"
-                  className="form-range custom-range-slider"
-                  min="1000000"
-                  max="30000000"
-                  step="500000"
-                  value={priceRange}
-                  onChange={(e) => setPriceRange(Number(e.target.value))}
-                />
-                <div className="d-flex justify-content-between align-items-center mt-3 fs-7 text-dark fw-medium">
-                  <span>Mức giá tối đa:</span>
-                  <span className="text-success">
-                    {priceRange.toLocaleString("vi-VN")}₫
-                  </span>
-                </div>
-              </div>
-            </div>
-
-            <div className="filter-sidebar bg-white rounded-4 p-4 shadow-sm">
-              <h5 className="fw-bold text-dark mb-4 pb-2 border-bottom">
-                Thương Hiệu
-              </h5>
-              <div className="d-flex flex-column gap-2">
-                {brands.map((brand, idx) => (
-                  <div
-                    className="form-check d-flex align-items-center gap-2"
-                    key={idx}
-                  >
-                    <input
-                      className="form-check-input m-0"
-                      type="checkbox"
-                      id={`brand-${idx}`}
-                    />
-                    <label
-                      className="form-check-label mt-1 text-dark fs-7"
-                      htmlFor={`brand-${idx}`}
-                    >
-                      {brand}
-                    </label>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </aside>
+          <FilterSidebar
+            categories={categories}
+            selectedCategory={selectedCategory}
+            setSelectedCategory={setSelectedCategory}
+            priceRange={priceRange}
+            setPriceRange={setPriceRange}
+            brands={brands}
+          />
 
           <main className="col-lg-9">
-            <div className="products-toolbar d-flex flex-wrap justify-content-between align-items-center bg-white p-3 rounded-4 mb-4 shadow-sm gap-3">
-              <p className="mb-0 text-muted fs-7">
-                Hiển thị{" "}
-                <span className="text-dark fw-semibold">
-                  {filteredProducts.length}
-                </span>{" "}
-                sản phẩm phù hợp
-              </p>
-              <div className="d-flex align-items-center gap-2">
-                <span className="text-dark fs-7 fw-medium text-nowrap">
-                  Sắp xếp:
-                </span>
-                <select
-                  className="form-select form-select-sm border-light-subtle rounded-3 py-2 text-dark fs-7"
-                  style={{ width: "180px" }}
-                  value={sortBy}
-                  onChange={(e) => setSortBy(e.target.value)}
-                >
-                  <option value="default">Mặc định</option>
-                  <option value="price-low">Giá: Thấp đến Cao</option>
-                  <option value="price-high">Giá: Cao đến Thấp</option>
-                </select>
-              </div>
-            </div>
+            <ProductsToolbar
+              productsCount={filteredProducts.length}
+              sortBy={sortBy}
+              setSortBy={setSortBy}
+            />
 
             <div className="row g-4">
               {filteredProducts.length > 0 ? (
