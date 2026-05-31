@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import ProductCard from "../components/common/ProductCard";
+import ProductCard from "../../components/common/ProductCard";
 import "../styles/layouts/products_page.css";
 
 export default function Products({ navigate }) {
