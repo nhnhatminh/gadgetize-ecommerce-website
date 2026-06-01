@@ -1,22 +1,28 @@
 import React from "react";
-import "../../styles/layouts/products_page.css";
 
 export default function ProductsToolbar({ productsCount, sortBy, setSortBy }) {
   return (
-    <div className="products-toolbar d-flex flex-wrap justify-content-between align-items-center bg-white p-3 rounded-4 mb-4 shadow-sm gap-3">
-      <p className="mb-0 text-muted fs-7">
-        Hiển thị <span className="text-dark fw-semibold">{productsCount}</span>{" "}
-        sản phẩm phù hợp
-      </p>
+    <div className="products-toolbar bg-white rounded-4 p-3 shadow-sm mb-4 d-flex align-items-center justify-content-between">
+      <div className="d-flex align-items-center gap-3">
+        <div className="layout-buttons d-flex gap-2 text-muted fs-5 cursor-pointer">
+          <i className="fa-solid fa-border-all text-dark"></i>
+          <i className="fa-solid fa-list"></i>
+        </div>
+        <span className="text-dark fs-7 fw-medium">
+          {productsCount} sản phẩm
+        </span>
+      </div>
+
       <div className="d-flex align-items-center gap-2">
-        <span className="text-dark fs-7 fw-medium text-nowrap">Sắp xếp:</span>
+        <label className="text-muted fs-7 text-nowrap mb-0">Lọc theo:</label>
         <select
-          className="form-select form-select-sm border-light-subtle rounded-3 py-2 text-dark fs-7"
-          style={{ width: "180px" }}
+          className="form-select form-select-sm border-light-subtle fs-7 py-1 px-3 text-dark"
+          style={{ width: "160px", borderRadius: "6px" }}
           value={sortBy}
           onChange={(e) => setSortBy(e.target.value)}
         >
           <option value="default">Mặc định</option>
+          <option value="bestseller">Bán chạy nhất</option>
           <option value="price-low">Giá: Thấp đến Cao</option>
           <option value="price-high">Giá: Cao đến Thấp</option>
         </select>

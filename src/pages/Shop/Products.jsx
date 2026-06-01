@@ -32,6 +32,7 @@ export default function Products({ navigate }) {
       reviews: 1,
       oldPrice: 1500000,
       newPrice: 1200000,
+      bestseller: true,
     },
     {
       id: 2,
@@ -45,6 +46,7 @@ export default function Products({ navigate }) {
       reviews: 12,
       oldPrice: 2500000,
       newPrice: 2450000,
+      bestseller: false,
     },
     {
       id: 3,
@@ -58,6 +60,7 @@ export default function Products({ navigate }) {
       reviews: 8,
       oldPrice: 24500000,
       newPrice: 22500000,
+      bestseller: true,
     },
     {
       id: 4,
@@ -71,6 +74,7 @@ export default function Products({ navigate }) {
       reviews: 3,
       oldPrice: 20000000,
       newPrice: 17000000,
+      bestseller: true,
     },
     {
       id: 5,
@@ -84,6 +88,7 @@ export default function Products({ navigate }) {
       reviews: 14,
       oldPrice: 34000000,
       newPrice: 17500000,
+      bestseller: true,
     },
     {
       id: 6,
@@ -97,6 +102,7 @@ export default function Products({ navigate }) {
       reviews: 9,
       oldPrice: 2100000,
       newPrice: 1800000,
+      bestseller: false,
     },
     {
       id: 7,
@@ -110,6 +116,7 @@ export default function Products({ navigate }) {
       reviews: 21,
       oldPrice: 24500000,
       newPrice: 22500000,
+      bestseller: false,
     },
     {
       id: 8,
@@ -123,6 +130,7 @@ export default function Products({ navigate }) {
       reviews: 5,
       oldPrice: 22500000,
       newPrice: 20000000,
+      bestseller: false,
     },
     {
       id: 9,
@@ -136,6 +144,7 @@ export default function Products({ navigate }) {
       reviews: 7,
       oldPrice: 1650000,
       newPrice: 890000,
+      bestseller: true,
     },
     {
       id: 10,
@@ -149,6 +158,7 @@ export default function Products({ navigate }) {
       reviews: 18,
       oldPrice: 4700000,
       newPrice: 3297000,
+      bestseller: true,
     },
     {
       id: 11,
@@ -162,6 +172,7 @@ export default function Products({ navigate }) {
       reviews: 32,
       oldPrice: 15000000,
       newPrice: 13500000,
+      bestseller: false,
     },
     {
       id: 12,
@@ -175,6 +186,7 @@ export default function Products({ navigate }) {
       reviews: 4,
       oldPrice: 4500000,
       newPrice: 3825000,
+      bestseller: false,
     },
   ];
 
@@ -186,6 +198,8 @@ export default function Products({ navigate }) {
     .sort((a, b) => {
       if (sortBy === "price-low") return a.newPrice - b.newPrice;
       if (sortBy === "price-high") return b.newPrice - a.newPrice;
+      if (sortBy === "bestseller")
+        return (b.bestseller ? 1 : 0) - (a.bestseller ? 1 : 0);
       return 0;
     });
 
@@ -243,7 +257,7 @@ export default function Products({ navigate }) {
                     key={prod.id}
                     onClick={() => navigate("product-detail")}
                   >
-                    <ProductCard product={prod} layoutMode="vertical" />
+                    <ProductCard product={prod} />
                   </div>
                 ))
               ) : (

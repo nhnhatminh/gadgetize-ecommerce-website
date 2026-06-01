@@ -1,71 +1,60 @@
 import React from "react";
 import "../../styles/components/produc_card.css";
 
-export default function ProductCard({ product, layoutMode = "horizontal" }) {
-  const {
-    discount,
-    image,
-    name,
-    description,
-    rating,
-    reviews,
-    oldPrice,
-    newPrice,
-  } = product;
-
-  const renderStars = () => {
-    const stars = [];
-    for (let i = 1; i <= 5; i++) {
-      stars.push(
-        <i
-          key={i}
-          className={`${i <= rating ? "fa-solid" : "fa-regular"} fa-star`}
-        ></i>,
-      );
-    }
-    return stars;
-  };
-
-  const priceContainerClass =
-    layoutMode === "vertical"
-      ? "product-card-price d-flex flex-column align-items-center mb-3 gap-1 mt-auto"
-      : "product-card-price d-flex justify-content-center align-items-baseline mb-3 gap-2 mt-auto";
-
+export default function ProductCard({ product }) {
   return (
-    <div className="product-card bg-white rounded-3 p-3 position-relative border h-100 d-flex flex-column">
-      {discount && (
-        <span className="product-card-badge bg-danger text-white position-absolute">
-          -{discount}%
+    <div className="product-card-custom h-100 d-flex flex-column bg-white rounded-4 p-3 border border-light-subtle position-relative cursor-pointer">
+      {product.discount > 0 && (
+        <span className="product-discount-badge position-absolute bg-danger text-white fs-8 fw-bold px-2 py-1 rounded-1 z-2">
+          -{product.discount}%
         </span>
       )}
 
-      <div className="product-card-img mb-3">
-        <img src={image} alt={name} className="img-fluid w-100" />
+      <div className="product-img-box w-100 d-flex align-items-center justify-content-center rounded-3 p-3 mb-3">
+        <img
+          src={product.image}
+          alt={product.name}
+          className="img-fluid object-fit-contain"
+          style={{ maxHeight: "120px" }}
+        />
       </div>
 
-      <h4 className="product-card-title text-center mb-2">{name}</h4>
+      <div className="product-info-box d-flex flex-column flex-grow-1">
+        <h6 className="product-title-green fw-bold mb-2 fs-7 text-center">
+          {product.name}
+        </h6>
 
-      <p className="product-card-desc text-center mb-3">{description}</p>
+        <p className="product-desc-clamp text-muted fs-8 mb-2 flex-grow-1">
+          {product.description}
+        </p>
 
-      <div className="product-card-rating mb-2 d-flex justify-content-center align-items-center gap-2">
-        <div className="stars">{renderStars()}</div>
-        <span className="text-dark">({reviews} đánh giá)</span>
-      </div>
+        <div className="product-rating-row d-flex align-items-center justify-content-center gap-1 mb-2 fs-8 text-warning">
+          <div className="stars-group d-flex gap-1">
+            <i className="fa-solid fa-star"></i>
+            <i className="fa-solid fa-star"></i>
+            <i className="fa-solid fa-star"></i>
+            <i className="fa-solid fa-star"></i>
+            <i className="fa-solid fa-star"></i>
+          </div>
+          <span className="text-muted fs-8">({product.reviews} đánh giá)</span>
+        </div>
 
-      <div className={priceContainerClass}>
-        {oldPrice && (
-          <span className="old-price text-muted text-decoration-line-through">
-            {oldPrice.toLocaleString("vi-VN")}₫
+        <div className="product-price-row d-flex align-items-center justify-content-center gap-2 mb-3 fs-8">
+          <span className="text-muted text-decoration-line-through">
+            {product.oldPrice.toLocaleString("vi-VN")}₫
           </span>
-        )}
-        <span className="new-price text-dark">
-          {(newPrice || 0).toLocaleString("vi-VN")}₫
-        </span>
-      </div>
+          <span className="fw-bold text-dark">
+            {product.newPrice.toLocaleString("vi-VN")}₫
+          </span>
+        </div>
 
-      <button className="product-card-btn btn w-100 bg-transparent">
-        Thêm vào giỏ hàng
-      </button>
+        <button
+          type="button"
+          className="btn btn-outline-cart-custom w-100 py-2 fs-8 fw-medium rounded-2 mt-auto"
+        >
+          Thêm vào giỏ hàng
+        </button>
+      </div>
     </div>
   );
 }
