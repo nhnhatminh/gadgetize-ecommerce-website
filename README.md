@@ -1,16 +1,45 @@
-# React + Vite
+# Gadgetize Store
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Gadgetize Store is a full-stack web application designed as an e-commerce platform connecting customers with high-quality electronic devices and technology components. The project utilizes a monorepo architecture containing a decoupled frontend framework and an independent server-side system to guarantee scalability and a clean separation of operational concerns.
 
-Currently, two official plugins are available:
+## Architecture Overview
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+The system repository is organized into two primary technical directories:
 
-## React Compiler
+- frontend: Developed using React and Vite, utilizing modern CSS configurations and vanilla semantic structures to deliver a responsive client interface.
+- backend: Constructed with Node.js and Express, integrated with a PostgreSQL relational database management system to ensure robust data persistency.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Core Systems and Features
 
-## Expanding the ESLint configuration
+### Frontend Specifications
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- Configured a dynamic product catalog featuring an optimized 6-column grid structure tailored for ultra-wide desktop monitors.
+- Integrated an advanced filtering sidebar enabling real-time client-side array sorting based on specific price boundaries, technical categories, and brand naming.
+- Structured an interactive live search dropdown within the main navigation header equipped with absolute layering positions and event listeners to automatically close upon detecting actions outside the container boundary.
+
+### Backend Specifications
+
+- Maintained a high-performance database connection pool management module using the pg native driver wrapper.
+- Established user authorization and secure login protocols through password hashing operations and secure JSON Web Tokens.
+- Formulated an extensive relational database schema mapping categories, customizable product configurations, and standalone variation imagery assets.
+- Implemented transactional order handling routines executing multi-table modifications to preserve atomic integrity across data changes.
+
+## Repository Organization
+
+The structure of the root directory is arranged as follows:
+
+- backend/
+- frontend/
+- .gitignore
+
+## Installation and Environment Setup
+
+### Client Framework Configuration
+
+Navigate into the dedicated client workspace and trigger the setup package installation:
+
+cd frontend
+npm install
+
+Project Ownership
+NGUYEN HUYNH NHAT MINH (nhnhatminh)
