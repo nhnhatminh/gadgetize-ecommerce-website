@@ -5,7 +5,7 @@ import ProductsToolbar from "../../components/products/ProductsToolbar";
 import "../../styles/layouts/products_page.css";
 
 export default function Products({ navigate }) {
-  const [priceRange, setPriceRange] = useState(5000000);
+  const [priceRange, setPriceRange] = useState(30000000);
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [sortBy, setSortBy] = useState("default");
 
@@ -72,6 +72,110 @@ export default function Products({ navigate }) {
       oldPrice: 20000000,
       newPrice: 17000000,
     },
+    {
+      id: 5,
+      category: "phone",
+      discount: 50,
+      image: "/images/pr-5.png",
+      name: "Điện thoại iPhone 14 Pro Max",
+      description:
+        "Lorem ipsum dolor sit amet consectetur. Fermentum malesuada iaculis aliquet nunc turpis.",
+      rating: 5,
+      reviews: 14,
+      oldPrice: 34000000,
+      newPrice: 17500000,
+    },
+    {
+      id: 6,
+      category: "accessories",
+      discount: 14,
+      image: "/images/pr-6.png",
+      name: "Tai Nghe Pure Bass Pro",
+      description:
+        "Lorem ipsum dolor sit amet consectetur. Fermentum malesuada iaculis aliquet nunc turpis.",
+      rating: 4,
+      reviews: 9,
+      oldPrice: 2100000,
+      newPrice: 1800000,
+    },
+    {
+      id: 7,
+      category: "audio",
+      discount: 9,
+      image: "/images/pr-7.png",
+      name: "Màn Hình LCD CrystalView",
+      description:
+        "Lorem ipsum dolor sit amet consectetur. Fermentum malesuada iaculis aliquet nunc turpis.",
+      rating: 5,
+      reviews: 21,
+      oldPrice: 24500000,
+      newPrice: 22500000,
+    },
+    {
+      id: 8,
+      category: "laptop",
+      discount: 12,
+      image: "/images/pr-8.png",
+      name: "UltraTech Note X",
+      description:
+        "Lorem ipsum dolor sit amet consectetur. Fermentum malesuada iaculis aliquet nunc turpis.",
+      rating: 4,
+      reviews: 5,
+      oldPrice: 22500000,
+      newPrice: 20000000,
+    },
+    {
+      id: 9,
+      category: "accessories",
+      discount: 46,
+      image: "/images/pr-9.png",
+      name: "Bàn Phím Silent Touch Pro",
+      description:
+        "Lorem ipsum dolor sit amet consectetur. Fermentum malesuada iaculis aliquet nunc turpis.",
+      rating: 5,
+      reviews: 7,
+      oldPrice: 1650000,
+      newPrice: 890000,
+    },
+    {
+      id: 10,
+      category: "accessories",
+      discount: 30,
+      image: "/images/pr-10.png",
+      name: "Tai nghe Airpod Pro 3",
+      description:
+        "Lorem ipsum dolor sit amet consectetur. Fermentum malesuada iaculis aliquet nunc turpis.",
+      rating: 5,
+      reviews: 18,
+      oldPrice: 4700000,
+      newPrice: 3297000,
+    },
+    {
+      id: 11,
+      category: "phone",
+      discount: 10,
+      image: "/images/cate-3.png",
+      name: "Nexus Mobile Pro 256GB",
+      description:
+        "Lorem ipsum dolor sit amet consectetur. Fermentum malesuada iaculis aliquet nunc turpis.",
+      rating: 4,
+      reviews: 32,
+      oldPrice: 15000000,
+      newPrice: 13500000,
+    },
+    {
+      id: 12,
+      category: "audio",
+      discount: 15,
+      image: "/images/cate-5.png",
+      name: "Loa Bluetooth SoundWave",
+      description:
+        "Lorem ipsum dolor sit amet consectetur. Fermentum malesuada iaculis aliquet nunc turpis.",
+      rating: 5,
+      reviews: 4,
+      oldPrice: 4500000,
+      newPrice: 3825000,
+    },
   ];
 
   const filteredProducts = productList
@@ -131,11 +235,11 @@ export default function Products({ navigate }) {
               setSortBy={setSortBy}
             />
 
-            <div className="row g-4">
+            <div className="row g-3">
               {filteredProducts.length > 0 ? (
                 filteredProducts.map((prod) => (
                   <div
-                    className="col-xl-3 col-md-4"
+                    className="col-xxl-2 col-xl-3 col-md-4 col-sm-6"
                     key={prod.id}
                     onClick={() => navigate("product-detail")}
                   >

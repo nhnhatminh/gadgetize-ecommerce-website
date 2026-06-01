@@ -51,16 +51,13 @@
   --font-size-des: 0.8125rem;
 
   --fw-regular: 400;
-  --fw-medium: 500; /* Jamjuree-md */
-  --fw-semibold: 600; /* Jamjuree-sb */
-  --fw-bold: 700; /* Jamjuree-b */
+  --fw-medium: 500;
+  --fw-semibold: 600;
+  --fw-bold: 700;
 
   --transition-speed: 0.3s;
 }
 
-/* ==========================================================================
-   3. RESET & BASE STYLES
-   ========================================================================== */
 * {
   box-sizing: border-box;
   margin: 0;
@@ -76,7 +73,6 @@ body {
   position: relative;
 }
 
-/* Custom Grid 1700px cho màn hình >= 1920px */
 @media (min-width: 1700px) {
   .container {
     max-width: 1700px !important;
@@ -95,7 +91,6 @@ ul {
   margin: 0;
 }
 
-/* Global Utilities */
 .cursor-pointer {
   cursor: pointer;
 }
@@ -103,9 +98,6 @@ ul {
   transition: all var(--transition-speed) ease;
 }
 
-/* ==========================================================================
-   4. GLOBAL TYPOGRAPHY CLASSES
-   ========================================================================== */
 h1,
 .h1 {
   font-size: var(--font-size-h1);

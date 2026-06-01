@@ -1,13 +1,8 @@
-/* ==========================================================================
-   HERO BANNERS COMPONENT
-   ========================================================================== */
-
 #banner-container {
   padding-top: 30px;
   padding-bottom: 30px;
 }
 
-/* --- Main Banner --- */
 .left-banner #main-banner .carousel-indicators [data-bs-target] {
   width: 30px;
   height: 4px;
@@ -80,7 +75,6 @@
   transform: scale(1.05);
 }
 
-/* --- Right Banners --- */
 .right-banner {
   display: flex;
   flex-direction: column;
@@ -88,7 +82,7 @@
 }
 
 .hero-side-item {
-  height: 48%; /* Chia không gian cho 2 khối */
+  height: 48%;
 }
 
 .right-banner .carousel-item .hero-side-caption {
@@ -116,7 +110,6 @@
   margin: 0;
 }
 
-/* --- Category Carousel --- */
 .category-container {
   padding-bottom: 50px;
 }
