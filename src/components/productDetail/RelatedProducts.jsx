@@ -2,7 +2,8 @@ import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Pagination } from "swiper/modules";
 import ProductCard from "../common/ProductCard";
-
+import "../../styles/layouts/product_detail_page.css";
+import "../../styles/components/showcase.css";
 import "swiper/css";
 import "swiper/css/pagination";
 

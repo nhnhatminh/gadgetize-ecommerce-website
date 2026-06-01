@@ -1,5 +1,8 @@
 import React from "react";
 import ProductCard from "../common/ProductCard";
+import "../../styles/layouts/home.css";
+import "../../styles/components/hero.css";
+import "../../styles/components/showcase.css";
 
 export default function FeaturedShowcase({
   products,

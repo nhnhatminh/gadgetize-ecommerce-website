@@ -1,6 +1,9 @@
 import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
+import "../../styles/layouts/home.css";
+import "../../styles/components/hero.css";
+import "../../styles/components/showcase.css";
 
 import "swiper/css";
 

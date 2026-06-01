@@ -1,4 +1,5 @@
 import React from "react";
+import "../../styles/layouts/checkout.css";
 
 export default function BillingShippingForm({
   emailOrPhone,

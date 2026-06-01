@@ -1,5 +1,6 @@
 import React from "react";
 import "../../styles/layouts/home.css";
+import "../../styles/components/footer.css";
 
 export default function Footer({ navigate }) {
   return (

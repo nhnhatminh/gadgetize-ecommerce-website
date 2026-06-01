@@ -1,4 +1,6 @@
 import React from "react";
+import "../../styles/layouts/product_detail_page.css";
+import "../../styles/components/showcase.css";
 
 export default function ProductDescriptionTabs({ activeTab, setActiveTab }) {
   return (

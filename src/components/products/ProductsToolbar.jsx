@@ -1,4 +1,5 @@
 import React from "react";
+import "../../styles/layouts/products_page.css";
 
 export default function ProductsToolbar({ productsCount, sortBy, setSortBy }) {
   return (

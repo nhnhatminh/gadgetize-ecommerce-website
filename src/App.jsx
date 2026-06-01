@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import Header from "./components/shared/Header";
 import Footer from "./components/shared/Footer";
-import Home from "./pages/Home";
-import Products from "./pages/Products";
-import ProductDetail from "./pages/ProductDetail";
-import Cart from "./pages/Cart";
-import Checkout from "./pages/Checkout";
-import Auth from "./pages/Auth";
+import Home from "./pages/Home/Home";
+import Products from "./pages/Shop/Products";
+import ProductDetail from "./pages/ProductDetail/ProductDetail";
+import Cart from "./pages/Cart/Cart";
+import Checkout from "./pages/Checkout/Checkout";
+import Auth from "./pages/Auth/Auth";
 
 export default function App() {
   const [currentPage, setCurrentPage] = useState("home");

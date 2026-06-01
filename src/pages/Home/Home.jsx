@@ -1,13 +1,13 @@
 import React, { useState } from "react";
-import HomeBanner from "../components/home/HomeBanner";
-import CategorySlider from "../components/home/CategorySlider";
-import FeaturedShowcase from "../components/home/FeaturedShowcase";
-import PopularGrid from "../components/home/PopularGrid";
-import BrandSlider from "../components/home/BrandSlider";
+import HomeBanner from "../../components/home/HomeBanner";
+import CategorySlider from "../../components/home/CategorySlider";
+import FeaturedShowcase from "../../components/home/FeaturedShowcase";
+import PopularGrid from "../../components/home/PopularGrid";
+import BrandSlider from "../../components/home/BrandSlider";
 
-import "../styles/layouts/home.css";
-import "../styles/components/hero.css";
-import "../styles/components/showcase.css";
+import "../../styles/layouts/home.css";
+import "../../styles/components/hero.css";
+import "../../styles/components/showcase.css";
 
 export default function Home({ navigate }) {
   const [activeTab, setActiveTab] = useState("all");

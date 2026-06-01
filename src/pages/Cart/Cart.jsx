@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import CartItemRow from "../../components/cart/CartItemRow";
 import CartTotals from "../../components/cart/CartTotals";
-import "../styles/layouts/cart.css";
+import "../../styles/layouts/cart.css";
 
 export default function Cart({ navigate }) {
   const [items, setItems] = useState([

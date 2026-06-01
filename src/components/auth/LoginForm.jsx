@@ -1,4 +1,5 @@
 import React from "react";
+import "../../styles/layouts/auth.css";
 
 export default function LoginForm({ loginForm, setLoginForm, onSubmit }) {
   return (
