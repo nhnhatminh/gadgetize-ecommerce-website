@@ -1,9 +1,68 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
+import LiveSearchDropdown from "./LiveSearchDropdown";
 import "../../styles/components/header.css";
 
 export default function Header({ navigate, currentPage }) {
   const [isCategoryOpen, setIsCategoryOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [showDropdown, setShowDropdown] = useState(false);
+  const searchRef = useRef(null);
+
+  const sampleProducts = [
+    {
+      id: 1,
+      name: "Tai Nghe Razer Electra",
+      image: "/images/pr-1.png",
+      newPrice: 1200000,
+    },
+    {
+      id: 2,
+      name: "Chuột Hyper Glide",
+      image: "/images/pr-2.png",
+      newPrice: 2450000,
+    },
+    {
+      id: 3,
+      name: "Màn Hình LCD Radiant View",
+      image: "/images/pr-3.png",
+      newPrice: 22500000,
+    },
+    {
+      id: 4,
+      name: "Laptop Gaming Nitro 5",
+      image: "/images/pr-4.png",
+      newPrice: 17000000,
+    },
+    {
+      id: 5,
+      name: "Điện thoại iPhone 14 Pro Max",
+      image: "/images/pr-5.png",
+      newPrice: 17500000,
+    },
+  ];
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (searchRef.current && !searchRef.current.contains(event.target)) {
+        setShowDropdown(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
+  const handleSearchChange = (e) => {
+    const value = e.target.value;
+    setSearchQuery(value);
+    setShowDropdown(value.trim() !== "");
+  };
+
+  const filteredProducts = sampleProducts.filter((product) =>
+    product.name.toLowerCase().includes(searchQuery.toLowerCase()),
+  );
 
   return (
     <header className="bg-white site-header">
@@ -32,7 +91,7 @@ export default function Header({ navigate, currentPage }) {
             </div>
 
             <div className="col-xl-6 col-lg-6 d-none d-lg-block">
-              <div className="header-search">
+              <div className="header-search" ref={searchRef}>
                 <div className="header-search-category">
                   Tất cả danh mục{" "}
                   <i className="fa-solid fa-angle-down ms-1"></i>
@@ -41,8 +100,20 @@ export default function Header({ navigate, currentPage }) {
                   type="text"
                   className="header-search-input"
                   placeholder="Tìm kiếm sản phẩm..."
+                  value={searchQuery}
+                  onChange={handleSearchChange}
+                  onFocus={() => {
+                    if (searchQuery.trim() !== "") {
+                      setShowDropdown(true);
+                    }
+                  }}
                 />
                 <button className="header-search-btn">Tìm kiếm</button>
+
+                <LiveSearchDropdown
+                  products={filteredProducts}
+                  isOpen={showDropdown}
+                />
               </div>
             </div>
 
