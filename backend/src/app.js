@@ -3,6 +3,8 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import pool from './config/database.js';
 import authRoutes from './routes/authRoutes.js';
+import authRoutes from "./routes/authRoutes.js";
+import errorMiddleware from "./middlewares/errorMiddleware.js";
 
 dotenv.config();
 
