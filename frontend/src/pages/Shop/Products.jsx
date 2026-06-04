@@ -1,207 +1,86 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import ProductCard from "../../components/common/ProductCard";
 import FilterSidebar from "../../components/products/FilterSidebar";
 import ProductsToolbar from "../../components/products/ProductsToolbar";
+import { productApi } from "../../api/productApi";
 import "../../styles/layouts/products_page.css";
 
 export default function Products({ navigate }) {
   const [priceRange, setPriceRange] = useState(30000000);
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [sortBy, setSortBy] = useState("default");
-
-  const categories = [
+  const [products, setProducts] = useState([]);
+  const [categories, setCategories] = useState([
     { id: "all", name: "Tất Cả Danh Mục" },
-    { id: "laptop", name: "Laptop & Máy Tính" },
-    { id: "phone", name: "Smartphone & Tablet" },
-    { id: "audio", name: "TV & Âm Thanh" },
-    { id: "accessories", name: "Tai Nghe & Phụ Kiện" },
-  ];
+  ]);
+  const [brands, setBrands] = useState([]);
 
-  const brands = ["Razer", "Logitech", "Apple", "Samsung", "ASUS"];
+  useEffect(() => {
+    const fetchMetadata = async () => {
+      try {
+        const [categoriesData, brandsData] = await Promise.all([
+          productApi.getCategories(),
+          productApi.getBrands(),
+        ]);
 
-  const productList = [
-    {
-      id: 1,
-      category: "accessories",
-      discount: 20,
-      image: "/images/pr-1.png",
-      name: "Tai Nghe Razer Electra",
-      description:
-        "Lorem ipsum dolor sit amet consectetur. Fermentum malesuada iaculis aliquet nunc turpis.",
-      rating: 5,
-      reviews: 1,
-      oldPrice: 1500000,
-      newPrice: 1200000,
-      bestseller: true,
-    },
-    {
-      id: 2,
-      category: "accessories",
-      discount: 2,
-      image: "/images/pr-2.png",
-      name: "Chuột Hyper Glide",
-      description:
-        "Lorem ipsum dolor sit amet consectetur. Fermentum malesuada iaculis aliquet nunc turpis.",
-      rating: 4,
-      reviews: 12,
-      oldPrice: 2500000,
-      newPrice: 2450000,
-      bestseller: false,
-    },
-    {
-      id: 3,
-      category: "audio",
-      discount: 9,
-      image: "/images/pr-3.png",
-      name: "Màn Hình LCD Radiant View",
-      description:
-        "Lorem ipsum dolor sit amet consectetur. Fermentum malesuada iaculis aliquet nunc turpis.",
-      rating: 5,
-      reviews: 8,
-      oldPrice: 24500000,
-      newPrice: 22500000,
-      bestseller: true,
-    },
-    {
-      id: 4,
-      category: "laptop",
-      discount: 15,
-      image: "/images/pr-4.png",
-      name: "Laptop Gaming Nitro 5",
-      description:
-        "Sản phẩm laptop cấu hình cao dành riêng cho giới game thủ chuyên nghiệp.",
-      rating: 5,
-      reviews: 3,
-      oldPrice: 20000000,
-      newPrice: 17000000,
-      bestseller: true,
-    },
-    {
-      id: 5,
-      category: "phone",
-      discount: 50,
-      image: "/images/pr-5.png",
-      name: "Điện thoại iPhone 14 Pro Max",
-      description:
-        "Lorem ipsum dolor sit amet consectetur. Fermentum malesuada iaculis aliquet nunc turpis.",
-      rating: 5,
-      reviews: 14,
-      oldPrice: 34000000,
-      newPrice: 17500000,
-      bestseller: true,
-    },
-    {
-      id: 6,
-      category: "accessories",
-      discount: 14,
-      image: "/images/pr-6.png",
-      name: "Tai Nghe Pure Bass Pro",
-      description:
-        "Lorem ipsum dolor sit amet consectetur. Fermentum malesuada iaculis aliquet nunc turpis.",
-      rating: 4,
-      reviews: 9,
-      oldPrice: 2100000,
-      newPrice: 1800000,
-      bestseller: false,
-    },
-    {
-      id: 7,
-      category: "audio",
-      discount: 9,
-      image: "/images/pr-7.png",
-      name: "Màn Hình LCD CrystalView",
-      description:
-        "Lorem ipsum dolor sit amet consectetur. Fermentum malesuada iaculis aliquet nunc turpis.",
-      rating: 5,
-      reviews: 21,
-      oldPrice: 24500000,
-      newPrice: 22500000,
-      bestseller: false,
-    },
-    {
-      id: 8,
-      category: "laptop",
-      discount: 12,
-      image: "/images/pr-8.png",
-      name: "UltraTech Note X",
-      description:
-        "Lorem ipsum dolor sit amet consectetur. Fermentum malesuada iaculis aliquet nunc turpis.",
-      rating: 4,
-      reviews: 5,
-      oldPrice: 22500000,
-      newPrice: 20000000,
-      bestseller: false,
-    },
-    {
-      id: 9,
-      category: "accessories",
-      discount: 46,
-      image: "/images/pr-9.png",
-      name: "Bàn Phím Silent Touch Pro",
-      description:
-        "Lorem ipsum dolor sit amet consectetur. Fermentum malesuada iaculis aliquet nunc turpis.",
-      rating: 5,
-      reviews: 7,
-      oldPrice: 1650000,
-      newPrice: 890000,
-      bestseller: true,
-    },
-    {
-      id: 10,
-      category: "accessories",
-      discount: 30,
-      image: "/images/pr-10.png",
-      name: "Tai nghe Airpod Pro 3",
-      description:
-        "Lorem ipsum dolor sit amet consectetur. Fermentum malesuada iaculis aliquet nunc turpis.",
-      rating: 5,
-      reviews: 18,
-      oldPrice: 4700000,
-      newPrice: 3297000,
-      bestseller: true,
-    },
-    {
-      id: 11,
-      category: "phone",
-      discount: 10,
-      image: "/images/cate-3.png",
-      name: "Nexus Mobile Pro 256GB",
-      description:
-        "Lorem ipsum dolor sit amet consectetur. Fermentum malesuada iaculis aliquet nunc turpis.",
-      rating: 4,
-      reviews: 32,
-      oldPrice: 15000000,
-      newPrice: 13500000,
-      bestseller: false,
-    },
-    {
-      id: 12,
-      category: "audio",
-      discount: 15,
-      image: "/images/cate-5.png",
-      name: "Loa Bluetooth SoundWave",
-      description:
-        "Lorem ipsum dolor sit amet consectetur. Fermentum malesuada iaculis aliquet nunc turpis.",
-      rating: 5,
-      reviews: 4,
-      oldPrice: 4500000,
-      newPrice: 3825000,
-      bestseller: false,
-    },
-  ];
+        setCategories([
+          { id: "all", name: "Tất Cả Danh Mục" },
+          ...categoriesData.map((c) => ({ id: c.slug, name: c.name })),
+        ]);
 
-  const filteredProducts = productList
-    .filter(
-      (p) => selectedCategory === "all" || p.category === selectedCategory,
-    )
-    .filter((p) => p.newPrice <= priceRange)
-    .sort((a, b) => {
-      if (sortBy === "price-low") return a.newPrice - b.newPrice;
-      if (sortBy === "price-high") return b.newPrice - a.newPrice;
-      if (sortBy === "bestseller")
-        return (b.bestseller ? 1 : 0) - (a.bestseller ? 1 : 0);
-      return 0;
-    });
+        setBrands(brandsData.map((b) => b.name));
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchMetadata();
+  }, []);
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const params = {
+          maxPrice: priceRange,
+          limit: 40,
+        };
+
+        if (selectedCategory !== "all") {
+          params.category = selectedCategory;
+        }
+
+        if (sortBy === "price-low") {
+          params.sort = "price_asc";
+        } else if (sortBy === "price-high") {
+          params.sort = "price_desc";
+        } else if (sortBy === "bestseller") {
+          params.sort = "rating";
+        } else {
+          params.sort = "newest";
+        }
+
+        const data = await productApi.getProducts(params);
+
+        const formatted = data.products.map((p) => ({
+          id: p.id,
+          name: p.name,
+          image: p.image_url || "/images/no-image.png",
+          discount: parseInt(p.discount_percent || 0, 10),
+          oldPrice: parseFloat(p.base_price),
+          newPrice:
+            (parseFloat(p.base_price) + parseFloat(p.price_modifier || 0)) *
+            (1 - parseFloat(p.discount_percent || 0) / 100),
+          rating: parseFloat(p.rating || 5),
+          reviews: parseInt(p.review_count || 0, 10),
+          bestseller: parseFloat(p.rating) >= 4.5,
+        }));
+
+        setProducts(formatted);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchProducts();
+  }, [selectedCategory, priceRange, sortBy]);
 
   return (
     <div className="products-page-wrapper">
@@ -244,14 +123,14 @@ export default function Products({ navigate }) {
 
           <main className="col-lg-9">
             <ProductsToolbar
-              productsCount={filteredProducts.length}
+              productsCount={products.length}
               sortBy={sortBy}
               setSortBy={setSortBy}
             />
 
             <div className="row g-3">
-              {filteredProducts.length > 0 ? (
-                filteredProducts.map((prod) => (
+              {products.length > 0 ? (
+                products.map((prod) => (
                   <div
                     className="col-xxl-2 col-xl-3 col-md-4 col-sm-6"
                     key={prod.id}
