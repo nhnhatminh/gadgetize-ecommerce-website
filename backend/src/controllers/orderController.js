@@ -151,3 +151,58 @@ export const createOrder = async (req, res, next) => {
     client.release();
   }
 };
+
+export const getOrders = async (req, res, next) => {
+  try {
+    const userId = req.user.id;
+    const result = await pool.query(
+      `SELECT o.id, o.subtotal, o.discount_amount, o.shipping_fee, o.total_amount, o.status, o.payment_method, o.created_at,
+       c.code AS coupon_code
+       FROM orders o
+       LEFT JOIN coupons c ON o.coupon_id = c.id
+       WHERE o.user_id = $1
+       ORDER BY o.created_at DESC`,
+      [userId]
+    );
+    res.status(200).json(result.rows);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const getOrderById = async (req, res, next) => {
+  try {
+    const userId = req.user.id;
+    const { id } = req.params;
+
+    const orderResult = await pool.query(
+      `SELECT o.id, o.subtotal, o.discount_amount, o.shipping_fee, o.total_amount, o.status, o.shipping_address, o.payment_method, o.created_at,
+       c.code AS coupon_code
+       FROM orders o
+       LEFT JOIN coupons c ON o.coupon_id = c.id
+       WHERE o.id = $1 AND o.user_id = $2`,
+      [id, userId]
+    );
+
+    if (orderResult.rows.length === 0) {
+      return res.status(404).json({ message: "Order not found" });
+    }
+
+    const itemsResult = await pool.query(
+      `SELECT oi.id, oi.quantity, oi.price, v.sku, v.color_name, p.name AS product_name, img.image_url
+       FROM order_items oi
+       JOIN product_variants v ON oi.variant_id = v.id
+       JOIN products p ON v.product_id = p.id
+       LEFT JOIN product_images img ON img.variant_id = v.id AND img.is_primary = TRUE
+       WHERE oi.order_id = $1`,
+      [id]
+    );
+
+    res.status(200).json({
+      order: orderResult.rows[0],
+      items: itemsResult.rows
+    });
+  } catch (error) {
+    next(error);
+  }
+};
