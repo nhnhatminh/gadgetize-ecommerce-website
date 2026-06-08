@@ -6,29 +6,6 @@ import "../../styles/layouts/auth.css";
 
 export default function Auth({ navigate }) {
   const [activeTab, setActiveTab] = useState("login");
-  const [loginForm, setLoginForm] = useState({
-    emailOrPhone: "",
-    password: "",
-    rememberMe: false,
-  });
-  const [registerForm, setRegisterForm] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    phone: "",
-    password: "",
-    agreeTerms: false,
-  });
-
-  const handleLoginSubmit = (e) => {
-    e.preventDefault();
-    navigate("home");
-  };
-
-  const handleRegisterSubmit = (e) => {
-    e.preventDefault();
-    setActiveTab("login");
-  };
 
   return (
     <div className="auth-page-container d-flex align-items-center justify-content-center min-vh-100">
@@ -76,19 +53,11 @@ export default function Auth({ navigate }) {
         <div className="tab-content">
           {activeTab === "login" ? (
             <div className="tab-pane fade show active">
-              <LoginForm
-                loginForm={loginForm}
-                setLoginForm={setLoginForm}
-                onSubmit={handleLoginSubmit}
-              />
+              <LoginForm navigate={navigate} />
             </div>
           ) : (
             <div className="tab-pane fade show active">
-              <RegisterForm
-                registerForm={registerForm}
-                setRegisterForm={setRegisterForm}
-                onSubmit={handleRegisterSubmit}
-              />
+              <RegisterForm onRegisterSuccess={() => setActiveTab("login")} />
             </div>
           )}
         </div>

@@ -1,8 +1,12 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useContext } from "react";
 import LiveSearchDropdown from "./LiveSearchDropdown";
+import { AuthContext } from "../../context/AuthContext";
+import { CartContext } from "../../context/CartContext";
 import "../../styles/components/header.css";
 
 export default function Header({ navigate, currentPage }) {
+  const { user, logout } = useContext(AuthContext);
+  const { cartItems } = useContext(CartContext);
   const [isCategoryOpen, setIsCategoryOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
@@ -64,6 +68,15 @@ export default function Header({ navigate, currentPage }) {
     product.name.toLowerCase().includes(searchQuery.toLowerCase()),
   );
 
+  const totalCartQuantity = cartItems.reduce(
+    (acc, item) => acc + item.quantity,
+    0,
+  );
+  const totalCartPrice = cartItems.reduce(
+    (acc, item) => acc + parseFloat(item.final_unit_price) * item.quantity,
+    0,
+  );
+
   return (
     <header className="bg-white site-header">
       <div className="header-topbar">
@@ -120,21 +133,21 @@ export default function Header({ navigate, currentPage }) {
             <div className="col-xl-3 col-lg-3 col-md-8 col-6 d-flex justify-content-end align-items-center gap-4">
               <div
                 className="header-action-item d-none d-sm-flex"
-                onClick={() => navigate("auth")}
+                onClick={() => (user ? logout() : navigate("auth"))}
               >
                 <div className="header-action-icon">
                   <i className="fa-regular fa-user"></i>
                 </div>
                 <div className="header-action-text">
-                  <span>Đăng nhập</span>
-                  <strong>Tài khoản</strong>
+                  <span>{user ? `Hi, ${user.firstName}` : "Đăng nhập"}</span>
+                  <strong>{user ? "Đăng xuất" : "Tài khoản"}</strong>
                 </div>
               </div>
 
               <div className="header-action-item">
                 <div className="header-action-icon">
                   <i className="fa-regular fa-heart"></i>
-                  <span className="header-action-badge">2</span>
+                  <span className="header-action-badge">0</span>
                 </div>
               </div>
 
@@ -144,11 +157,13 @@ export default function Header({ navigate, currentPage }) {
               >
                 <div className="header-action-icon">
                   <i className="fa-solid fa-cart-shopping"></i>
-                  <span className="header-action-badge">5</span>
+                  <span className="header-action-badge">
+                    {totalCartQuantity}
+                  </span>
                 </div>
                 <div className="header-action-text d-none d-sm-block">
                   <span>Giỏ hàng</span>
-                  <strong>32tr560</strong>
+                  <strong>{totalCartPrice.toLocaleString()} VND</strong>
                 </div>
               </div>
 

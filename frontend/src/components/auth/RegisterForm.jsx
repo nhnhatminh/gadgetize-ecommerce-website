@@ -1,13 +1,43 @@
-import React from "react";
+import React, { useState, useContext } from "react";
+import { AuthContext } from "../../context/AuthContext";
 import "../../styles/layouts/auth.css";
 
-export default function RegisterForm({
-  registerForm,
-  setRegisterForm,
-  onSubmit,
-}) {
+export default function RegisterForm({ onRegisterSuccess }) {
+  const { register } = useContext(AuthContext);
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
+
+  const handleFormSubmit = async (e) => {
+    e.preventDefault();
+    setError("");
+    setSuccess("");
+    try {
+      await register(firstName, lastName, email, password, phone);
+      setSuccess("Đăng ký tài khoản thành công!");
+      if (onRegisterSuccess) {
+        setTimeout(() => {
+          onRegisterSuccess();
+        }, 1500);
+      }
+    } catch (err) {
+      setError(
+        err.response?.data?.message || "Đăng ký thất bại. Vui lòng thử lại",
+      );
+    }
+  };
+
   return (
-    <form className="auth-form" onSubmit={onSubmit}>
+    <form className="auth-form" onSubmit={handleFormSubmit}>
+      {error && <div className="alert alert-danger py-2 small">{error}</div>}
+      {success && (
+        <div className="alert alert-success py-2 small">{success}</div>
+      )}
+
       <div className="row g-3 mb-3">
         <div className="col-sm-6">
           <label className="form-label text-dark fw-medium">Họ</label>
@@ -15,13 +45,8 @@ export default function RegisterForm({
             type="text"
             className="form-control py-3 text-p"
             placeholder="Nhập họ"
-            value={registerForm.lastName}
-            onChange={(e) =>
-              setRegisterForm({
-                ...registerForm,
-                lastName: e.target.value,
-              })
-            }
+            value={lastName}
+            onChange={(e) => setLastName(e.target.value)}
             required
           />
         </div>
@@ -31,13 +56,8 @@ export default function RegisterForm({
             type="text"
             className="form-control py-3 text-p"
             placeholder="Nhập tên"
-            value={registerForm.firstName}
-            onChange={(e) =>
-              setRegisterForm({
-                ...registerForm,
-                firstName: e.target.value,
-              })
-            }
+            value={firstName}
+            onChange={(e) => setFirstName(e.target.value)}
             required
           />
         </div>
@@ -48,13 +68,8 @@ export default function RegisterForm({
           type="email"
           className="form-control py-3 text-p"
           placeholder="example@domain.com"
-          value={registerForm.email}
-          onChange={(e) =>
-            setRegisterForm({
-              ...registerForm,
-              email: e.target.value,
-            })
-          }
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
           required
         />
       </div>
@@ -64,13 +79,8 @@ export default function RegisterForm({
           type="text"
           className="form-control py-3 text-p"
           placeholder="Nhập số điện thoại"
-          value={registerForm.phone}
-          onChange={(e) =>
-            setRegisterForm({
-              ...registerForm,
-              phone: e.target.value,
-            })
-          }
+          value={phone}
+          onChange={(e) => setPhone(e.target.value)}
           required
         />
       </div>
@@ -80,13 +90,8 @@ export default function RegisterForm({
           type="password"
           className="form-control py-3 text-p"
           placeholder="Tối thiểu 6 ký tự"
-          value={registerForm.password}
-          onChange={(e) =>
-            setRegisterForm({
-              ...registerForm,
-              password: e.target.value,
-            })
-          }
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
           required
         />
       </div>
@@ -95,13 +100,6 @@ export default function RegisterForm({
           type="checkbox"
           className="form-check-input m-0"
           id="agreeTerms"
-          checked={registerForm.agreeTerms}
-          onChange={(e) =>
-            setRegisterForm({
-              ...registerForm,
-              agreeTerms: e.target.checked,
-            })
-          }
           required
         />
         <label

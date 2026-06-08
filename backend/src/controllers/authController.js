@@ -79,7 +79,7 @@ export const getMe = async (req, res, next) => {
   try {
     const userId = req.user.id;
     const result = await pool.query(
-      "SELECT id, first_name, last_name, email, phone, role, created_at FROM users WHERE id = $1",
+      "SELECT id, first_name AS \"firstName\", last_name AS \"lastName\", email, phone, role, created_at FROM users WHERE id = $1",
       [userId]
     );
 
