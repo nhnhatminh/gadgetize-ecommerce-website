@@ -1,182 +1,182 @@
-import React, { useState } from "react";
-import CartItemRow from "../../components/cart/CartItemRow";
-import CartTotals from "../../components/cart/CartTotals";
+import React, { useContext } from "react";
+import { CartContext } from "../../context/CartContext";
 import "../../styles/layouts/cart.css";
 
 export default function Cart({ navigate }) {
-  const [items, setItems] = useState([
-    {
-      id: 1,
-      name: "iPad Standard Plus",
-      color: "Đen",
-      price: 2450000,
-      oldPrice: 2475000,
-      image: "/images/pr-4.png",
-      quantity: 1,
-    },
-    {
-      id: 2,
-      name: "iPad Standard Plus",
-      color: "Đen",
-      price: 2450000,
-      oldPrice: 2475000,
-      image: "/images/pr-4.png",
-      quantity: 1,
-    },
-    {
-      id: 3,
-      name: "iPad Standard Plus",
-      color: "Đen",
-      price: 2450000,
-      oldPrice: 2475000,
-      image: "/images/pr-4.png",
-      quantity: 1,
-    },
-  ]);
-  const [note, setNote] = useState("");
-  const [promoCode, setPromoCode] = useState("");
-  const [shipping, setShipping] = useState({
-    province: "",
-    district: "",
-    ward: "",
-    address: "",
-  });
-  const [isAgreed, setIsAgreed] = useState(false);
+  const { cartItems, loading, updateCartItem, removeFromCart, clearCart } =
+    useContext(CartContext);
 
-  const handleQuantityChange = (id, type) => {
-    setItems(
-      items.map((item) => {
-        if (item.id === id) {
-          const newQty =
-            type === "increase" ? item.quantity + 1 : item.quantity - 1;
-          return { ...item, quantity: newQty > 0 ? newQty : 1 };
-        }
-        return item;
-      }),
+  const calculateSubtotal = () => {
+    return cartItems.reduce(
+      (total, item) =>
+        total + parseFloat(item.final_unit_price) * item.quantity,
+      0,
     );
   };
 
-  const handleRemoveItem = (id) => {
-    setItems(items.filter((item) => item.id !== id));
-  };
-
-  const subtotal = items.reduce(
-    (sum, item) => sum + item.price * item.quantity,
-    0,
-  );
-  const savings = items.length > 0 ? 75000 : 0;
-  const shippingFee = 0;
-  const finalTotal = subtotal - savings + shippingFee;
+  if (loading) {
+    return (
+      <div className="cart-loading-container text-center py-5">
+        <div className="spinner-border text-primary" role="status"></div>
+        <p className="text-muted mt-2">Loading your shopping cart...</p>
+      </div>
+    );
+  }
 
   return (
-    <div className="cart-page-wrapper py-5">
-      <section
-        className="page-banner position-relative py-5 overflow-hidden mb-5"
-        style={{ backgroundColor: "var(--light-grey)" }}
-      >
-        <div className="container">
-          <div
-            className="row align-items-center justify-content-center"
-            style={{ minHeight: "180px" }}
+    <div className="cart-page-wrapper container py-5">
+      <h1 className="fw-bold text-dark mb-4">Giỏ Hàng Của Bạn</h1>
+
+      {cartItems.length === 0 ? (
+        <div className="empty-cart-wrapper text-center py-5">
+          <p className="text-muted fs-5">Giỏ hàng của bạn đang trống.</p>
+          <button
+            className="btn btn-primary px-4 py-2 mt-2"
+            onClick={() => navigate("shop")}
           >
-            <div className="col-12 text-center z-2">
-              <h1 className="fw-bold text-dark mb-0">Giỏ Hàng</h1>
-            </div>
-            <img
-              src="/images/breadcome-pr.png"
-              alt="Tablet"
-              className="position-absolute start-0 bottom-0 d-none d-lg-block w-auto h-100 p-3 z-1"
-            />
-            <img
-              src="/images/pr-5.png"
-              alt="Phones"
-              className="position-absolute end-0 bottom-0 d-none d-lg-block w-auto h-100 p-3 z-1"
-            />
-          </div>
+            Tiếp Tục Mua Sắm
+          </button>
         </div>
-      </section>
-
-      <div className="container">
+      ) : (
         <div className="row g-4">
-          <div className="col-lg-8">
-            <div className="cart-items-wrapper bg-white rounded-4 p-4 p-lg-5 shadow-sm mb-4">
-              <div className="cart-header d-none d-md-flex align-items-center pb-3 border-bottom mb-4">
-                <div className="col-5 fw-bold text-dark fs-6">Sản Phẩm</div>
-                <div className="col-3 fw-bold text-dark fs-6 text-center">
-                  Số Lượng
-                </div>
-                <div className="col-2 fw-bold text-dark fs-6 text-center">
-                  Tạm Tính
-                </div>
-                <div className="col-2 fw-bold text-dark fs-6 text-end">Xóa</div>
-              </div>
-
-              <div className="cart-item-list">
-                {items.length > 0 ? (
-                  items.map((item) => (
-                    <CartItemRow
-                      key={item.id}
-                      item={item}
-                      onQuantityChange={handleQuantityChange}
-                      onRemoveItem={handleRemoveItem}
-                    />
-                  ))
-                ) : (
-                  <div className="text-center py-5">
-                    <p className="text-muted mb-0 fs-6">
-                      Giỏ hàng của bạn đang trống.
-                    </p>
-                  </div>
-                )}
-              </div>
-
-              <div className="cart-actions d-flex flex-wrap justify-content-between mt-4 pt-2 gap-3">
-                <button
-                  className="btn btn-cart-action fw-bold px-4 py-2 rounded-3 text-white"
-                  onClick={() => navigate("products")}
-                >
-                  Tiếp Tục Mua Sắm
-                </button>
-                <button
-                  className="btn btn-cart-action fw-bold px-4 py-2 rounded-3 text-white"
-                  disabled={items.length === 0}
-                >
-                  Cập Nhật Giỏ Hàng
-                </button>
-              </div>
+          <main className="col-lg-8">
+            <div className="table-responsive">
+              <table className="table cart-table align-middle">
+                <thead>
+                  <tr>
+                    <th>Sản phẩm</th>
+                    <th>Giá</th>
+                    <th>Số lượng</th>
+                    <th>Tổng tiền</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {cartItems.map((item) => (
+                    <tr key={item.id}>
+                      <td>
+                        <div className="d-flex align-items-center gap-3">
+                          <img
+                            src={item.image_url || "/images/no-image.png"}
+                            alt={item.name}
+                            className="cart-item-imgimg"
+                            style={{
+                              width: "80px",
+                              height: "80px",
+                              objectFit: "cover",
+                            }}
+                          />
+                          <div>
+                            <h5 className="mb-1 text-dark fw-semibold">
+                              {item.name}
+                            </h5>
+                            <p className="mb-0 text-muted small">
+                              Color: {item.color_name} | SKU: {item.sku}
+                            </p>
+                          </div>
+                        </div>
+                      </td>
+                      <td>
+                        <span className="text-dark">
+                          {parseFloat(item.final_unit_price).toLocaleString()}{" "}
+                          VND
+                        </span>
+                      </td>
+                      <td>
+                        <div
+                          className="input-group input-group-sm cart-qty-selector"
+                          style={{ width: "100px" }}
+                        >
+                          <button
+                            className="btn btn-outline-secondary"
+                            type="button"
+                            onClick={() =>
+                              updateCartItem(item.id, item.quantity - 1)
+                            }
+                          >
+                            -
+                          </button>
+                          <input
+                            type="text"
+                            className="form-control text-center"
+                            value={item.quantity}
+                            readOnly
+                          />
+                          <button
+                            className="btn btn-outline-secondary"
+                            type="button"
+                            onClick={() =>
+                              updateCartItem(item.id, item.quantity + 1)
+                            }
+                          >
+                            +
+                          </button>
+                        </div>
+                      </td>
+                      <td>
+                        <span className="text-primary fw-bold">
+                          {(
+                            parseFloat(item.final_unit_price) * item.quantity
+                          ).toLocaleString()}{" "}
+                          VND
+                        </span>
+                      </td>
+                      <td>
+                        <button
+                          className="btn btn-link text-danger p-0"
+                          onClick={() => removeFromCart(item.id)}
+                        >
+                          Xóa
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             </div>
 
-            <div className="cart-note-wrapper mt-4">
-              <h5 className="fw-bold mb-3 text-dark">
-                Thêm Ghi Chú Cho Đơn Hàng
-              </h5>
-              <textarea
-                className="form-control bg-white border-0 rounded-4 p-4 shadow-sm"
-                rows="5"
-                placeholder="Chúng tôi có thể hỗ trợ gì cho bạn?"
-                value={note}
-                onChange={(e) => setNote(e.target.value)}
-              ></textarea>
+            <div className="d-flex justify-content-between mt-3">
+              <button className="btn btn-outline-danger" onClick={clearCart}>
+                Xóa Toàn Bộ Giỏ Hàng
+              </button>
+              <button
+                className="btn btn-outline-secondary"
+                onClick={() => navigate("shop")}
+              >
+                Tiếp Tục Mua Sắm
+              </button>
             </div>
-          </div>
+          </main>
 
-          <div className="col-lg-4">
-            <CartTotals
-              subtotal={subtotal}
-              savings={savings}
-              finalTotal={finalTotal}
-              shipping={shipping}
-              setShipping={setShipping}
-              promoCode={promoCode}
-              setPromoCode={setPromoCode}
-              isAgreed={isAgreed}
-              setIsAgreed={setIsAgreed}
-              itemsLength={items.length}
-              navigate={navigate}
-            />
-          </div>
+          <aside className="col-lg-4">
+            <div className="cart-summary-box p-4 border rounded bg-light">
+              <h3 className="fw-bold mb-4">Tóm tắt đơn hàng</h3>
+              <div className="d-flex justify-content-between mb-3 border-bottom pb-2">
+                <span className="text-muted">Tạm tính:</span>
+                <span className="text-dark fw-semibold">
+                  {calculateSubtotal().toLocaleString()} VND
+                </span>
+              </div>
+              <div className="d-flex justify-content-between mb-4">
+                <span className="text-muted">Vận chuyển:</span>
+                <span className="text-success fw-medium">Miễn phí</span>
+              </div>
+              <div className="d-flex justify-content-between mb-4 pt-2 border-top">
+                <span className="fs-5 fw-bold">Tổng cộng:</span>
+                <span className="fs-5 fw-bold text-primary">
+                  {calculateSubtotal().toLocaleString()} VND
+                </span>
+              </div>
+              <button
+                className="btn btn-primary w-100 py-3 fw-bold"
+                onClick={() => navigate("checkout")}
+              >
+                Tiến Hành Thanh Toán
+              </button>
+            </div>
+          </aside>
         </div>
-      </div>
+      )}
     </div>
   );
 }
