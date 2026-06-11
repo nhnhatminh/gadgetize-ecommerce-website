@@ -8,7 +8,7 @@ import { CartContext } from "../../context/CartContext";
 import "../../styles/layouts/product_detail_page.css";
 import "../../styles/components/showcase.css";
 
-export default function ProductDetail({ navigate }) {
+export default function ProductDetail({ navigate, productSlug }) {
   const { addToCart } = useContext(CartContext);
   const [quantity, setQuantity] = useState(1);
   const [selectedColor, setSelectedColor] = useState("");
@@ -16,13 +16,17 @@ export default function ProductDetail({ navigate }) {
   const [currentProduct, setCurrentProduct] = useState(null);
   const [relatedProducts, setRelatedProducts] = useState([]);
   const [isAdding, setIsAdding] = useState(false);
+  const [mainImage, setMainImage] = useState("");
 
   useEffect(() => {
     const fetchProductDetail = async () => {
       try {
-        const data = await productApi.getProducts({ limit: 10 });
+        const data = await productApi.getProducts({ limit: 40 });
         if (data.products.length > 0) {
-          const p = data.products[0];
+          const p =
+            data.products.find((item) => item.slug === productSlug) ||
+            data.products[0];
+
           setCurrentProduct({
             id: p.id,
             variantId: p.variant_id,
@@ -43,25 +47,32 @@ export default function ProductDetail({ navigate }) {
               p.image_url || "/images/pr-1.png",
               "/images/pr-2.png",
               "/images/pr-3.png",
+              "/images/pr-4.png",
+              "/images/pr-5.png",
             ],
           });
+          setMainImage(p.image_url || "/images/pr-1.png");
           setSelectedColor(p.color_name || "Black");
 
-          const formattedRelated = data.products.slice(1).map((item) => ({
-            id: item.id,
-            variantId: item.variant_id,
-            name: item.name,
-            image: item.image_url || "/images/no-image.png",
-            description: item.description,
-            discount: parseInt(item.discount_percent || 0, 10),
-            oldPrice: parseFloat(item.base_price),
-            newPrice:
-              (parseFloat(item.base_price) +
-                parseFloat(item.price_modifier || 0)) *
-              (1 - parseFloat(item.discount_percent || 0) / 100),
-            rating: parseFloat(item.rating || 5),
-            reviews: parseInt(item.review_count || 0, 10),
-          }));
+          const formattedRelated = data.products
+            .filter((item) => item.id !== p.id)
+            .slice(0, 6)
+            .map((item) => ({
+              id: item.id,
+              variantId: item.variant_id,
+              slug: item.slug,
+              name: item.name,
+              image: item.image_url || "/images/no-image.png",
+              description: item.description,
+              discount: parseInt(item.discount_percent || 0, 10),
+              oldPrice: parseFloat(item.base_price),
+              newPrice:
+                (parseFloat(item.base_price) +
+                  parseFloat(item.price_modifier || 0)) *
+                (1 - parseFloat(item.discount_percent || 0) / 100),
+              rating: parseFloat(item.rating || 5),
+              reviews: parseInt(item.review_count || 0, 10),
+            }));
           setRelatedProducts(formattedRelated);
         }
       } catch (error) {
@@ -69,7 +80,7 @@ export default function ProductDetail({ navigate }) {
       }
     };
     fetchProductDetail();
-  }, []);
+  }, [productSlug]);
 
   const handleQuantityChange = (type) => {
     if (type === "decrease" && quantity > 1) {
@@ -82,14 +93,6 @@ export default function ProductDetail({ navigate }) {
   const handleAddToCart = async () => {
     if (!currentProduct || isAdding) return;
     setIsAdding(true);
-    const testPayload = {
-      variantId: currentProduct.variantId,
-      quantity: quantity,
-    };
-    console.log(
-      "Trigger AddToCart from ProductDetail. Payload JSON:",
-      JSON.stringify(testPayload),
-    );
     try {
       await addToCart(currentProduct.variantId, quantity);
     } catch (error) {
@@ -139,8 +142,8 @@ export default function ProductDetail({ navigate }) {
             <div className="col-lg-6">
               <ProductGallery
                 images={currentProduct.images}
-                mainImage={currentProduct.images[0]}
-                setMainImage={() => {}}
+                mainImage={mainImage}
+                setMainImage={setMainImage}
                 productName={currentProduct.name}
               />
             </div>
@@ -164,12 +167,15 @@ export default function ProductDetail({ navigate }) {
               <ProductDescriptionTabs
                 activeTab={activeTab}
                 setActiveTab={setActiveTab}
-                productImage={currentProduct.images[0]}
+                productImage={mainImage}
               />
             </div>
           </div>
 
-          <RelatedProducts relatedProducts={relatedProducts} />
+          <RelatedProducts
+            relatedProducts={relatedProducts}
+            navigate={navigate}
+          />
         </div>
       </main>
     </div>

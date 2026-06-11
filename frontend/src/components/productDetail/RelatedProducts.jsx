@@ -7,7 +7,7 @@ import "../../styles/components/showcase.css";
 import "swiper/css";
 import "swiper/css/pagination";
 
-export default function RelatedProducts({ relatedProducts }) {
+export default function RelatedProducts({ relatedProducts, navigate }) {
   return (
     <div className="row mt-5">
       <div className="col-12">
@@ -29,7 +29,10 @@ export default function RelatedProducts({ relatedProducts }) {
             className="related-products-swiper"
           >
             {relatedProducts.map((prod) => (
-              <SwiperSlide key={prod.id}>
+              <SwiperSlide
+                key={prod.id}
+                onClick={() => navigate("product-detail", prod.slug)}
+              >
                 <ProductCard product={prod} layoutMode="vertical" />
               </SwiperSlide>
             ))}

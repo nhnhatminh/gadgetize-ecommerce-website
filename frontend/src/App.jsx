@@ -10,33 +10,46 @@ import Auth from "./pages/Auth/Auth";
 
 export default function App() {
   const [currentPage, setCurrentPage] = useState("home");
+  const [selectedProductSlug, setSelectedProductSlug] = useState(null);
+
+  const navigateToPage = (page, slug = null) => {
+    if (slug) {
+      setSelectedProductSlug(slug);
+    }
+    setCurrentPage(page);
+  };
 
   const renderPage = () => {
     switch (currentPage) {
       case "home":
-        return <Home navigate={setCurrentPage} />;
+        return <Home navigate={navigateToPage} />;
       case "products":
-        return <Products navigate={setCurrentPage} />;
+        return <Products navigate={navigateToPage} />;
       case "product-detail":
-        return <ProductDetail navigate={setCurrentPage} />;
+        return (
+          <ProductDetail
+            navigate={navigateToPage}
+            productSlug={selectedProductSlug}
+          />
+        );
       case "cart":
-        return <Cart navigate={setCurrentPage} />;
+        return <Cart navigate={navigateToPage} />;
       case "checkout":
-        return <Checkout navigate={setCurrentPage} />;
+        return <Checkout navigate={navigateToPage} />;
       case "auth":
-        return <Auth navigate={setCurrentPage} />;
+        return <Auth navigate={navigateToPage} />;
       default:
-        return <Home navigate={setCurrentPage} />;
+        return <Home navigate={navigateToPage} />;
     }
   };
 
   return (
     <div className="app-container">
       {currentPage !== "checkout" && (
-        <Header navigate={setCurrentPage} currentPage={currentPage} />
+        <Header navigate={navigateToPage} currentPage={currentPage} />
       )}
       <main>{renderPage()}</main>
-      {currentPage !== "checkout" && <Footer navigate={setCurrentPage} />}
+      {currentPage !== "checkout" && <Footer navigate={navigateToPage} />}
     </div>
   );
 }

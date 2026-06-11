@@ -23,6 +23,7 @@ export default function PopularGrid({
         const formatted = data.products.map((p) => ({
           id: p.id,
           variantId: p.variant_id,
+          slug: p.slug,
           name: p.name,
           image: p.image_url || "/images/no-image.png",
           description: p.description,
@@ -70,7 +71,7 @@ export default function PopularGrid({
             <div
               className="col-xl-2 col-lg-3 col-md-4 col-sm-6"
               key={prod.id}
-              onClick={() => navigate("product-detail")}
+              onClick={() => navigate("product-detail", prod.slug)}
             >
               <ProductCard product={prod} layoutMode="vertical" />
             </div>

@@ -13,15 +13,23 @@ export default function ProductGallery({
   productName,
 }) {
   return (
-    <div className="gallery-wrapper bg-white rounded-4 p-4 p-lg-5 h-100 d-flex flex-column">
-      <div className="product-gallery-main flex-grow-1 d-flex align-items-center justify-content-center mb-4">
-        <img src={mainImage} alt={productName} className="img-fluid w-75" />
+    <div className="gallery-wrapper bg-white rounded-4 p-4 p-lg-5 h-100 d-flex flex-column border border-light-subtle">
+      <div
+        className="product-gallery-main flex-grow-1 d-flex align-items-center justify-content-center mb-4 rounded-4 bg-light"
+        style={{ minHeight: "400px", padding: "40px" }}
+      >
+        <img
+          src={mainImage}
+          alt={productName}
+          className="img-fluid object-fit-contain"
+          style={{ maxHeight: "300px", maxWidth: "100%", width: "auto" }}
+        />
       </div>
 
       <div className="product-gallery-thumbs mt-auto">
         <Swiper
           modules={[Navigation]}
-          spaceBetween={10}
+          spaceBetween={15}
           slidesPerView={3}
           breakpoints={{
             576: { slidesPerView: 4 },
@@ -35,10 +43,21 @@ export default function ProductGallery({
           {images.map((img, idx) => (
             <SwiperSlide key={idx}>
               <div
-                className={`thumb-item cursor-pointer bg-light-grey rounded-circle d-flex align-items-center justify-content-center mx-auto p-3 ${mainImage === img ? "active" : ""}`}
+                className={`thumb-item cursor-pointer rounded-circle d-flex align-items-center justify-content-center mx-auto bg-light border ${mainImage === img ? "border-success border-2 shadow-sm" : "border-light-subtle"}`}
                 onClick={() => setMainImage(img)}
+                style={{
+                  width: "70px",
+                  height: "70px",
+                  padding: "10px",
+                  transition: "all 0.2s ease",
+                }}
               >
-                <img src={img} alt="Thumb" className="img-fluid" />
+                <img
+                  src={img}
+                  alt="Thumb"
+                  className="img-fluid object-fit-contain"
+                  style={{ maxHeight: "100%", maxWidth: "100%" }}
+                />
               </div>
             </SwiperSlide>
           ))}

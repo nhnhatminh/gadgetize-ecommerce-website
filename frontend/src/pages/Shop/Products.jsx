@@ -63,6 +63,7 @@ export default function Products({ navigate }) {
         const formatted = data.products.map((p) => ({
           id: p.id,
           variantId: p.variant_id,
+          slug: p.slug,
           name: p.name,
           image: p.image_url || "/images/no-image.png",
           discount: parseInt(p.discount_percent || 0, 10),
@@ -135,7 +136,7 @@ export default function Products({ navigate }) {
                   <div
                     className="col-xxl-2 col-xl-3 col-md-4 col-sm-6"
                     key={prod.id}
-                    onClick={() => navigate("product-detail")}
+                    onClick={() => navigate("product-detail", prod.slug)}
                   >
                     <ProductCard product={prod} />
                   </div>
