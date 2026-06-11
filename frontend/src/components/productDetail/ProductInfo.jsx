@@ -9,6 +9,8 @@ export default function ProductInfo({
   selectedColor,
   setSelectedColor,
   navigate,
+  onAddToCart,
+  isAdding,
 }) {
   return (
     <div className="product-info-wrapper bg-white rounded-4 p-4 p-lg-5 h-100">
@@ -27,12 +29,14 @@ export default function ProductInfo({
         <h3 className="fw-bold mb-1">
           {mainProduct.price.toLocaleString("vi-VN")}₫
         </h3>
-        <p className="text-muted text-des mb-0">
-          Giảm giá: 7.500₫ ({mainProduct.discount}%){" "}
-          <span className="text-decoration-line-through">
-            {mainProduct.oldPrice.toLocaleString("vi-VN")}₫
-          </span>
-        </p>
+        {mainProduct.oldPrice > 0 && (
+          <p className="text-muted text-des mb-0">
+            Giảm giá: ({mainProduct.discount}%) Thấp hơn{" "}
+            <span className="text-decoration-line-through">
+              {mainProduct.oldPrice.toLocaleString("vi-VN")}₫
+            </span>
+          </p>
+        )}
       </div>
 
       <p className="text-muted text-des mb-4">{mainProduct.description}</p>
@@ -128,8 +132,13 @@ export default function ProductInfo({
               <i className="fa-solid fa-plus"></i>
             </button>
           </div>
-          <button className="btn btn-outline-success flex-grow-1 fw-bold rounded-3">
-            Thêm Vào Giỏ Hàng
+          <button
+            type="button"
+            className="btn btn-outline-success flex-grow-1 fw-bold rounded-3"
+            onClick={onAddToCart}
+            disabled={isAdding}
+          >
+            {isAdding ? "Đang Thêm..." : "Thêm Vào Giỏ Hàng"}
           </button>
           <button className="btn btn-outline-secondary px-3 rounded-3">
             <i className="fa-regular fa-heart"></i>
@@ -165,22 +174,6 @@ export default function ProductInfo({
             lại.
           </p>
         </div>
-      </div>
-
-      <div className="social-share d-flex align-items-center gap-2 border-top pt-3">
-        <span className="fw-bold text-dark fs-7">Chia sẻ:</span>
-        <a href="#" className="share-icon">
-          <i className="fa-brands fa-facebook-f"></i>
-        </a>
-        <a href="#" className="share-icon">
-          <i className="fa-brands fa-twitter"></i>
-        </a>
-        <a href="#" className="share-icon">
-          <i className="fa-brands fa-instagram"></i>
-        </a>
-        <a href="#" className="share-icon">
-          <i className="fa-brands fa-tiktok"></i>
-        </a>
       </div>
     </div>
   );

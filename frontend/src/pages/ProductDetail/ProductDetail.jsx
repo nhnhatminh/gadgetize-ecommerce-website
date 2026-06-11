@@ -1,117 +1,75 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import ProductGallery from "../../components/productDetail/ProductGallery";
 import ProductInfo from "../../components/productDetail/ProductInfo";
 import ProductDescriptionTabs from "../../components/productDetail/ProductDescriptionTabs";
 import RelatedProducts from "../../components/productDetail/RelatedProducts";
-
+import { productApi } from "../../api/productApi";
+import { CartContext } from "../../context/CartContext";
 import "../../styles/layouts/product_detail_page.css";
 import "../../styles/components/showcase.css";
 
 export default function ProductDetail({ navigate }) {
+  const { addToCart } = useContext(CartContext);
   const [quantity, setQuantity] = useState(1);
-  const [selectedColor, setSelectedColor] = useState("green");
+  const [selectedColor, setSelectedColor] = useState("");
   const [activeTab, setActiveTab] = useState("desc");
+  const [currentProduct, setCurrentProduct] = useState(null);
+  const [relatedProducts, setRelatedProducts] = useState([]);
+  const [isAdding, setIsAdding] = useState(false);
 
-  const mainProduct = {
-    name: "Tai Nghe Razer Electra",
-    price: 300000,
-    oldPrice: 375000,
-    discount: 20,
-    rating: 5,
-    reviews: 1,
-    description:
-      "Lorem ipsum dolor sit amet consectetur. Est morbi cum bibendum id eleifend ultrices enim nec. Vitae morbi mus imperdiet tincidunt ultrices hendrerit. Lobortis donec massa fermentum aliquet sapien. Magna risus donec aliquam diam aliquet consectetur...",
-    stock: 10,
-    sku: "RZ-ELECTRA-01",
-    category: "Tai Nghe Rảnh Tay, Trang Chủ",
-    tags: "Phụ kiện, Earbuds, Thiết bị điện tử",
-    images: [
-      "/images/pr-1.png",
-      "/images/pr-4.png",
-      "/images/pr-9.png",
-      "/images/cate-3.png",
-      "/images/pr-3.png",
-      "/images/pr-2.png",
-      "/images/pr-5.png",
-    ],
-  };
+  useEffect(() => {
+    const fetchProductDetail = async () => {
+      try {
+        const data = await productApi.getProducts({ limit: 10 });
+        if (data.products.length > 0) {
+          const p = data.products[0];
+          setCurrentProduct({
+            id: p.id,
+            variantId: p.variant_id,
+            name: p.name,
+            price:
+              (parseFloat(p.base_price) + parseFloat(p.price_modifier || 0)) *
+              (1 - parseFloat(p.discount_percent || 0) / 100),
+            oldPrice: parseFloat(p.base_price),
+            discount: parseInt(p.discount_percent || 0, 10),
+            rating: Math.round(parseFloat(p.rating || 5)),
+            reviews: parseInt(p.review_count || 0, 10),
+            description: p.description,
+            stock: parseInt(p.stock_quantity || 10, 10),
+            sku: p.sku,
+            category: p.category_name,
+            tags: "Phụ kiện, Thiết bị điện tử",
+            images: [
+              p.image_url || "/images/pr-1.png",
+              "/images/pr-2.png",
+              "/images/pr-3.png",
+            ],
+          });
+          setSelectedColor(p.color_name || "Black");
 
-  const [mainImage, setMainImage] = useState(mainProduct.images[0]);
-
-  const relatedProducts = [
-    {
-      id: 1,
-      name: "Thiết Bị Âm Thanh Cao Cấp",
-      newPrice: 1500000,
-      oldPrice: 1200000,
-      image: "/images/pr-1.png",
-      discount: 20,
-      rating: 5,
-      reviews: 1,
-      description:
-        "Lorem ipsum dolor sit amet consectetur. Fermentum malesuada iaculis aliquet nunc turpis.",
-    },
-    {
-      id: 2,
-      name: "Thiết Bị Âm Thanh Cao Cấp",
-      newPrice: 1500000,
-      oldPrice: 1200000,
-      image: "/images/pr-1.png",
-      discount: 20,
-      rating: 5,
-      reviews: 1,
-      description:
-        "Lorem ipsum dolor sit amet consectetur. Fermentum malesuada iaculis aliquet nunc turpis.",
-    },
-    {
-      id: 3,
-      name: "Thiết Bị Âm Thanh Cao Cấp",
-      newPrice: 1500000,
-      oldPrice: 1200000,
-      image: "/images/pr-1.png",
-      discount: 20,
-      rating: 5,
-      reviews: 1,
-      description:
-        "Lorem ipsum dolor sit amet consectetur. Fermentum malesuada iaculis aliquet nunc turpis.",
-    },
-    {
-      id: 4,
-      name: "Thiết Bị Âm Thanh Cao Cấp",
-      newPrice: 1500000,
-      oldPrice: 1200000,
-      image: "/images/pr-1.png",
-      discount: 20,
-      rating: 5,
-      reviews: 1,
-      description:
-        "Lorem ipsum dolor sit amet consectetur. Fermentum malesuada iaculis aliquet nunc turpis.",
-    },
-    {
-      id: 5,
-      name: "Thiết Bị Âm Thanh Cao Cấp",
-      newPrice: 1500000,
-      oldPrice: 1200000,
-      image: "/images/pr-1.png",
-      discount: 20,
-      rating: 5,
-      reviews: 1,
-      description:
-        "Lorem ipsum dolor sit amet consectetur. Fermentum malesuada iaculis aliquet nunc turpis.",
-    },
-    {
-      id: 6,
-      name: "Thiết Bị Âm Thanh Cao Cấp",
-      newPrice: 1500000,
-      oldPrice: 1200000,
-      image: "/images/pr-1.png",
-      discount: 20,
-      rating: 5,
-      reviews: 1,
-      description:
-        "Lorem ipsum dolor sit amet consectetur. Fermentum malesuada iaculis aliquet nunc turpis.",
-    },
-  ];
+          const formattedRelated = data.products.slice(1).map((item) => ({
+            id: item.id,
+            variantId: item.variant_id,
+            name: item.name,
+            image: item.image_url || "/images/no-image.png",
+            description: item.description,
+            discount: parseInt(item.discount_percent || 0, 10),
+            oldPrice: parseFloat(item.base_price),
+            newPrice:
+              (parseFloat(item.base_price) +
+                parseFloat(item.price_modifier || 0)) *
+              (1 - parseFloat(item.discount_percent || 0) / 100),
+            rating: parseFloat(item.rating || 5),
+            reviews: parseInt(item.review_count || 0, 10),
+          }));
+          setRelatedProducts(formattedRelated);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchProductDetail();
+  }, []);
 
   const handleQuantityChange = (type) => {
     if (type === "decrease" && quantity > 1) {
@@ -120,6 +78,32 @@ export default function ProductDetail({ navigate }) {
       setQuantity(quantity + 1);
     }
   };
+
+  const handleAddToCart = async () => {
+    if (!currentProduct || isAdding) return;
+    setIsAdding(true);
+    const testPayload = {
+      variantId: currentProduct.variantId,
+      quantity: quantity,
+    };
+    console.log(
+      "Trigger AddToCart from ProductDetail. Payload JSON:",
+      JSON.stringify(testPayload),
+    );
+    try {
+      await addToCart(currentProduct.variantId, quantity);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setIsAdding(false);
+    }
+  };
+
+  if (!currentProduct) {
+    return (
+      <div className="text-center py-5">Loading product data matrix...</div>
+    );
+  }
 
   return (
     <div className="product-detail-page-wrapper">
@@ -133,7 +117,7 @@ export default function ProductDetail({ navigate }) {
             style={{ minHeight: "180px" }}
           >
             <div className="col-12 text-center z-2">
-              <h1 className="fw-bold text-dark mb-0">{mainProduct.name}</h1>
+              <h1 className="fw-bold text-dark mb-0">{currentProduct.name}</h1>
             </div>
             <img
               src="/images/breadcome-pr.png"
@@ -154,21 +138,23 @@ export default function ProductDetail({ navigate }) {
           <div className="row g-4">
             <div className="col-lg-6">
               <ProductGallery
-                images={mainProduct.images}
-                mainImage={mainImage}
-                setMainImage={setMainImage}
-                productName={mainProduct.name}
+                images={currentProduct.images}
+                mainImage={currentProduct.images[0]}
+                setMainImage={() => {}}
+                productName={currentProduct.name}
               />
             </div>
 
             <div className="col-lg-6">
               <ProductInfo
-                mainProduct={mainProduct}
+                mainProduct={currentProduct}
                 quantity={quantity}
                 handleQuantityChange={handleQuantityChange}
                 selectedColor={selectedColor}
                 setSelectedColor={setSelectedColor}
                 navigate={navigate}
+                onAddToCart={handleAddToCart}
+                isAdding={isAdding}
               />
             </div>
           </div>
@@ -178,6 +164,7 @@ export default function ProductDetail({ navigate }) {
               <ProductDescriptionTabs
                 activeTab={activeTab}
                 setActiveTab={setActiveTab}
+                productImage={currentProduct.images[0]}
               />
             </div>
           </div>

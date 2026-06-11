@@ -62,6 +62,7 @@ export default function Products({ navigate }) {
 
         const formatted = data.products.map((p) => ({
           id: p.id,
+          variantId: p.variant_id,
           name: p.name,
           image: p.image_url || "/images/no-image.png",
           discount: parseInt(p.discount_percent || 0, 10),
