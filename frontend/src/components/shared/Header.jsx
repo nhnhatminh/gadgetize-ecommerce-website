@@ -130,7 +130,22 @@ export default function Header({ navigate, currentPage }) {
               </div>
             </div>
 
-            <div className="col-xl-3 col-lg-3 col-md-8 col-6 d-flex justify-content-end align-items-center gap-4">
+            <div className="col-xl-3 col-lg-3 col-md-8 col-6 d-flex justify-content-end align-items-center gap-3">
+              {user?.role === "admin" && (
+                <div
+                  className="header-action-item d-none d-sm-flex text-success"
+                  onClick={() => navigate("admin-dashboard")}
+                >
+                  <div className="header-action-icon text-success">
+                    <i className="fa-solid fa-user-gear"></i>
+                  </div>
+                  <div className="header-action-text">
+                    <span className="text-success">Hệ thống</span>
+                    <strong className="text-success">Quản trị</strong>
+                  </div>
+                </div>
+              )}
+
               <div
                 className="header-action-item d-none d-sm-flex"
                 onClick={() => (user ? logout() : navigate("auth"))}
@@ -310,6 +325,17 @@ export default function Header({ navigate, currentPage }) {
             >
               Tài khoản
             </li>
+            {user?.role === "admin" && (
+              <li
+                className="cursor-pointer text-success fw-bold border-top pt-2"
+                onClick={() => {
+                  navigate("admin-dashboard");
+                  setIsMobileMenuOpen(false);
+                }}
+              >
+                Quản trị hệ thống
+              </li>
+            )}
           </ul>
         </div>
       </div>

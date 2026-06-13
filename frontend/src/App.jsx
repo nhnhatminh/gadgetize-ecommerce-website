@@ -7,7 +7,10 @@ import ProductDetail from "./pages/ProductDetail/ProductDetail";
 import Cart from "./pages/Cart/Cart";
 import Checkout from "./pages/Checkout/Checkout";
 import Auth from "./pages/Auth/Auth";
+import AdminLayout from "./pages/Admin/AdminLayout";
 import { AuthContext } from "./context/AuthContext";
+import AdminProducts from "./pages/Admin/AdminProducts";
+import AdminOrders from "./pages/Admin/AdminOrders";
 
 export default function App() {
   const [currentPage, setCurrentPage] = useState("home");
@@ -37,25 +40,21 @@ export default function App() {
         return <Home navigate={navigateToPage} />;
       }
 
-      switch (currentPage) {
-        case "admin-dashboard":
-          return (
-            <div className="container py-5">
-              <h2 className="fw-bold text-dark">Admin Dashboard Placeholder</h2>
-              <p className="text-muted">
-                Security gate verified. Welcome, Administrator.
+      return (
+        <AdminLayout navigate={navigateToPage} currentPage={currentPage}>
+          {currentPage === "admin-dashboard" && (
+            <div className="bg-white p-4 rounded-4 shadow-sm border border-light-subtle">
+              <h4 className="fw-bold text-dark mb-2">Tổng Quan Hệ Thống</h4>
+              <p className="text-muted mb-0">
+                Hạ tầng khung vỏ quản trị đã thiết lập thành công. Sẵn sàng nạp
+                dữ liệu ma trận.
               </p>
-              <button
-                className="btn btn-danger mt-3"
-                onClick={() => navigateToPage("home")}
-              >
-                Back to Customer View
-              </button>
             </div>
-          );
-        default:
-          return <Home navigate={navigateToPage} />;
-      }
+          )}
+          {currentPage === "admin-products" && <AdminProducts />}
+          {currentPage === "admin-orders" && <AdminOrders />}
+        </AdminLayout>
+      );
     }
 
     switch (currentPage) {
