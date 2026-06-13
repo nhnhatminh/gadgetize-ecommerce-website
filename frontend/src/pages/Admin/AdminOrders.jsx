@@ -36,12 +36,15 @@ export default function AdminOrders() {
         </p>
       </div>
 
-      <div className="card border rounded-4 shadow-sm overflow-hidden bg-white">
+      <div className="card border-0 rounded-4 shadow-sm overflow-hidden bg-white">
         <div className="table-responsive">
           <table className="table table-hover align-middle mb-0">
-            <thead className="table-light">
-              <tr className="text-secondary fs-7">
-                <th className="ps-4">Mã đơn</th>
+            <thead
+              className="table-light"
+              style={{ backgroundColor: "#f8f9fa" }}
+            >
+              <tr className="text-secondary fs-7 border-bottom">
+                <th className="ps-4 py-3">Mã đơn</th>
                 <th>Khách hàng</th>
                 <th>Địa chỉ giao hàng</th>
                 <th>Phương thức</th>
@@ -53,7 +56,7 @@ export default function AdminOrders() {
             </thead>
             <tbody>
               {orders.map((ord) => (
-                <tr key={ord.id} className="fs-7 text-dark">
+                <tr key={ord.id} className="fs-7 text-dark border-bottom">
                   <td className="ps-4 fw-bold text-primary">#{ord.id}</td>
                   <td>
                     <div className="fw-bold">
@@ -71,7 +74,7 @@ export default function AdminOrders() {
                     </div>
                   </td>
                   <td>
-                    <span className="badge bg-light text-dark text-uppercase border">
+                    <span className="badge bg-light text-dark text-uppercase border px-2 py-1 rounded">
                       {ord.payment_method}
                     </span>
                   </td>
