@@ -150,3 +150,103 @@ export const getBrands = async (req, res, next) => {
     next(error);
   }
 };
+
+export const createProduct = async (req, res, next) => {
+  const client = await pool.connect();
+  try {
+    await client.query("BEGIN");
+    const { categoryId, brandId, name, slug, description, basePrice, discountPercent, sku, colorName, colorHex, stockQuantity, priceModifier } = req.body;
+    
+    let imageUrl = "/images/no-image.png";
+    if (req.file) {
+      imageUrl = `/uploads/${req.file.filename}`;
+    }
+
+    const productResult = await client.query(
+      `INSERT INTO products (category_id, brand_id, name, slug, description, base_price, discount_percent)
+       VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING id`,
+      [categoryId, brandId, name, slug, description, basePrice, discountPercent || 0]
+    );
+    const productId = productResult.rows[0].id;
+
+    const variantResult = await client.query(
+      `INSERT INTO product_variants (product_id, sku, color_name, color_hex, stock_quantity, price_modifier)
+       VALUES ($1, $2, $3, $4, $5, $6) RETURNING id`,
+      [productId, sku, colorName, colorHex, stockQuantity || 0, priceModifier || 0]
+    );
+    const variantId = variantResult.rows[0].id;
+
+    await client.query(
+      `INSERT INTO product_images (variant_id, image_url, is_primary)
+       VALUES ($1, $2, true)`,
+      [variantId, imageUrl]
+    );
+
+    await client.query("COMMIT");
+    res.status(201).json({ message: "Product created successfully", productId });
+  } catch (error) {
+    await client.query("ROLLBACK");
+    next(error);
+  } 
+  finally {
+    client.release();
+  }
+};
+
+export const updateProduct = async (req, res, next) => {
+  const client = await pool.connect();
+  try {
+    await client.query("BEGIN");
+    const { id } = req.params;
+    const { categoryId, brandId, name, slug, description, basePrice, discountPercent, sku, colorName, colorHex, stockQuantity, priceModifier } = req.body;
+
+    await client.query(
+      `UPDATE products 
+       SET category_id = $1, brand_id = $2, name = $3, slug = $4, description = $5, base_price = $6, discount_percent = $7
+       WHERE id = $8`,
+      [categoryId, brandId, name, slug, description, basePrice, discountPercent, id]
+    );
+
+    const variantRes = await client.query(
+      `SELECT id FROM product_variants WHERE product_id = $1 LIMIT 1`,
+      [id]
+    );
+
+    if (variantRes.rows.length > 0) {
+      const variantId = variantRes.rows[0].id;
+      await client.query(
+        `UPDATE product_variants 
+         SET sku = $1, color_name = $2, color_hex = $3, stock_quantity = $4, price_modifier = $5
+         WHERE id = $6`,
+        [sku, colorName, colorHex, stockQuantity, priceModifier, variantId]
+      );
+
+          if (req.file) {
+            const imageUrl = `/uploads/${req.file.filename}`;
+            await client.query(
+              `UPDATE product_images SET image_url = $1 WHERE variant_id = $2 AND is_primary = true`,
+              [imageUrl, variantId]
+            );
+          }
+    }
+
+    await client.query("COMMIT");
+    res.status(200).json({ message: "Product updated successfully" });
+  } catch (error) {
+    await client.query("ROLLBACK");
+    next(error);
+  } 
+  finally {
+    client.release();
+  }
+};
+
+export const deleteProduct = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    await pool.query("DELETE FROM products WHERE id = $1", [id]);
+    res.status(200).json({ message: "Product deleted successfully" });
+  } catch (error) {
+    next(error);
+  }
+};

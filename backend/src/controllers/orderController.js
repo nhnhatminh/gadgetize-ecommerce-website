@@ -190,3 +190,32 @@ export const getOrderById = async (req, res, next) => {
     next(error);
   }
 };
+
+export const getAllOrdersAdmin = async (req, res, next) => {
+  try {
+    const result = await pool.query(
+      `SELECT o.id, o.subtotal, o.discount_total, o.shipping_fee, o.final_total, o.status, o.payment_method, o.created_at, o.shipping_address,
+       u.first_name, u.last_name, u.email
+       FROM orders o
+       JOIN users u ON o.user_id = u.id
+       ORDER BY o.created_at DESC`
+    );
+    res.status(200).json(result.rows);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const updateOrderStatus = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const { status } = req.body;
+    await pool.query(
+      `UPDATE orders SET status = $1 WHERE id = $2`,
+      [status, id]
+    );
+    res.status(200).json({ message: "Order status updated successfully" });
+  } catch (error) {
+    next(error);
+  }
+};
