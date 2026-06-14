@@ -6,9 +6,13 @@ import productRoutes from './routes/productRoutes.js';
 import orderRoutes from "./routes/orderRoutes.js";
 import cartRoutes from "./routes/cartRoutes.js";
 import errorMiddleware from "./middlewares/errorMiddleware.js";
+import path from 'path';
+import { fileURLToPath } from 'url';
 
 const app = express();
 const PORT = process.env.PORT || 5000;
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 app.use(cors({
   origin: 'http://localhost:5173',
@@ -43,4 +47,13 @@ app.use(errorMiddleware);
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
+});
+
+app.use(express.static(path.join(__dirname, '../../frontend/dist')));
+
+app.get('*', (req, res, next) => {
+  if (req.url.startsWith('/api/')) {
+    return next();
+  }
+  res.sendFile(path.join(__dirname, '../../frontend/dist/index.html'));
 });

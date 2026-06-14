@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import ProductGallery from "../../components/productDetail/ProductGallery";
 import ProductInfo from "../../components/productDetail/ProductInfo";
 import ProductDescriptionTabs from "../../components/productDetail/ProductDescriptionTabs";
@@ -8,7 +9,9 @@ import { CartContext } from "../../context/CartContext";
 import "../../styles/layouts/product_detail_page.css";
 import "../../styles/components/showcase.css";
 
-export default function ProductDetail({ navigate, productSlug }) {
+export default function ProductDetail() {
+  const { slug } = useParams();
+  const navigate = useNavigate();
   const { addToCart } = useContext(CartContext);
   const [quantity, setQuantity] = useState(1);
   const [selectedColor, setSelectedColor] = useState("");
@@ -24,7 +27,7 @@ export default function ProductDetail({ navigate, productSlug }) {
         const data = await productApi.getProducts({ limit: 40 });
         if (data.products.length > 0) {
           const p =
-            data.products.find((item) => item.slug === productSlug) ||
+            data.products.find((item) => item.slug === slug) ||
             data.products[0];
 
           setCurrentProduct({
@@ -80,7 +83,7 @@ export default function ProductDetail({ navigate, productSlug }) {
       }
     };
     fetchProductDetail();
-  }, [productSlug]);
+  }, [slug]);
 
   const handleQuantityChange = (type) => {
     if (type === "decrease" && quantity > 1) {
@@ -99,6 +102,16 @@ export default function ProductDetail({ navigate, productSlug }) {
       console.error(error);
     } finally {
       setIsAdding(false);
+    }
+  };
+
+  const handleLegacyNavigate = (page, targetSlug = null) => {
+    if (page === "product-detail" && targetSlug) {
+      navigate(`/product/${targetSlug}`);
+    } else if (page === "products" || page === "shop") {
+      navigate("/shop");
+    } else {
+      navigate("/");
     }
   };
 
@@ -155,7 +168,7 @@ export default function ProductDetail({ navigate, productSlug }) {
                 handleQuantityChange={handleQuantityChange}
                 selectedColor={selectedColor}
                 setSelectedColor={setSelectedColor}
-                navigate={navigate}
+                navigate={handleLegacyNavigate}
                 onAddToCart={handleAddToCart}
                 isAdding={isAdding}
               />
@@ -174,7 +187,7 @@ export default function ProductDetail({ navigate, productSlug }) {
 
           <RelatedProducts
             relatedProducts={relatedProducts}
-            navigate={navigate}
+            navigate={handleLegacyNavigate}
           />
         </div>
       </main>

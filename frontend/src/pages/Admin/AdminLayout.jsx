@@ -1,13 +1,17 @@
 import React, { useContext } from "react";
+import { Outlet, useNavigate, useLocation } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
 import "../../styles/layouts/admin.css";
 
-export default function AdminLayout({ navigate, currentPage, children }) {
+export default function AdminLayout() {
   const { user, logout } = useContext(AuthContext);
+  const navigate = useNavigate();
+  const location = useLocation();
+  const currentPath = location.pathname;
 
   const handleLogout = () => {
     logout();
-    navigate("home");
+    navigate("/auth");
   };
 
   return (
@@ -25,8 +29,8 @@ export default function AdminLayout({ navigate, currentPage, children }) {
           <div className="admin-sidebar__category">Overview</div>
           <nav className="admin-sidebar__nav">
             <div
-              className={`admin-sidebar__link ${currentPage === "admin-dashboard" ? "admin-sidebar__link--active" : ""}`}
-              onClick={() => navigate("admin-dashboard")}
+              className={`admin-sidebar__link ${currentPath === "/admin" ? "admin-sidebar__link--active" : ""}`}
+              onClick={() => navigate("/admin")}
             >
               <i className="fa-solid fa-chart-pie admin-sidebar__icon"></i>
               <span>Dashboard</span>
@@ -36,16 +40,16 @@ export default function AdminLayout({ navigate, currentPage, children }) {
           <div className="admin-sidebar__category">Commerce</div>
           <nav className="admin-sidebar__nav">
             <div
-              className={`admin-sidebar__link ${currentPage === "admin-products" ? "admin-sidebar__link--active" : ""}`}
-              onClick={() => navigate("admin-products")}
+              className={`admin-sidebar__link ${currentPath === "/admin/products" ? "admin-sidebar__link--active" : ""}`}
+              onClick={() => navigate("/admin/products")}
             >
               <i className="fa-solid fa-box-open admin-sidebar__icon"></i>
               <span>Products</span>
             </div>
 
             <div
-              className={`admin-sidebar__link ${currentPage === "admin-orders" ? "admin-sidebar__link--active" : ""}`}
-              onClick={() => navigate("admin-orders")}
+              className={`admin-sidebar__link ${currentPath === "/admin/orders" ? "admin-sidebar__link--active" : ""}`}
+              onClick={() => navigate("/admin/orders")}
             >
               <i className="fa-solid fa-file-invoice-dollar admin-sidebar__icon"></i>
               <span>Orders</span>
@@ -113,7 +117,9 @@ export default function AdminLayout({ navigate, currentPage, children }) {
           </div>
         </header>
 
-        <main className="admin-content-body">{children}</main>
+        <main className="admin-content-body">
+          <Outlet />
+        </main>
       </div>
     </div>
   );

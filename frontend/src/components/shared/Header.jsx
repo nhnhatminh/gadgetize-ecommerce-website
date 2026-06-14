@@ -1,12 +1,17 @@
 import React, { useState, useEffect, useRef, useContext } from "react";
+import { useNavigate, useLocation, Link } from "react-router-dom";
 import LiveSearchDropdown from "./LiveSearchDropdown";
 import { AuthContext } from "../../context/AuthContext";
 import { CartContext } from "../../context/CartContext";
 import "../../styles/components/header.css";
 
-export default function Header({ navigate, currentPage }) {
+export default function Header() {
   const { user, logout } = useContext(AuthContext);
   const { cartItems } = useContext(CartContext);
+  const navigate = useNavigate();
+  const location = useLocation();
+  const currentPath = location.pathname;
+
   const [isCategoryOpen, setIsCategoryOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
@@ -97,7 +102,7 @@ export default function Header({ navigate, currentPage }) {
             <div className="col-xl-3 col-lg-3 col-md-4 col-6">
               <div
                 className="header-logo cursor-pointer"
-                onClick={() => navigate("home")}
+                onClick={() => navigate("/")}
               >
                 <img src="/images/logo.png" alt="Gadgetize Logo" />
               </div>
@@ -134,7 +139,7 @@ export default function Header({ navigate, currentPage }) {
               {user?.role === "admin" && (
                 <div
                   className="header-action-item d-none d-sm-flex text-success"
-                  onClick={() => navigate("admin-dashboard")}
+                  onClick={() => navigate("/admin")}
                 >
                   <div className="header-action-icon text-success">
                     <i className="fa-solid fa-user-gear"></i>
@@ -148,7 +153,7 @@ export default function Header({ navigate, currentPage }) {
 
               <div
                 className="header-action-item d-none d-sm-flex"
-                onClick={() => (user ? logout() : navigate("auth"))}
+                onClick={() => (user ? logout() : navigate("/auth"))}
               >
                 <div className="header-action-icon">
                   <i className="fa-regular fa-user"></i>
@@ -168,7 +173,7 @@ export default function Header({ navigate, currentPage }) {
 
               <div
                 className="header-action-item"
-                onClick={() => navigate("cart")}
+                onClick={() => navigate("/cart")}
               >
                 <div className="header-action-icon">
                   <i className="fa-solid fa-cart-shopping"></i>
@@ -212,16 +217,16 @@ export default function Header({ navigate, currentPage }) {
               <ul className="nav-menu">
                 <li>
                   <span
-                    className={`cursor-pointer fw-medium ${currentPage === "home" ? "text-success" : ""}`}
-                    onClick={() => navigate("home")}
+                    className={`cursor-pointer fw-medium ${currentPath === "/" ? "text-success" : ""}`}
+                    onClick={() => navigate("/")}
                   >
                     Trang chủ
                   </span>
                 </li>
                 <li>
                   <span
-                    className={`cursor-pointer fw-medium ${currentPage === "products" ? "text-success" : ""}`}
-                    onClick={() => navigate("products")}
+                    className={`cursor-pointer fw-medium ${currentPath === "/shop" ? "text-success" : ""}`}
+                    onClick={() => navigate("/shop")}
                   >
                     Sản phẩm{" "}
                     <i className="fa-solid fa-angle-down ms-1 fs-7"></i>
@@ -291,7 +296,7 @@ export default function Header({ navigate, currentPage }) {
             <li
               className="cursor-pointer"
               onClick={() => {
-                navigate("home");
+                navigate("/");
                 setIsMobileMenuOpen(false);
               }}
             >
@@ -300,7 +305,7 @@ export default function Header({ navigate, currentPage }) {
             <li
               className="cursor-pointer"
               onClick={() => {
-                navigate("products");
+                navigate("/shop");
                 setIsMobileMenuOpen(false);
               }}
             >
@@ -310,7 +315,7 @@ export default function Header({ navigate, currentPage }) {
             <li
               className="cursor-pointer"
               onClick={() => {
-                navigate("cart");
+                navigate("/cart");
                 setIsMobileMenuOpen(false);
               }}
             >
@@ -319,7 +324,7 @@ export default function Header({ navigate, currentPage }) {
             <li
               className="cursor-pointer"
               onClick={() => {
-                navigate("auth");
+                navigate("/auth");
                 setIsMobileMenuOpen(false);
               }}
             >
@@ -329,7 +334,7 @@ export default function Header({ navigate, currentPage }) {
               <li
                 className="cursor-pointer text-success fw-bold border-top pt-2"
                 onClick={() => {
-                  navigate("admin-dashboard");
+                  navigate("/admin");
                   setIsMobileMenuOpen(false);
                 }}
               >

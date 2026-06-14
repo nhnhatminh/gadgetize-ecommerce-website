@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import HomeBanner from "../../components/home/HomeBanner";
 import CategorySlider from "../../components/home/CategorySlider";
 import FeaturedShowcase from "../../components/home/FeaturedShowcase";
@@ -9,7 +10,8 @@ import "../../styles/layouts/home.css";
 import "../../styles/components/hero.css";
 import "../../styles/components/showcase.css";
 
-export default function Home({ navigate }) {
+export default function Home() {
+  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState("all");
   const [activePopularTab, setActivePopularTab] = useState("all");
 
@@ -68,20 +70,34 @@ export default function Home({ navigate }) {
     },
   ];
 
+  const handleLegacyNavigate = (page, slug = null) => {
+    if (page === "product-detail" && slug) {
+      navigate(`/product/${slug}`);
+    } else if (page === "products" || page === "shop") {
+      navigate("/shop");
+    } else if (page === "cart") {
+      navigate("/cart");
+    } else if (page === "checkout") {
+      navigate("/checkout");
+    } else {
+      navigate("/");
+    }
+  };
+
   return (
     <main className="bg-white">
-      <HomeBanner navigate={navigate} />
+      <HomeBanner navigate={handleLegacyNavigate} />
       <CategorySlider />
       <FeaturedShowcase
         products={products}
         activeTab={activeTab}
         setActiveTab={setActiveTab}
-        navigate={navigate}
+        navigate={handleLegacyNavigate}
       />
       <PopularGrid
         activePopularTab={activePopularTab}
         setActivePopularTab={setActivePopularTab}
-        navigate={navigate}
+        navigate={handleLegacyNavigate}
       />
       <BrandSlider />
     </main>
