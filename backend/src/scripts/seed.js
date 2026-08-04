@@ -1,3 +1,4 @@
+import bcrypt from "bcrypt";
 import pool from "../config/database.js";
 
 const seedDatabase = async () => {
@@ -8,6 +9,18 @@ const seedDatabase = async () => {
       TRUNCATE TABLE product_images, product_variants, products, brands, categories 
       RESTART IDENTITY CASCADE
     `);
+
+    const hashedPassword = await bcrypt.hash("Admin@123", 10);
+
+    await pool.query(`
+      INSERT INTO users (first_name, last_name, email, password_hash, phone, role)
+      VALUES 
+      ('Minh', 'Admin', 'minhadmin@gadgetize.com', $1, '0987654321', 'admin'),
+      ('My', 'Customer', 'mycustomer@gadgetize.com', $1, '0907654321', 'customer')
+      ON CONFLICT (email) DO NOTHING
+    `, [hashedPassword]);
+
+    console.log("Seeded default users: minhadmin@gadgetize.com / mycustomer@gadgetize.com (Password: Admin@123)");
 
     const categoriesResult = await pool.query(`
       INSERT INTO categories (name, slug) VALUES 

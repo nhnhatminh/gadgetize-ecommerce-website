@@ -19,7 +19,7 @@ export default function HomeBanner({ navigate }) {
           <Swiper
             modules={[Autoplay, Pagination]}
             pagination={{ clickable: true }}
-            loop={true}
+            loop={false}
             autoplay={{ delay: 3000, disableOnInteraction: false }}
             className="main-banner-swiper rounded-4 overflow-hidden shadow-sm h-100"
           >

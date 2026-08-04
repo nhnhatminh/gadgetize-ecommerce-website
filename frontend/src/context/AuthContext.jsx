@@ -1,49 +1,46 @@
-import { createContext, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import axiosClient from "../api/axiosClient";
-
-export const AuthContext = createContext();
+import { AuthContext } from "./AuthContext";
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  // Tự động khôi phục phiên đăng nhập khi F5 hoặc mở lại web
   useEffect(() => {
-    const checkLoginStatus = async () => {
+    const checkLoggedInUser = async () => {
       const token = localStorage.getItem("token");
-      if (!token) {
-        setLoading(false);
-        return;
+      if (token) {
+        try {
+          const userData = await axiosClient.get("/auth/me");
+          setUser(userData);
+        } catch (error) {
+          console.error("Token hết hạn hoặc không hợp lệ:", error);
+          localStorage.removeItem("token");
+          setUser(null);
+        }
       }
-      try {
-        const data = await axiosClient.get("/auth/me");
-        setUser(data);
-      } catch (error) {
-        localStorage.removeItem("token");
-        setUser(null);
-      } finally {
-        setLoading(false);
-      }
+      setLoading(false);
     };
-    checkLoginStatus();
+
+    checkLoggedInUser();
   }, []);
 
+  // Hàm Đăng nhập
   const login = async (email, password) => {
-    const data = await axiosClient.post("/auth/login", { email, password });
-    localStorage.setItem("token", data.token);
-    setUser(data.user);
-    return data;
+    const response = await axiosClient.post("/auth/login", { email, password });
+    localStorage.setItem("token", response.token);
+    setUser(response.user);
+    return response;
   };
 
-  const register = async (firstName, lastName, email, password, phone) => {
-    return await axiosClient.post("/auth/register", {
-      firstName,
-      lastName,
-      email,
-      password,
-      phone,
-    });
+  // Hàm Đăng ký
+  const register = async (formData) => {
+    const response = await axiosClient.post("/auth/register", formData);
+    return response;
   };
 
+  // Hàm Đăng xuất
   const logout = () => {
     localStorage.removeItem("token");
     setUser(null);

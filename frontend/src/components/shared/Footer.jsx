@@ -6,48 +6,48 @@ export default function Footer({ navigate }) {
   return (
     <footer className="site-footer bg-white border-top mt-5">
       <div className="footer-services border-bottom py-5">
-        <div class="container">
-          <div class="row g-4 justify-content-center text-center">
-            <div class="col-xl-2 col-lg-4 col-md-4 col-sm-6">
-              <div class="service-item">
-                <img src="/images/service-1.png" alt="Service 1" class="mb-3" />
-                <h6 class="fw-bold mb-1">Đổi Trả Dễ Dàng</h6>
-                <p class="text-muted text-des mb-0">Từ nhà bán uy tín</p>
+        <div className="container">
+          <div className="row g-4 justify-content-center text-center">
+            <div className="col-xl-2 col-lg-4 col-md-4 col-sm-6">
+              <div className="service-item">
+                <img src="/images/service-1.png" alt="Service 1" className="mb-3" />
+                <h6 className="fw-bold mb-1">Đổi Trả Dễ Dàng</h6>
+                <p className="text-muted text-des mb-0">Từ nhà bán uy tín</p>
               </div>
             </div>
-            <div class="col-xl-2 col-lg-4 col-md-4 col-sm-6">
-              <div class="service-item">
-                <img src="/images/service-2.png" alt="Service 2" class="mb-3" />
-                <h6 class="fw-bold mb-1">Đổi Trả Dễ Dàng</h6>
-                <p class="text-muted text-des mb-0">Từ nhà bán uy tín</p>
+            <div className="col-xl-2 col-lg-4 col-md-4 col-sm-6">
+              <div className="service-item">
+                <img src="/images/service-2.png" alt="Service 2" className="mb-3" />
+                <h6 className="fw-bold mb-1">Đổi Trả Dễ Dàng</h6>
+                <p className="text-muted text-des mb-0">Từ nhà bán uy tín</p>
               </div>
             </div>
-            <div class="col-xl-2 col-lg-4 col-md-4 col-sm-6">
-              <div class="service-item">
-                <img src="/images/service-3.png" alt="Service 3" class="mb-3" />
-                <h6 class="fw-bold mb-1">Đổi Trả Dễ Dàng</h6>
-                <p class="text-muted text-des mb-0">Từ nhà bán uy tín</p>
+            <div className="col-xl-2 col-lg-4 col-md-4 col-sm-6">
+              <div className="service-item">
+                <img src="/images/service-3.png" alt="Service 3" className="mb-3" />
+                <h6 className="fw-bold mb-1">Đổi Trả Dễ Dàng</h6>
+                <p className="text-muted text-des mb-0">Từ nhà bán uy tín</p>
               </div>
             </div>
-            <div class="col-xl-2 col-lg-4 col-md-4 col-sm-6">
-              <div class="service-item">
-                <img src="/images/service-4.png" alt="Service 4" class="mb-3" />
-                <h6 class="fw-bold mb-1">Đổi Trả Dễ Dàng</h6>
-                <p class="text-muted text-des mb-0">Từ nhà bán uy tín</p>
+            <div className="col-xl-2 col-lg-4 col-md-4 col-sm-6">
+              <div className="service-item">
+                <img src="/images/service-4.png" alt="Service 4" className="mb-3" />
+                <h6 className="fw-bold mb-1">Đổi Trả Dễ Dàng</h6>
+                <p className="text-muted text-des mb-0">Từ nhà bán uy tín</p>
               </div>
             </div>
-            <div class="col-xl-2 col-lg-4 col-md-4 col-sm-6">
-              <div class="service-item">
-                <img src="/images/service-5.png" alt="Service 5" class="mb-3" />
-                <h6 class="fw-bold mb-1">Đổi Trả Dễ Dàng</h6>
-                <p class="text-muted text-des mb-0">Từ nhà bán uy tín</p>
+            <div className="col-xl-2 col-lg-4 col-md-4 col-sm-6">
+              <div className="service-item">
+                <img src="/images/service-5.png" alt="Service 5" className="mb-3" />
+                <h6 className="fw-bold mb-1">Đổi Trả Dễ Dàng</h6>
+                <p className="text-muted text-des mb-0">Từ nhà bán uy tín</p>
               </div>
             </div>
-            <div class="col-xl-2 col-lg-4 col-md-4 col-sm-6">
-              <div class="service-item">
-                <img src="/images/service-6.png" alt="Service 6" class="mb-3" />
-                <h6 class="fw-bold mb-1">Đổi Trả Dễ Dàng</h6>
-                <p class="text-muted text-des mb-0">Từ nhà bán uy tín</p>
+            <div className="col-xl-2 col-lg-4 col-md-4 col-sm-6">
+              <div className="service-item">
+                <img src="/images/service-6.png" alt="Service 6" className="mb-3" />
+                <h6 className="fw-bold mb-1">Đổi Trả Dễ Dàng</h6>
+                <p className="text-muted text-des mb-0">Từ nhà bán uy tín</p>
               </div>
             </div>
           </div>

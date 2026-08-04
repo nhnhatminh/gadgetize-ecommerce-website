@@ -14,7 +14,7 @@ export default function BrandSlider() {
         <Swiper
           modules={[Autoplay]}
           spaceBetween={30}
-          loop={true}
+          loop={false}
           autoplay={{ delay: 3000, disableOnInteraction: false }}
           breakpoints={{
             0: { slidesPerView: 2 },

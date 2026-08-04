@@ -16,7 +16,7 @@ export default function RelatedProducts({ relatedProducts, navigate }) {
           <Swiper
             modules={[Autoplay, Pagination]}
             spaceBetween={24}
-            loop={true}
+            loop={false}
             pagination={{ clickable: true }}
             autoplay={{ delay: 3000, disableOnInteraction: false }}
             breakpoints={{

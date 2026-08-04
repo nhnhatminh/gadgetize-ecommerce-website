@@ -45,7 +45,7 @@ export default function CategorySlider() {
       <Swiper
         modules={[Autoplay, Navigation]}
         spaceBetween={24}
-        loop={true}
+        loop={false}
         autoplay={{ delay: 2500, disableOnInteraction: false }}
         breakpoints={{
           0: { slidesPerView: 2 },
