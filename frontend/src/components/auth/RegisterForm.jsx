@@ -1,9 +1,12 @@
-import React, { useState, useContext } from "react";
-import { AuthContext } from "../../context/AuthContext";
+import { useState } from "react";
+import { useAuth } from "../../context/useAuth";
 import "../../styles/layouts/auth.css";
 
 export default function RegisterForm({ onRegisterSuccess }) {
-  const { register } = useContext(AuthContext);
+  // Lấy hàm register từ AuthContext
+  const { register } = useAuth();
+
+  // State quản lý form và trạng thái submit
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
@@ -11,14 +14,21 @@ export default function RegisterForm({ onRegisterSuccess }) {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
+  // Xử lý đăng ký
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     setError("");
     setSuccess("");
+    setIsSubmitting(true);
+
     try {
-      await register(firstName, lastName, email, password, phone);
-      setSuccess("Đăng ký tài khoản thành công!");
+      // Gửi dữ liệu đăng ký
+      await register({ firstName, lastName, email, password, phone });
+
+      setSuccess("Tạo tài khoản thành công! Đang chuyển sang trang đăng nhập...");
+
       if (onRegisterSuccess) {
         setTimeout(() => {
           onRegisterSuccess();
@@ -26,8 +36,10 @@ export default function RegisterForm({ onRegisterSuccess }) {
       }
     } catch (err) {
       setError(
-        err.response?.data?.message || "Đăng ký thất bại. Vui lòng thử lại",
+        err.response?.data?.message || "Đăng ký thất bại. Vui lòng thử lại"
       );
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -48,6 +60,7 @@ export default function RegisterForm({ onRegisterSuccess }) {
             value={lastName}
             onChange={(e) => setLastName(e.target.value)}
             required
+            disabled={isSubmitting}
           />
         </div>
         <div className="col-sm-6">
@@ -59,9 +72,11 @@ export default function RegisterForm({ onRegisterSuccess }) {
             value={firstName}
             onChange={(e) => setFirstName(e.target.value)}
             required
+            disabled={isSubmitting}
           />
         </div>
       </div>
+
       <div className="mb-3">
         <label className="form-label text-dark fw-medium">Địa chỉ Email</label>
         <input
@@ -71,8 +86,10 @@ export default function RegisterForm({ onRegisterSuccess }) {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
+          disabled={isSubmitting}
         />
       </div>
+
       <div className="mb-3">
         <label className="form-label text-dark fw-medium">Số điện thoại</label>
         <input
@@ -82,8 +99,10 @@ export default function RegisterForm({ onRegisterSuccess }) {
           value={phone}
           onChange={(e) => setPhone(e.target.value)}
           required
+          disabled={isSubmitting}
         />
       </div>
+
       <div className="mb-3">
         <label className="form-label text-dark fw-medium">Mật khẩu</label>
         <input
@@ -93,14 +112,17 @@ export default function RegisterForm({ onRegisterSuccess }) {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
+          disabled={isSubmitting}
         />
       </div>
+
       <div className="mb-4 form-check d-flex align-items-center gap-2">
         <input
           type="checkbox"
           className="form-check-input m-0"
           id="agreeTerms"
           required
+          disabled={isSubmitting}
         />
         <label
           className="form-check-label text-des text-muted mt-1"
@@ -112,11 +134,13 @@ export default function RegisterForm({ onRegisterSuccess }) {
           </a>
         </label>
       </div>
+
       <button
         type="submit"
         className="btn btn-auth-submit w-100 py-3 fw-medium text-white rounded-3 mb-3"
+        disabled={isSubmitting}
       >
-        Tạo Tài Khoản
+        {isSubmitting ? "Đang xử lý..." : "Tạo Tài Khoản"}
       </button>
     </form>
   );

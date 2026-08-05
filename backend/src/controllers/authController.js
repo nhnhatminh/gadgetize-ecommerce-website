@@ -13,7 +13,7 @@ export const register = async (req, res, next) => {
     );
 
     if (userCheck.rows.length > 0) {
-      return res.status(400).json({ message: "Email already exists" });
+      return res.status(400).json({ message: "Địa chỉ email này đã được sử dụng" });
     }
 
     const saltRounds = 10;
@@ -25,7 +25,7 @@ export const register = async (req, res, next) => {
     );
 
     res.status(201).json({
-      message: "User registered successfully",
+      message: "Đăng ký thành công",
       user: newUser.rows[0],
     });
   } catch (error) {
@@ -43,14 +43,14 @@ export const login = async (req, res, next) => {
     );
 
     if (result.rows.length === 0) {
-      return res.status(401).json({ message: "Invalid email or password" });
+      return res.status(401).json({ message: "Địa chỉ email hoặc mật khẩu không chính xác" });
     }
 
     const user = result.rows[0];
 
     const isPasswordValid = await bcrypt.compare(password, user.password_hash);
     if (!isPasswordValid) {
-      return res.status(401).json({ message: "Invalid email or password" });
+      return res.status(401).json({ message: "Địa chỉ email hoặc mật khẩu không chính xác" });
     }
 
     const token = jwt.sign(
@@ -60,7 +60,7 @@ export const login = async (req, res, next) => {
     );
 
     res.status(200).json({
-      message: "Login successful",
+      message: "Đăng nhập thành công",
       token,
       user: {
         id: user.id,
@@ -84,7 +84,7 @@ export const getMe = async (req, res, next) => {
     );
 
     if (result.rows.length === 0) {
-      return res.status(404).json({ message: "User not found" });
+      return res.status(404).json({ message: "Không tìm thấy thông tin người dùng" });
     }
 
     res.status(200).json(result.rows[0]);

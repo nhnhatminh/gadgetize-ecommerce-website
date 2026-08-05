@@ -25,10 +25,20 @@ axiosClient.interceptors.response.use(
     return response.data;
   },
   (error) => {
-    if (error.response && error.response.status === 401 || error.response.status === 403) {
+    // Bỏ qua API đăng nhập
+    const isLoginApi = error.config?.url?.includes("/auth/login");
+
+    // Tự động đăng xuất khi token không còn hợp lệ
+    if (
+      error.response &&
+      (error.response.status === 401 || error.response.status === 403) &&
+      !isLoginApi
+    ) {
       localStorage.removeItem("token");
-      window.location.href = "/login";
+      window.location.href = "/auth";
     }
+
+    // Chuyển lỗi cho nơi gọi API xử lý
     return Promise.reject(error);
   }
 );

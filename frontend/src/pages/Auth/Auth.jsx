@@ -53,7 +53,7 @@ export default function Auth({ navigate }) {
         <div className="tab-content">
           {activeTab === "login" ? (
             <div className="tab-pane fade show active">
-              <LoginForm navigate={navigate} />
+              <LoginForm/>
             </div>
           ) : (
             <div className="tab-pane fade show active">
