@@ -3,10 +3,13 @@ import pool from "../config/database.js";
 export const getProducts = async (req, res, next) => {
   try {
     const { category, brand, minPrice, maxPrice, color, search, sort, page = 1, limit = 12 } = req.query;
-    const offset = (parseInt(page, 10) - 1) * parseInt(limit, 10);
+    const pageNum = parseInt(page, 10) || 1;
+    const limitNum = parseInt(limit, 10) || 12;
+    const offset = (pageNum - 1) * limitNum;
 
+    // Dùng DISTINCT ON để loại bỏ sản phẩm trùng khi JOIN nhiều biến thể
     let queryText = `
-      SELECT 
+      SELECT DISTINCT ON (p.id)
         p.id, p.name, p.slug, p.description, p.base_price, p.discount_percent, p.rating, p.review_count, p.created_at,
         c.name AS category_name, c.slug AS category_slug,
         b.name AS brand_name,
@@ -59,31 +62,35 @@ export const getProducts = async (req, res, next) => {
       paramIndex++;
     }
 
+    //  Bọc query để hỗ trợ sắp xếp theo giá sau khi lọc
+    let finalQueryText = `SELECT * FROM (${queryText}) AS subquery`;
+
     if (sort) {
       switch (sort) {
         case "price_asc":
-          queryText += " ORDER BY (p.base_price + COALESCE(v.price_modifier, 0)) ASC";
+          finalQueryText += " ORDER BY (base_price + COALESCE(price_modifier, 0)) ASC";
           break;
         case "price_desc":
-          queryText += " ORDER BY (p.base_price + COALESCE(v.price_modifier, 0)) DESC";
+          finalQueryText += " ORDER BY (base_price + COALESCE(price_modifier, 0)) DESC";
           break;
         case "rating":
-          queryText += " ORDER BY p.rating DESC";
+          finalQueryText += " ORDER BY rating DESC";
           break;
         case "newest":
         default:
-          queryText += " ORDER BY p.created_at DESC";
+          finalQueryText += " ORDER BY created_at DESC";
           break;
       }
     } else {
-      queryText += " ORDER BY p.created_at DESC";
+      finalQueryText += " ORDER BY created_at DESC";
     }
 
-    queryText += ` LIMIT $${paramIndex} OFFSET $${paramIndex + 1}`;
-    queryParams.push(parseInt(limit, 10), offset);
+    finalQueryText += ` LIMIT $${paramIndex} OFFSET $${paramIndex + 1}`;
+    queryParams.push(limitNum, offset);
 
-    const result = await pool.query(queryText, queryParams);
+    const result = await pool.query(finalQueryText, queryParams);
 
+    // Đếm tổng số sản phẩm theo các điều kiện lọc
     let countQueryText = `
       SELECT COUNT(DISTINCT p.id) 
       FROM products p
@@ -92,7 +99,7 @@ export const getProducts = async (req, res, next) => {
       LEFT JOIN product_variants v ON v.product_id = p.id
       WHERE 1=1
     `;
-    
+
     const countParams = [];
     let countParamIndex = 1;
 
@@ -106,6 +113,21 @@ export const getProducts = async (req, res, next) => {
       countParams.push(brand);
       countParamIndex++;
     }
+    if (minPrice) {
+      countQueryText += ` AND (p.base_price + COALESCE(v.price_modifier, 0)) >= $${countParamIndex}`;
+      countParams.push(parseFloat(minPrice));
+      countParamIndex++;
+    }
+    if (maxPrice) {
+      countQueryText += ` AND (p.base_price + COALESCE(v.price_modifier, 0)) <= $${countParamIndex}`;
+      countParams.push(parseFloat(maxPrice));
+      countParamIndex++;
+    }
+    if (color) {
+      countQueryText += ` AND v.color_name = $${countParamIndex}`;
+      countParams.push(color);
+      countParamIndex++;
+    }
     if (search) {
       countQueryText += ` AND (p.name ILIKE $${countParamIndex} OR p.description ILIKE $${countParamIndex})`;
       countParams.push(`%${search}%`);
@@ -115,13 +137,24 @@ export const getProducts = async (req, res, next) => {
     const countResult = await pool.query(countQueryText, countParams);
     const totalProducts = parseInt(countResult.rows[0].count, 10);
 
+    // Chuyển kiểu dữ liệu từ PostgreSQL sang Number
+    const formattedProducts = result.rows.map((item) => ({
+      ...item,
+      base_price: parseFloat(item.base_price),
+      discount_percent: parseInt(item.discount_percent || 0, 10),
+      rating: parseFloat(item.rating || 0),
+      review_count: parseInt(item.review_count || 0, 10),
+      price_modifier: parseFloat(item.price_modifier || 0),
+      stock_quantity: parseInt(item.stock_quantity || 0, 10),
+    }));
+
     res.status(200).json({
-      products: result.rows,
+      products: formattedProducts,
       meta: {
         totalProducts,
-        totalPages: Math.ceil(totalProducts / parseInt(limit, 10)),
-        currentPage: parseInt(page, 10),
-        limit: parseInt(limit, 10),
+        totalPages: Math.ceil(totalProducts / limitNum),
+        currentPage: pageNum,
+        limit: limitNum,
       },
     });
   } catch (error) {
@@ -156,7 +189,7 @@ export const createProduct = async (req, res, next) => {
   try {
     await client.query("BEGIN");
     const { categoryId, brandId, name, slug, description, basePrice, discountPercent, sku, colorName, colorHex, stockQuantity, priceModifier } = req.body;
-    
+
     let imageUrl = "/images/no-image.png";
     if (req.file) {
       imageUrl = `/uploads/${req.file.filename}`;
@@ -183,12 +216,15 @@ export const createProduct = async (req, res, next) => {
     );
 
     await client.query("COMMIT");
-    res.status(201).json({ message: "Product created successfully", productId });
+    res.status(201).json({ message: "Thêm sản phẩm thành công", productId });
   } catch (error) {
     await client.query("ROLLBACK");
+    // Xử lý lỗi trùng slug hoặc SKU
+    if (error.code === "23505") {
+      return res.status(400).json({ message: "Mã SKU hoặc đường dẫn Slug sản phẩm đã tồn tại" });
+    }
     next(error);
-  } 
-  finally {
+  } finally {
     client.release();
   }
 };
@@ -221,22 +257,24 @@ export const updateProduct = async (req, res, next) => {
         [sku, colorName, colorHex, stockQuantity, priceModifier, variantId]
       );
 
-          if (req.file) {
-            const imageUrl = `/uploads/${req.file.filename}`;
-            await client.query(
-              `UPDATE product_images SET image_url = $1 WHERE variant_id = $2 AND is_primary = true`,
-              [imageUrl, variantId]
-            );
-          }
+      if (req.file) {
+        const imageUrl = `/uploads/${req.file.filename}`;
+        await client.query(
+          `UPDATE product_images SET image_url = $1 WHERE variant_id = $2 AND is_primary = true`,
+          [imageUrl, variantId]
+        );
+      }
     }
 
     await client.query("COMMIT");
-    res.status(200).json({ message: "Product updated successfully" });
+    res.status(200).json({ message: "Cập nhật sản phẩm thành công" });
   } catch (error) {
     await client.query("ROLLBACK");
+    if (error.code === "23505") {
+      return res.status(400).json({ message: "Mã SKU hoặc đường dẫn Slug sản phẩm đã tồn tại" });
+    }
     next(error);
-  } 
-  finally {
+  } finally {
     client.release();
   }
 };
@@ -245,7 +283,7 @@ export const deleteProduct = async (req, res, next) => {
   try {
     const { id } = req.params;
     await pool.query("DELETE FROM products WHERE id = $1", [id]);
-    res.status(200).json({ message: "Product deleted successfully" });
+    res.status(200).json({ message: "Xóa sản phẩm thành công" });
   } catch (error) {
     next(error);
   }

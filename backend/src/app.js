@@ -21,7 +21,9 @@ app.use(cors({
 }));
 
 app.use(express.json());
-app.use('/uploads', express.static('uploads'));
+
+// Phục vụ ảnh từ thư mục uploads
+app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
 
 app.use('/api/auth', authRoutes);
 app.use('/api/products', productRoutes);
@@ -45,6 +47,7 @@ app.get('/api/health', async (req, res) => {
 
 app.use(express.static(path.join(__dirname, '../../frontend/dist')));
 
+// Chuyển mọi route không phải API về React
 app.get('*', (req, res, next) => {
   if (req.url.startsWith('/api/')) {
     return next();
