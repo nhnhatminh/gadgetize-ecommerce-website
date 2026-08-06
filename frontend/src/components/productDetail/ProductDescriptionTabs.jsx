@@ -1,4 +1,3 @@
-import { useState, useEffect } from "react";
 import "../../styles/layouts/product_detail_page.css";
 import "../../styles/components/showcase.css";
 
@@ -6,9 +5,10 @@ export default function ProductDescriptionTabs({
   activeTab,
   setActiveTab,
   productImage,
+  description,
 }) {
   return (
-    <div className="product-description-tabs bg-white rounded-4 p-4 p-lg-5 mb-5 shadow-sm">
+   <div className="product-description-tabs bg-white rounded-4 p-4 p-lg-5 mb-5 shadow-sm">
       <ul
         className="nav nav-tabs justify-content-center border-bottom mb-4"
         role="tablist"
@@ -45,14 +45,9 @@ export default function ProductDescriptionTabs({
       <div className="tab-content">
         {activeTab === "desc" && (
           <div className="tab-pane fade show active">
-            <h4 className="fw-bold mb-4">Mô Tả</h4>
-            <p className="text-muted text-des mb-4">
-              Lorem ipsum dolor sit amet consectetur. Est morbi cum bibendum id
-              eleifend ultrices enim nec. Vitae morbi mus imperdiet tincidunt
-              ultrices hendrerit. Lobortis donec massa fermentum aliquet sapien.
-              Magna risus donec aliquam diam aliquet consectetur. Etiam accumsan
-              ipsum augue sed vitae. Tortor volutpat et dui in malesuada
-              euismod. Sociis aenean porttitor aliquet sit amet.
+            <h4 className="fw-bold mb-4">Mô Tả Sản Phẩm</h4>
+            <p className="text-muted text-des mb-4 lh-base">
+              {description}
             </p>
             <div className="text-center mb-5">
               <div className="row g-4 justify-content-center">
@@ -62,6 +57,10 @@ export default function ProductDescriptionTabs({
                     alt="Product Details"
                     className="img-fluid w-75 object-fit-contain"
                     style={{ maxHeight: "350px" }}
+                    onError={(e) => {
+                      e.target.onerror = null;
+                      e.target.src = "/images/no-image.png";
+                    }}
                   />
                 </div>
               </div>

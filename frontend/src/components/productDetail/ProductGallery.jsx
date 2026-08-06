@@ -1,4 +1,3 @@
-import { useState, useEffect } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
 import "../../styles/layouts/product_detail_page.css";
@@ -23,6 +22,10 @@ export default function ProductGallery({
           alt={productName}
           className="img-fluid object-fit-contain"
           style={{ maxHeight: "300px", maxWidth: "100%", width: "auto" }}
+          onError={(e) => {
+            e.target.onerror = null;
+            e.target.src = "/images/no-image.png";
+          }}
         />
       </div>
 
@@ -36,14 +39,17 @@ export default function ProductGallery({
             768: { slidesPerView: 5 },
             992: { slidesPerView: 4 },
             1200: { slidesPerView: 5 },
-            1400: { slidesPerView: 6 },
           }}
           className="thumbs-swiper"
         >
           {images.map((img, idx) => (
             <SwiperSlide key={idx}>
               <div
-                className={`thumb-item cursor-pointer rounded-circle d-flex align-items-center justify-content-center mx-auto bg-light border ${mainImage === img ? "border-success border-2 shadow-sm" : "border-light-subtle"}`}
+                className={`thumb-item cursor-pointer rounded-circle d-flex align-items-center justify-content-center mx-auto bg-light border ${
+                  mainImage === img
+                    ? "border-success border-2 shadow-sm"
+                    : "border-light-subtle"
+                }`}
                 onClick={() => setMainImage(img)}
                 style={{
                   width: "70px",
@@ -57,6 +63,10 @@ export default function ProductGallery({
                   alt="Thumb"
                   className="img-fluid object-fit-contain"
                   style={{ maxHeight: "100%", maxWidth: "100%" }}
+                  onError={(e) => {
+                    e.target.onerror = null;
+                    e.target.src = "/images/no-image.png";
+                  }}
                 />
               </div>
             </SwiperSlide>

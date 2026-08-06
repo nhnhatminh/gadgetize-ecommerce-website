@@ -1,4 +1,3 @@
-import { useState, useEffect } from "react";
 import "../../styles/layouts/product_detail_page.css";
 import "../../styles/components/showcase.css";
 
@@ -200,7 +199,10 @@ export default function ProductInfo({
         <button
           type="button"
           className="btn btn-success w-100 py-3 fw-bold rounded-3 text-white border-0 fs-6 shadow-sm"
-          onClick={() => navigate("cart")}
+          onClick={() => {
+            onAddToCart();
+            navigate("cart");
+          }}
           style={{
             backgroundColor: "#006837",
             letterSpacing: "0.5px",

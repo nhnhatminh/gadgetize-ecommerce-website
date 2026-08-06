@@ -1,4 +1,3 @@
-import { useState, useEffect } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Pagination } from "swiper/modules";
 import ProductCard from "../common/ProductCard";
@@ -33,7 +32,7 @@ export default function RelatedProducts({ relatedProducts, navigate }) {
                 key={prod.id}
                 onClick={() => navigate("product-detail", prod.slug)}
               >
-                <ProductCard product={prod} layoutMode="vertical" />
+                <ProductCard product={prod} />
               </SwiperSlide>
             ))}
           </Swiper>
