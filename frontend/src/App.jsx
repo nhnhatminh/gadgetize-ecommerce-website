@@ -35,7 +35,12 @@ export default function App() {
         <Route path="/auth" element={<Auth />} />
       </Route>
 
-      <Route path="/checkout" element={<Checkout />} />
+      <Route
+        path="/checkout"
+        element={
+          user ? <Checkout /> : <Navigate to="/auth" replace />
+        }
+      />
 
       <Route
         path="/admin"

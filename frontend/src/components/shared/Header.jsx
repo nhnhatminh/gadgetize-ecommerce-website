@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useRef, useContext } from "react";
 import { useNavigate, useLocation, Link } from "react-router-dom";
 import LiveSearchDropdown from "./LiveSearchDropdown";
-import { AuthContext } from "../../context/AuthContext";
+import { useAuth } from "../../context/useAuth";
 import { CartContext } from "../../context/CartContext";
 import "../../styles/components/header.css";
 
 export default function Header() {
-  const { user, logout } = useContext(AuthContext);
+  const { user, logout } = useAuth();
   const { cartItems } = useContext(CartContext);
   const navigate = useNavigate();
   const location = useLocation();
@@ -82,6 +82,11 @@ export default function Header() {
     0,
   );
 
+  const handleLogout = () => {
+    logout();
+    navigate("/auth");
+  };
+
   return (
     <header className="bg-white site-header">
       <div className="header-topbar">
@@ -153,7 +158,7 @@ export default function Header() {
 
               <div
                 className="header-action-item d-none d-sm-flex"
-                onClick={() => (user ? logout() : navigate("/auth"))}
+                onClick={() => (user ? handleLogout() : navigate("/auth"))}
               >
                 <div className="header-action-icon">
                   <i className="fa-regular fa-user"></i>
@@ -324,11 +329,15 @@ export default function Header() {
             <li
               className="cursor-pointer"
               onClick={() => {
-                navigate("/auth");
+                if (user) {
+                  handleLogout();
+                } else {
+                  navigate("/auth");
+                }
                 setIsMobileMenuOpen(false);
               }}
             >
-              Tài khoản
+              {user ? `Đăng xuất (${user.firstName})` : "Tài khoản / Đăng nhập"}
             </li>
             {user?.role === "admin" && (
               <li

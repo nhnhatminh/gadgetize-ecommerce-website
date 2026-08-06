@@ -1,11 +1,22 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../context/useAuth";
 import LoginForm from "../../components/auth/LoginForm";
 import RegisterForm from "../../components/auth/RegisterForm";
 import SocialLogin from "../../components/auth/SocialLogin";
 import "../../styles/layouts/auth.css";
 
-export default function Auth({ navigate }) {
+export default function Auth() {
+  const navigate = useNavigate();
+  const { user } = useAuth();
   const [activeTab, setActiveTab] = useState("login");
+
+  // Chuyển về trang chủ nếu đã đăng nhập
+  useEffect(() => {
+    if (user) {
+      navigate("/", { replace: true });
+    }
+  }, [user, navigate]);
 
   return (
     <div className="auth-page-container d-flex align-items-center justify-content-center min-vh-100">
@@ -13,7 +24,7 @@ export default function Auth({ navigate }) {
         <div className="text-center mb-4">
           <div
             className="cursor-pointer d-inline-block mb-3"
-            onClick={() => navigate("home")}
+            onClick={() => navigate("/")}
           >
             <img
               src="/images/logo.png"
