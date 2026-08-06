@@ -1,5 +1,3 @@
-import React from "react";
-
 export default function ProductsToolbar({ productsCount, sortBy, setSortBy }) {
   return (
     <div className="products-toolbar bg-white rounded-4 p-3 shadow-sm mb-4 d-flex align-items-center justify-content-between">
@@ -17,14 +15,14 @@ export default function ProductsToolbar({ productsCount, sortBy, setSortBy }) {
         <label className="text-muted fs-7 text-nowrap mb-0">Lọc theo:</label>
         <select
           className="form-select form-select-sm border-light-subtle fs-7 py-1 px-3 text-dark"
-          style={{ width: "160px", borderRadius: "6px" }}
+          style={{ width: "180px", borderRadius: "6px" }}
           value={sortBy}
           onChange={(e) => setSortBy(e.target.value)}
         >
-          <option value="default">Mặc định</option>
-          <option value="bestseller">Bán chạy nhất</option>
-          <option value="price-low">Giá: Thấp đến Cao</option>
-          <option value="price-high">Giá: Cao đến Thấp</option>
+          <option value="newest">Mới nhất</option>
+          <option value="price_asc">Giá: Thấp đến Cao</option>
+          <option value="price_desc">Giá: Cao đến Thấp</option>
+          <option value="rating">Đánh giá cao nhất</option>
         </select>
       </div>
     </div>

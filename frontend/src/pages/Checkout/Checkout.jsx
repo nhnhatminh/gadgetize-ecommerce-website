@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import { useState, useContext } from "react";
 import { CartContext } from "../../context/CartContext";
 import { orderApi } from "../../api/orderApi";
 import BillingShippingForm from "../../components/checkout/BillingShippingForm";

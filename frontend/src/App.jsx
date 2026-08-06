@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import { useContext } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import ClientLayout from "./components/shared/ClientLayout";
 import AdminLayout from "./pages/Admin/AdminLayout";

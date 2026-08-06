@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import HomeBanner from "../../components/home/HomeBanner";
 import CategorySlider from "../../components/home/CategorySlider";

@@ -1,4 +1,4 @@
-import React from "react";
+import { useState, useEffect } from "react";
 import ProductCard from "../common/ProductCard";
 import "../../styles/layouts/home.css";
 import "../../styles/components/hero.css";

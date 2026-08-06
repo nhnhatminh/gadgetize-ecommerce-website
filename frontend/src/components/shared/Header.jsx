@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useContext } from "react";
+import { useState, useEffect, useRef, useContext } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import LiveSearchDropdown from "./LiveSearchDropdown";
 import { useAuth } from "../../context/useAuth";
@@ -13,18 +13,28 @@ export default function Header() {
   const location = useLocation();
   const currentPath = location.pathname;
 
-// State quản lý menu
+  // State quản lý menu 
   const [isCategoryOpen, setIsCategoryOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-// State quản lý Live Search
+  // State quản lý Live Search
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [isSearching, setIsSearching] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
   const searchRef = useRef(null);
 
-// Đóng menu khi click ra ngoài
+  // Xử lý tìm kiếm
+  const handleInputChange = (e) => {
+    const value = e.target.value;
+    setSearchQuery(value);
+
+    if (!value.trim()) {
+      setSearchResults([]);
+      setShowDropdown(false);
+    }
+  };
+
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (searchRef.current && !searchRef.current.contains(event.target)) {
@@ -37,13 +47,9 @@ export default function Header() {
     };
   }, []);
 
-// Debounce tìm kiếm
+  // Debounce tìm kiếm
   useEffect(() => {
-    if (!searchQuery.trim()) {
-      setSearchResults([]);
-      setShowDropdown(false);
-      return;
-    }
+    if (!searchQuery.trim()) return;
 
     const timer = setTimeout(async () => {
       try {
@@ -61,7 +67,7 @@ export default function Header() {
     return () => clearTimeout(timer);
   }, [searchQuery]);
 
-// Tìm kiếm sản phẩm
+  // Tìm kiếm sản phẩm
   const handleSearchSubmit = (e) => {
     e.preventDefault();
     if (searchQuery.trim()) {
@@ -70,14 +76,14 @@ export default function Header() {
     }
   };
 
-// Chọn sản phẩm từ gợi ý
+  // Chọn sản phẩm từ gợi ý
   const handleSelectSearchItem = (slug) => {
     setShowDropdown(false);
     setSearchQuery("");
     navigate(`/product/${slug}`);
   };
 
-// Tính tổng giỏ hàng
+  // Tính tổng giỏ hàng
   const totalCartQuantity = cartItems.reduce(
     (acc, item) => acc + item.quantity,
     0
@@ -87,7 +93,7 @@ export default function Header() {
     0
   );
 
-// Đăng xuất
+  // Xử lý đăng xuất
   const handleLogout = () => {
     logout();
     navigate("/auth");
@@ -134,7 +140,7 @@ export default function Header() {
                   className="header-search-input"
                   placeholder="Tìm kiếm sản phẩm..."
                   value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
+                  onChange={handleInputChange}
                   onFocus={() => {
                     if (searchResults.length > 0) setShowDropdown(true);
                   }}

@@ -1,4 +1,4 @@
-import React from "react";
+import { useState, useEffect } from "react";
 
 export default function LiveSearchDropdown({ products, isOpen, onItemClick }) {
   if (!isOpen) return null;

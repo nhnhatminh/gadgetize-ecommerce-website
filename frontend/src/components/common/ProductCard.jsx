@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import { useContext, useState } from "react";
 import { CartContext } from "../../context/CartContext";
 import "../../styles/components/produc_card.css";
 
@@ -43,6 +43,10 @@ export default function ProductCard({ product }) {
           alt={product.name}
           className="img-fluid object-fit-contain"
           style={{ maxHeight: "120px" }}
+          onError={(e) => {
+            e.target.onerror = null;
+            e.target.src = "/images/no-image.png";
+          }}
         />
       </div>
 

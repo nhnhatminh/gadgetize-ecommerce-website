@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { adminApi } from "../../api/adminApi";
 
 export default function AdminOrders() {

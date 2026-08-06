@@ -1,4 +1,4 @@
-import React from "react";
+import { useState, useEffect } from "react";
 import "../../styles/layouts/product_detail_page.css";
 import "../../styles/components/showcase.css";
 
