@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useRef, useContext } from "react";
-import { useNavigate, useLocation, Link } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import LiveSearchDropdown from "./LiveSearchDropdown";
 import { useAuth } from "../../context/useAuth";
 import { CartContext } from "../../context/CartContext";
+import { productApi } from "../../api/productApi";
 import "../../styles/components/header.css";
 
 export default function Header() {
@@ -12,45 +13,18 @@ export default function Header() {
   const location = useLocation();
   const currentPath = location.pathname;
 
+// State quản lý menu
   const [isCategoryOpen, setIsCategoryOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+// State quản lý Live Search
   const [searchQuery, setSearchQuery] = useState("");
+  const [searchResults, setSearchResults] = useState([]);
+  const [isSearching, setIsSearching] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
   const searchRef = useRef(null);
 
-  const sampleProducts = [
-    {
-      id: 1,
-      name: "Tai Nghe Razer Electra",
-      image: "/images/pr-1.png",
-      newPrice: 1200000,
-    },
-    {
-      id: 2,
-      name: "Chuột Hyper Glide",
-      image: "/images/pr-2.png",
-      newPrice: 2450000,
-    },
-    {
-      id: 3,
-      name: "Màn Hình LCD Radiant View",
-      image: "/images/pr-3.png",
-      newPrice: 22500000,
-    },
-    {
-      id: 4,
-      name: "Laptop Gaming Nitro 5",
-      image: "/images/pr-4.png",
-      newPrice: 17000000,
-    },
-    {
-      id: 5,
-      name: "Điện thoại iPhone 14 Pro Max",
-      image: "/images/pr-5.png",
-      newPrice: 17500000,
-    },
-  ];
-
+// Đóng menu khi click ra ngoài
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (searchRef.current && !searchRef.current.contains(event.target)) {
@@ -63,25 +37,57 @@ export default function Header() {
     };
   }, []);
 
-  const handleSearchChange = (e) => {
-    const value = e.target.value;
-    setSearchQuery(value);
-    setShowDropdown(value.trim() !== "");
+// Debounce tìm kiếm
+  useEffect(() => {
+    if (!searchQuery.trim()) {
+      setSearchResults([]);
+      setShowDropdown(false);
+      return;
+    }
+
+    const timer = setTimeout(async () => {
+      try {
+        setIsSearching(true);
+        const response = await productApi.searchProducts(searchQuery.trim());
+        setSearchResults(response.products || []);
+        setShowDropdown(true);
+      } catch (error) {
+        console.error("Lỗi khi tìm kiếm sản phẩm:", error);
+      } finally {
+        setIsSearching(false);
+      }
+    }, 300);
+
+    return () => clearTimeout(timer);
+  }, [searchQuery]);
+
+// Tìm kiếm sản phẩm
+  const handleSearchSubmit = (e) => {
+    e.preventDefault();
+    if (searchQuery.trim()) {
+      setShowDropdown(false);
+      navigate(`/shop?search=${encodeURIComponent(searchQuery.trim())}`);
+    }
   };
 
-  const filteredProducts = sampleProducts.filter((product) =>
-    product.name.toLowerCase().includes(searchQuery.toLowerCase()),
-  );
+// Chọn sản phẩm từ gợi ý
+  const handleSelectSearchItem = (slug) => {
+    setShowDropdown(false);
+    setSearchQuery("");
+    navigate(`/product/${slug}`);
+  };
 
+// Tính tổng giỏ hàng
   const totalCartQuantity = cartItems.reduce(
     (acc, item) => acc + item.quantity,
-    0,
+    0
   );
   const totalCartPrice = cartItems.reduce(
-    (acc, item) => acc + parseFloat(item.final_unit_price) * item.quantity,
-    0,
+    (acc, item) => acc + parseFloat(item.final_unit_price || 0) * item.quantity,
+    0
   );
 
+// Đăng xuất
   const handleLogout = () => {
     logout();
     navigate("/auth");
@@ -114,7 +120,11 @@ export default function Header() {
             </div>
 
             <div className="col-xl-6 col-lg-6 d-none d-lg-block">
-              <div className="header-search" ref={searchRef}>
+              <form
+                className="header-search"
+                ref={searchRef}
+                onSubmit={handleSearchSubmit}
+              >
                 <div className="header-search-category">
                   Tất cả danh mục{" "}
                   <i className="fa-solid fa-angle-down ms-1"></i>
@@ -124,20 +134,25 @@ export default function Header() {
                   className="header-search-input"
                   placeholder="Tìm kiếm sản phẩm..."
                   value={searchQuery}
-                  onChange={handleSearchChange}
+                  onChange={(e) => setSearchQuery(e.target.value)}
                   onFocus={() => {
-                    if (searchQuery.trim() !== "") {
-                      setShowDropdown(true);
-                    }
+                    if (searchResults.length > 0) setShowDropdown(true);
                   }}
                 />
-                <button className="header-search-btn">Tìm kiếm</button>
+                <button type="submit" className="header-search-btn">
+                  {isSearching ? (
+                    <i className="fa-solid fa-spinner fa-spin"></i>
+                  ) : (
+                    "Tìm kiếm"
+                  )}
+                </button>
 
                 <LiveSearchDropdown
-                  products={filteredProducts}
+                  products={searchResults}
                   isOpen={showDropdown}
+                  onItemClick={handleSelectSearchItem}
                 />
-              </div>
+              </form>
             </div>
 
             <div className="col-xl-3 col-lg-3 col-md-8 col-6 d-flex justify-content-end align-items-center gap-3">
@@ -188,7 +203,7 @@ export default function Header() {
                 </div>
                 <div className="header-action-text d-none d-sm-block">
                   <span>Giỏ hàng</span>
-                  <strong>{totalCartPrice.toLocaleString()} VND</strong>
+                  <strong>{totalCartPrice.toLocaleString("vi-VN")} VND</strong>
                 </div>
               </div>
 
