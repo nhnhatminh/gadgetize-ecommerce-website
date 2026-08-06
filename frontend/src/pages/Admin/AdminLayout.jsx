@@ -1,10 +1,9 @@
-import { useContext } from "react";
 import { Outlet, useNavigate, useLocation } from "react-router-dom";
-import { AuthContext } from "../../context/AuthContext";
+import { useAuth } from "../../context/useAuth";
 import "../../styles/layouts/admin.css";
 
 export default function AdminLayout() {
-  const { user, logout } = useContext(AuthContext);
+  const { user, logout } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
   const currentPath = location.pathname;
@@ -97,7 +96,7 @@ export default function AdminLayout() {
           <div className="admin-header__actions">
             <button
               className="admin-header__btn-action"
-              onClick={() => navigate("admin-products")}
+              onClick={() => navigate("/admin/products")}
             >
               <i className="fa-solid fa-plus me-2"></i> New Product
             </button>

@@ -285,6 +285,12 @@ export const deleteProduct = async (req, res, next) => {
     await pool.query("DELETE FROM products WHERE id = $1", [id]);
     res.status(200).json({ message: "Xóa sản phẩm thành công" });
   } catch (error) {
+    if (error.code === "23503") {
+      return res.status(400).json({
+        message:
+          "Không thể xóa sản phẩm này do đã tồn tại trong đơn hàng hoặc giỏ hàng của người dùng",
+      });
+    }
     next(error);
   }
 };

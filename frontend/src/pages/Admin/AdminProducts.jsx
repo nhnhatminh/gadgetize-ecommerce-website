@@ -9,6 +9,8 @@ export default function AdminProducts() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingId, setEditingId] = useState(null);
   const [selectedFile, setSelectedFile] = useState(null);
+  const [previewUrl, setPreviewUrl] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
   const [form, setForm] = useState({
     name: "",
@@ -25,44 +27,58 @@ export default function AdminProducts() {
     priceModifier: "0",
   });
 
+  // Tải danh sách sản phẩm 
   const loadAdminProducts = async () => {
     try {
       const data = await productApi.getProducts({ limit: 100 });
-      setProducts(data.products);
+      setProducts(data.products || []);
     } catch (error) {
-      console.error(error);
+      console.error("Lỗi khi tải danh sách sản phẩm:", error);
     }
   };
 
+  // Tải danh mục và thương hiệu
   useEffect(() => {
-    const fetchMetadata = async () => {
+    const fetchInitialData = async () => {
       try {
-        const [catData, brandData] = await Promise.all([
+        const [catData, brandData, productsData] = await Promise.all([
           productApi.getCategories(),
           productApi.getBrands(),
+          productApi.getProducts({ limit: 100 }),
         ]);
-        setCategories(catData);
-        setBrands(brandData);
+
+        setCategories(catData || []);
+        setBrands(brandData || []);
+        setProducts(productsData.products || []);
       } catch (error) {
-        console.error(error);
+        console.error("Lỗi khi tải dữ liệu khởi tạo Admin:", error);
       }
     };
-    fetchMetadata();
-    loadAdminProducts();
+
+    fetchInitialData();
   }, []);
 
+  // Cập nhật dữ liệu form
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setForm((prev) => ({ ...prev, [name]: value }));
   };
 
+  // Chọn ảnh xem trước
   const handleFileChange = (e) => {
-    setSelectedFile(e.target.files[0]);
+    const file = e.target.files[0];
+    if (file) {
+      setSelectedFile(file);
+      setPreviewUrl(URL.createObjectURL(file));
+    }
   };
 
+  // Mở modal thêm sản phẩm 
   const handleOpenAddModal = () => {
     setEditingId(null);
     setSelectedFile(null);
+    setPreviewUrl("");
+    setErrorMessage("");
     setForm({
       name: "",
       slug: "",
@@ -80,17 +96,20 @@ export default function AdminProducts() {
     setIsModalOpen(true);
   };
 
+  // Mở modal chỉnh sửa
   const handleOpenEditModal = (prod) => {
     setEditingId(prod.id);
     setSelectedFile(null);
+    setPreviewUrl(prod.image_url || "");
+    setErrorMessage("");
     setForm({
-      name: prod.name,
-      slug: prod.slug,
+      name: prod.name || "",
+      slug: prod.slug || "",
       description: prod.description || "",
-      basePrice: prod.base_price,
+      basePrice: prod.base_price || "",
       discountPercent: prod.discount_percent || "0",
-      categoryId: prod.category_id || "",
-      brandId: prod.brand_id || "",
+      categoryId: prod.category_id || categories[0]?.id || "",
+      brandId: prod.brand_id || brands[0]?.id || "",
       sku: prod.sku || "",
       colorName: prod.color_name || "",
       colorHex: prod.color_hex || "#111111",
@@ -100,19 +119,26 @@ export default function AdminProducts() {
     setIsModalOpen(true);
   };
 
+  // Xóa sản phẩm
   const handleDelete = async (id) => {
-    if (window.confirm("Are you sure you want to delete this product?")) {
+    if (window.confirm("Bạn có chắc chắn muốn xóa sản phẩm này?")) {
       try {
         await adminApi.deleteProduct(id);
         loadAdminProducts();
       } catch (error) {
-        console.error(error);
+        alert(
+          error.response?.data?.message ||
+            "Không thể xóa sản phẩm này do đã có trong đơn hàng."
+        );
       }
     }
   };
 
+  // Lưu sản phẩm
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setErrorMessage("");
+
     const formData = new FormData();
     Object.keys(form).forEach((key) => {
       formData.append(key, form[key]);
@@ -130,7 +156,10 @@ export default function AdminProducts() {
       setIsModalOpen(false);
       loadAdminProducts();
     } catch (error) {
-      console.error(error);
+      setErrorMessage(
+        error.response?.data?.message ||
+          "Có lỗi xảy ra khi lưu thông tin sản phẩm. Vui lòng thử lại."
+      );
     }
   };
 
@@ -174,17 +203,21 @@ export default function AdminProducts() {
                         height: "45px",
                         objectFit: "contain",
                       }}
+                      onError={(e) => {
+                        e.target.onerror = null;
+                        e.target.src = "/images/no-image.png";
+                      }}
                     />
                   </td>
                   <td className="fw-bold" style={{ maxWidth: "250px" }}>
                     {prod.name}
                   </td>
                   <td>
-                    {parseFloat(prod.base_price).toLocaleString("vi-VN")}₫
+                    {parseFloat(prod.base_price || 0).toLocaleString("vi-VN")}₫
                   </td>
                   <td>
                     <span className="badge bg-danger-subtle text-danger rounded-1">
-                      {prod.discount_percent}%
+                      {prod.discount_percent || 0}%
                     </span>
                   </td>
                   <td>
@@ -202,7 +235,7 @@ export default function AdminProducts() {
                   </td>
                   <td>
                     <span
-                      className={`fw-bold ${parseInt(prod.stock_quantity) > 0 ? "text-success" : "text-danger"}`}
+                      className={`fw-bold ${parseInt(prod.stock_quantity || 0, 10) > 0 ? "text-success" : "text-danger"}`}
                     >
                       {prod.stock_quantity || 0} pcs
                     </span>
@@ -253,6 +286,15 @@ export default function AdminProducts() {
                   className="modal-body p-4 overflow-auto"
                   style={{ maxHeight: "calc(100vh - 200px)" }}
                 >
+                  {errorMessage && (
+                    <div
+                      className="alert alert-danger py-2 fs-7 mb-3"
+                      role="alert"
+                    >
+                      {errorMessage}
+                    </div>
+                  )}
+
                   <div className="row g-3">
                     <div className="col-md-6">
                       <label className="form-label text-muted fw-medium fs-7">
@@ -410,10 +452,24 @@ export default function AdminProducts() {
                       </label>
                       <input
                         type="file"
-                        className="form-control"
+                        className="form-control mb-2"
                         onChange={handleFileChange}
                         accept="image/*"
                       />
+                      {previewUrl && (
+                        <div className="mt-2 text-center">
+                          <img
+                            src={previewUrl}
+                            alt="Preview"
+                            className="rounded border p-1 bg-light"
+                            style={{ maxHeight: "120px", objectFit: "contain" }}
+                            onError={(e) => {
+                              e.target.onerror = null;
+                              e.target.src = "/images/no-image.png";
+                            }}
+                          />
+                        </div>
+                      )}
                     </div>
                     <div className="col-12">
                       <label className="form-label text-muted fw-medium fs-7">
