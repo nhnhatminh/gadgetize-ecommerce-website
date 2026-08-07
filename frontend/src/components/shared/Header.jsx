@@ -1,14 +1,14 @@
-import { useState, useEffect, useRef, useContext } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import LiveSearchDropdown from "./LiveSearchDropdown";
 import { useAuth } from "../../context/useAuth";
-import { CartContext } from "../../context/CartContext";
+import { useCart } from "../../context/CartContext";
 import { productApi } from "../../api/productApi";
 import "../../styles/components/header.css";
 
 export default function Header() {
   const { user, logout } = useAuth();
-  const { cartItems } = useContext(CartContext);
+  const { cartItems } = useCart();
   const navigate = useNavigate();
   const location = useLocation();
   const currentPath = location.pathname;

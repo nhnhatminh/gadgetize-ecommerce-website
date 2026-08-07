@@ -1,11 +1,8 @@
-import { useContext } from "react";
-import { CartContext } from "../../context/CartContext";
+import { useCart } from "../../context/CartContext";
 import "../../styles/layouts/cart.css";
 
 export default function Cart({ navigate }) {
-  const { cartItems, loading, updateCartItem, removeFromCart, clearCart } =
-    useContext(CartContext);
-
+  const { cartItems, loading, updateCartItem, removeFromCart, clearCart } = useCart();
   const calculateSubtotal = () => {
     return cartItems.reduce(
       (total, item) =>

@@ -1,18 +1,18 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import ProductGallery from "../../components/productDetail/ProductGallery";
 import ProductInfo from "../../components/productDetail/ProductInfo";
 import ProductDescriptionTabs from "../../components/productDetail/ProductDescriptionTabs";
 import RelatedProducts from "../../components/productDetail/RelatedProducts";
 import { productApi } from "../../api/productApi";
-import { CartContext } from "../../context/CartContext";
+import { useCart } from "../../context/CartContext";
 import "../../styles/layouts/product_detail_page.css";
 import "../../styles/components/showcase.css";
 
 export default function ProductDetail() {
   const { slug } = useParams();
   const navigate = useNavigate();
-  const { addToCart } = useContext(CartContext);
+  const { addToCart } = useCart();
 
   // State quản lý sản phẩm
   const [quantity, setQuantity] = useState(1);

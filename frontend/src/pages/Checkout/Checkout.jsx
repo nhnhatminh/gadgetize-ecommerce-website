@@ -1,12 +1,12 @@
-import { useState, useContext } from "react";
-import { CartContext } from "../../context/CartContext";
+import { useState } from "react";
+import { useCart } from "../../context/CartContext";
 import { orderApi } from "../../api/orderApi";
 import BillingShippingForm from "../../components/checkout/BillingShippingForm";
 import PaymentMethods from "../../components/checkout/PaymentMethods";
 import OrderSummarySidebar from "../../components/checkout/OrderSummarySidebar";
 
 export default function Checkout({ navigate }) {
-  const { cartItems, clearCart } = useContext(CartContext);
+  const { cartItems, clearCart } = useCart();
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState("");
   const [successData, setSuccessData] = useState(null);
