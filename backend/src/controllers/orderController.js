@@ -113,6 +113,8 @@ export const createOrder = async (req, res, next) => {
       );
     }
 
+    await client.query("DELETE FROM cart_items WHERE user_id = $1", [userId]);
+
     await client.query("COMMIT");
 
     res.status(201).json({
@@ -133,6 +135,50 @@ export const createOrder = async (req, res, next) => {
     next(error);
   } finally {
     client.release();
+  }
+};
+
+export const checkCoupon = async (req, res, next) => {
+  try {
+    const { couponCode, subtotal } = req.body;
+    if (!couponCode) {
+      return res.status(400).json({ message: "Vui lòng nhập mã giảm giá" });
+    }
+
+    const result = await pool.query(
+      `SELECT id, code, discount_amount, min_order_value, expiration_date, is_active 
+       FROM coupons 
+       WHERE code = $1`,
+      [couponCode]
+    );
+
+    if (result.rows.length === 0) {
+      return res.status(404).json({ message: "Mã giảm giá không tồn tại" });
+    }
+
+    const coupon = result.rows[0];
+    const now = new Date();
+
+    if (!coupon.is_active || (coupon.expiration_date && new Date(coupon.expiration_date) < now)) {
+      return res.status(400).json({ message: "Mã giảm giá đã hết hạn hoặc ngưng áp dụng" });
+    }
+
+    if (subtotal && parseFloat(subtotal) < parseFloat(coupon.min_order_value || 0)) {
+      return res.status(400).json({
+        message: `Giá trị đơn hàng tối thiểu phải từ ${parseFloat(coupon.min_order_value).toLocaleString("vi-VN")}₫ để sử dụng mã này`
+      });
+    }
+
+    res.status(200).json({
+      message: "Áp dụng mã giảm giá thành công",
+      coupon: {
+        id: coupon.id,
+        code: coupon.code,
+        discountAmount: parseFloat(coupon.discount_amount)
+      }
+    });
+  } catch (error) {
+    next(error);
   }
 };
 
@@ -179,7 +225,7 @@ export const getOrderById = async (req, res, next) => {
        JOIN products p ON v.product_id = p.id
        LEFT JOIN product_images img ON img.variant_id = v.id AND img.is_primary = TRUE
        WHERE oi.order_id = $1`,
-       [id]
+      [id]
     );
 
     res.status(200).json({
