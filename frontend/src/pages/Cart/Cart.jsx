@@ -1,176 +1,86 @@
+import { useNavigate } from "react-router-dom";
 import { useCart } from "../../context/CartContext";
+import CartItemRow from "../../components/cart/CartItemRow";
+import CartTotals from "../../components/cart/CartTotals";
 import "../../styles/layouts/cart.css";
 
-export default function Cart({ navigate }) {
-  const { cartItems, loading, updateCartItem, removeFromCart, clearCart } = useCart();
-  const calculateSubtotal = () => {
-    return cartItems.reduce(
-      (total, item) =>
-        total + parseFloat(item.final_unit_price) * item.quantity,
-      0,
-    );
-  };
+export default function Cart() {
+  const navigate = useNavigate();
+  const { cartItems, loading, updateCartItem, removeFromCart, clearCart, totalPrice, totalQuantity } = useCart();
 
   if (loading) {
     return (
-      <div className="cart-loading-container text-center py-5">
-        <div className="spinner-border text-primary" role="status"></div>
-        <p className="text-muted mt-2">Loading your shopping cart...</p>
+      <div className="d-flex justify-content-center align-items-center py-5 min-vh-50">
+        <div className="spinner-border text-success" role="status">
+          <span className="visually-hidden">Loading...</span>
+        </div>
       </div>
     );
   }
 
   return (
     <div className="cart-page-wrapper container py-5">
-      <h1 className="fw-bold text-dark mb-4">Giỏ Hàng Của Bạn</h1>
+      <h2 className="fw-bold text-dark mb-4">Giỏ Hàng Của Bạn</h2>
 
       {cartItems.length === 0 ? (
-        <div className="empty-cart-wrapper text-center py-5">
-          <p className="text-muted fs-5">Giỏ hàng của bạn đang trống.</p>
+        <div className="empty-cart-wrapper text-center py-5 bg-white rounded-4 shadow-sm border p-5">
+          <div className="mb-3 text-muted">
+            <i className="fa-solid fa-cart-flatbed fs-1"></i>
+          </div>
+          <h4 className="fw-bold text-dark mb-2">Giỏ hàng đang trống</h4>
+          <p className="text-muted mb-4 fs-7">Bạn chưa thêm sản phẩm nào vào giỏ hàng.</p>
           <button
-            className="btn btn-primary px-4 py-2 mt-2"
-            onClick={() => navigate("shop")}
+            type="button"
+            className="btn btn-success px-4 py-2 fw-bold rounded-3"
+            onClick={() => navigate("/shop")}
+            style={{ backgroundColor: "#006837" }}
           >
-            Tiếp Tục Mua Sắm
+            Khám Phá Sản Phẩm Ngay
           </button>
         </div>
       ) : (
         <div className="row g-4">
           <main className="col-lg-8">
-            <div className="table-responsive">
-              <table className="table cart-table align-middle">
-                <thead>
-                  <tr>
-                    <th>Sản phẩm</th>
-                    <th>Giá</th>
-                    <th>Số lượng</th>
-                    <th>Tổng tiền</th>
-                    <th></th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {cartItems.map((item) => (
-                    <tr key={item.id}>
-                      <td>
-                        <div className="d-flex align-items-center gap-3">
-                          <img
-                            src={item.image_url || "/images/no-image.png"}
-                            alt={item.name}
-                            className="cart-item-imgimg"
-                            style={{
-                              width: "80px",
-                              height: "80px",
-                              objectFit: "cover",
-                            }}
-                          />
-                          <div>
-                            <h5 className="mb-1 text-dark fw-semibold">
-                              {item.name}
-                            </h5>
-                            <p className="mb-0 text-muted small">
-                              Color: {item.color_name} | SKU: {item.sku}
-                            </p>
-                          </div>
-                        </div>
-                      </td>
-                      <td>
-                        <span className="text-dark">
-                          {parseFloat(item.final_unit_price).toLocaleString()}{" "}
-                          VND
-                        </span>
-                      </td>
-                      <td>
-                        <div
-                          className="input-group input-group-sm cart-qty-selector"
-                          style={{ width: "100px" }}
-                        >
-                          <button
-                            className="btn btn-outline-secondary"
-                            type="button"
-                            onClick={() =>
-                              updateCartItem(item.id, item.quantity - 1)
-                            }
-                          >
-                            -
-                          </button>
-                          <input
-                            type="text"
-                            className="form-control text-center"
-                            value={item.quantity}
-                            readOnly
-                          />
-                          <button
-                            className="btn btn-outline-secondary"
-                            type="button"
-                            onClick={() =>
-                              updateCartItem(item.id, item.quantity + 1)
-                            }
-                          >
-                            +
-                          </button>
-                        </div>
-                      </td>
-                      <td>
-                        <span className="text-primary fw-bold">
-                          {(
-                            parseFloat(item.final_unit_price) * item.quantity
-                          ).toLocaleString()}{" "}
-                          VND
-                        </span>
-                      </td>
-                      <td>
-                        <button
-                          className="btn btn-link text-danger p-0"
-                          onClick={() => removeFromCart(item.id)}
-                        >
-                          Xóa
-                        </button>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+            <div className="bg-white rounded-4 p-4 shadow-sm border">
+              <div className="cart-header d-none d-md-flex row fw-bold text-muted border-bottom pb-3 fs-7">
+                <div className="col-md-5">Sản phẩm</div>
+                <div className="col-md-3 text-center">Số lượng</div>
+                <div className="col-md-2 text-center">Thành tiền</div>
+                <div className="col-md-2 text-end">Thao tác</div>
+              </div>
 
-            <div className="d-flex justify-content-between mt-3">
-              <button className="btn btn-outline-danger" onClick={clearCart}>
-                Xóa Toàn Bộ Giỏ Hàng
-              </button>
-              <button
-                className="btn btn-outline-secondary"
-                onClick={() => navigate("shop")}
-              >
-                Tiếp Tục Mua Sắm
-              </button>
+              <div className="cart-items-list">
+                {cartItems.map((item) => (
+                  <CartItemRow
+                    key={item.id}
+                    item={item}
+                    onUpdateQuantity={updateCartItem}
+                    onRemoveItem={removeFromCart}
+                  />
+                ))}
+              </div>
+
+              <div className="d-flex justify-content-between align-items-center mt-4 pt-2">
+                <button
+                  type="button"
+                  className="btn btn-outline-danger btn-sm rounded-2 px-3 fw-medium"
+                  onClick={clearCart}
+                >
+                  <i className="fa-solid fa-trash-arrow-up me-1"></i> Xóa Tất Cả
+                </button>
+                <button
+                  type="button"
+                  className="btn btn-outline-secondary btn-sm rounded-2 px-3 fw-medium"
+                  onClick={() => navigate("/shop")}
+                >
+                  <i className="fa-solid fa-arrow-left me-1"></i> Tiếp Tục Mua Sắm
+                </button>
+              </div>
             </div>
           </main>
 
           <aside className="col-lg-4">
-            <div className="cart-summary-box p-4 border rounded bg-light">
-              <h3 className="fw-bold mb-4">Tóm tắt đơn hàng</h3>
-              <div className="d-flex justify-content-between mb-3 border-bottom pb-2">
-                <span className="text-muted">Tạm tính:</span>
-                <span className="text-dark fw-semibold">
-                  {calculateSubtotal().toLocaleString()} VND
-                </span>
-              </div>
-              <div className="d-flex justify-content-between mb-4">
-                <span className="text-muted">Vận chuyển:</span>
-                <span className="text-success fw-medium">Miễn phí</span>
-              </div>
-              <div className="d-flex justify-content-between mb-4 pt-2 border-top">
-                <span className="fs-5 fw-bold">Tổng cộng:</span>
-                <span className="fs-5 fw-bold text-primary">
-                  {calculateSubtotal().toLocaleString()} VND
-                </span>
-              </div>
-              <button
-                className="btn btn-primary w-100 py-3 fw-bold"
-                onClick={() => navigate("checkout")}
-              >
-                Tiến Hành Thanh Toán
-              </button>
-            </div>
+            <CartTotals subtotal={totalPrice} itemsCount={totalQuantity} />
           </aside>
         </div>
       )}

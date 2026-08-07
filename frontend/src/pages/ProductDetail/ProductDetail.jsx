@@ -106,7 +106,6 @@ export default function ProductDetail() {
     if (type === "decrease" && quantity > 1) {
       setQuantity(quantity - 1);
     } else if (type === "increase") {
-      // Không vượt quá tồn kho
       if (currentProduct && quantity < currentProduct.stock) {
         setQuantity(quantity + 1);
       }
@@ -125,7 +124,6 @@ export default function ProductDetail() {
     }
   };
 
-  // Điều hướng dùng cho component con
   const handleLegacyNavigate = (page, targetSlug = null) => {
     if (page === "product-detail" && targetSlug) {
       navigate(`/product/${targetSlug}`);
