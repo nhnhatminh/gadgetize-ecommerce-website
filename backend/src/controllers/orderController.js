@@ -15,6 +15,7 @@ export const createOrder = async (req, res, next) => {
     let discountTotal = 0;
     let couponId = null;
 
+    // Kiểm tra và khóa dòng thông tin mã giảm giá 
     if (couponCode) {
       const couponResult = await client.query(
         `SELECT id, discount_amount, min_order_value, expiration_date, is_active 
@@ -24,6 +25,7 @@ export const createOrder = async (req, res, next) => {
       );
 
       if (couponResult.rows.length === 0) {
+        await client.query("ROLLBACK");
         return res.status(400).json({ message: "Invalid coupon code" });
       }
 
@@ -31,15 +33,17 @@ export const createOrder = async (req, res, next) => {
       const now = new Date();
 
       if (!coupon.is_active || (coupon.expiration_date && new Date(coupon.expiration_date) < now)) {
+        await client.query("ROLLBACK");
         return res.status(400).json({ message: "Coupon has expired or is inactive" });
       }
 
       couponId = coupon.id;
-      discountTotal = parseFloat(coupon.discount_amount);
+      discountTotal = parseFloat(coupon.discount_amount || 0);
     }
 
     const processedItems = [];
 
+    // Kiểm tra tồn kho
     for (const item of items) {
       const { variantId, quantity } = item;
 
@@ -53,7 +57,7 @@ export const createOrder = async (req, res, next) => {
 
       if (variantResult.rows.length === 0) {
         await client.query("ROLLBACK");
-        return res.status(444).json({ message: `Product variant with ID ${variantId} not found` });
+        return res.status(404).json({ message: `Product variant with ID ${variantId} not found` });
       }
 
       const variant = variantResult.rows[0];
@@ -63,7 +67,7 @@ export const createOrder = async (req, res, next) => {
         return res.status(400).json({ message: `Insufficient stock for product: ${variant.name}` });
       }
 
-      const basePrice = parseFloat(variant.base_price);
+      const basePrice = parseFloat(variant.base_price || 0);
       const priceModifier = parseFloat(variant.price_modifier || 0);
       const discountPercent = parseFloat(variant.discount_percent || 0);
 
@@ -81,26 +85,37 @@ export const createOrder = async (req, res, next) => {
       });
     }
 
-    if (couponId && subtotal < parseFloat(couponResult.rows[0].min_order_value || 0)) {
-      await client.query("ROLLBACK");
-      return res.status(400).json({ message: "Minimum order value for coupon not met" });
+    // Kiểm tra giá trị đơn hàng tối thiểu
+    if (couponId) {
+      const couponCheck = await client.query(
+        "SELECT min_order_value FROM coupons WHERE id = $1",
+        [couponId]
+      );
+      const minOrderValue = parseFloat(couponCheck.rows[0]?.min_order_value || 0);
+      if (subtotal < minOrderValue) {
+        await client.query("ROLLBACK");
+        return res.status(400).json({ message: "Minimum order value for coupon not met" });
+      }
     }
 
     if (discountTotal > subtotal) {
       discountTotal = subtotal;
     }
 
-    const finalTotal = subtotal - discountTotal + parseFloat(shippingFee);
+    const parsedShippingFee = parseFloat(shippingFee || 0);
+    const finalTotal = subtotal - discountTotal + parsedShippingFee;
 
+    // Tạo bản ghi đơn hàng
     const orderResult = await client.query(
       `INSERT INTO orders (user_id, coupon_id, subtotal, discount_total, shipping_fee, final_total, shipping_address, payment_method, status)
        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, 'pending')
        RETURNING id, created_at, status`,
-      [userId, couponId, subtotal, discountTotal, shippingFee, finalTotal, shippingAddress, paymentMethod]
+      [userId, couponId, subtotal, discountTotal, parsedShippingFee, finalTotal, shippingAddress, paymentMethod]
     );
 
     const orderId = orderResult.rows[0].id;
 
+    // Thêm danh sách chi tiết đơn hàng và cập nhật tồn kho
     for (const pi of processedItems) {
       await client.query(
         "INSERT INTO order_items (order_id, variant_id, quantity, unit_price) VALUES ($1, $2, $3, $4)",
@@ -113,6 +128,15 @@ export const createOrder = async (req, res, next) => {
       );
     }
 
+    // Cập nhật lượt đã sử dụng của Coupon
+    if (couponId) {
+      await client.query(
+        "UPDATE coupons SET used_count = COALESCE(used_count, 0) + 1 WHERE id = $1",
+        [couponId]
+      );
+    }
+
+    // Xóa các sản phẩm trong giỏ hàng
     await client.query("DELETE FROM cart_items WHERE user_id = $1", [userId]);
 
     await client.query("COMMIT");
@@ -125,7 +149,7 @@ export const createOrder = async (req, res, next) => {
       totals: {
         subtotal,
         discountTotal,
-        shippingFee,
+        shippingFee: parsedShippingFee,
         finalTotal
       }
     });
@@ -138,6 +162,7 @@ export const createOrder = async (req, res, next) => {
   }
 };
 
+// Kiểm tra tính hợp lệ của Coupon
 export const checkCoupon = async (req, res, next) => {
   try {
     const { couponCode, subtotal } = req.body;
@@ -174,7 +199,7 @@ export const checkCoupon = async (req, res, next) => {
       coupon: {
         id: coupon.id,
         code: coupon.code,
-        discountAmount: parseFloat(coupon.discount_amount)
+        discountAmount: parseFloat(coupon.discount_amount || 0)
       }
     });
   } catch (error) {
@@ -182,6 +207,7 @@ export const checkCoupon = async (req, res, next) => {
   }
 };
 
+// Lấy danh sách lịch sử đơn hàng
 export const getOrders = async (req, res, next) => {
   try {
     const userId = req.user.id;
@@ -194,12 +220,22 @@ export const getOrders = async (req, res, next) => {
        ORDER BY o.created_at DESC`,
       [userId]
     );
-    res.status(200).json(result.rows);
+
+    const formattedOrders = result.rows.map((order) => ({
+      ...order,
+      subtotal: parseFloat(order.subtotal || 0),
+      discount_total: parseFloat(order.discount_total || 0),
+      shipping_fee: parseFloat(order.shipping_fee || 0),
+      final_total: parseFloat(order.final_total || 0),
+    }));
+
+    res.status(200).json(formattedOrders);
   } catch (error) {
     next(error);
   }
 };
 
+// Lấy thông tin chi tiết đơn hàng theo ID cho người dùng
 export const getOrderById = async (req, res, next) => {
   try {
     const userId = req.user.id;
@@ -228,15 +264,28 @@ export const getOrderById = async (req, res, next) => {
       [id]
     );
 
+    const orderData = orderResult.rows[0];
+
     res.status(200).json({
-      order: orderResult.rows[0],
-      items: itemsResult.rows
+      order: {
+        ...orderData,
+        subtotal: parseFloat(orderData.subtotal || 0),
+        discount_total: parseFloat(orderData.discount_total || 0),
+        shipping_fee: parseFloat(orderData.shipping_fee || 0),
+        final_total: parseFloat(orderData.final_total || 0),
+      },
+      items: itemsResult.rows.map((item) => ({
+        ...item,
+        unit_price: parseFloat(item.unit_price || 0),
+        quantity: parseInt(item.quantity, 10),
+      })),
     });
   } catch (error) {
     next(error);
   }
 };
 
+// Lấy toàn bộ danh sách đơn hàng dành cho Admin
 export const getAllOrdersAdmin = async (req, res, next) => {
   try {
     const result = await pool.query(
@@ -246,20 +295,36 @@ export const getAllOrdersAdmin = async (req, res, next) => {
        JOIN users u ON o.user_id = u.id
        ORDER BY o.created_at DESC`
     );
-    res.status(200).json(result.rows);
+
+    const formattedOrders = result.rows.map((order) => ({
+      ...order,
+      subtotal: parseFloat(order.subtotal || 0),
+      discount_total: parseFloat(order.discount_total || 0),
+      shipping_fee: parseFloat(order.shipping_fee || 0),
+      final_total: parseFloat(order.final_total || 0),
+    }));
+
+    res.status(200).json(formattedOrders);
   } catch (error) {
     next(error);
   }
 };
 
+// Cập nhật trạng thái đơn hàng dành cho Admin
 export const updateOrderStatus = async (req, res, next) => {
   try {
     const { id } = req.params;
     const { status } = req.body;
-    await pool.query(
-      `UPDATE orders SET status = $1 WHERE id = $2`,
+
+    const result = await pool.query(
+      `UPDATE orders SET status = $1 WHERE id = $2 RETURNING id`,
       [status, id]
     );
+
+    if (result.rowCount === 0) {
+      return res.status(404).json({ message: "Order not found" });
+    }
+
     res.status(200).json({ message: "Order status updated successfully" });
   } catch (error) {
     next(error);

@@ -8,4 +8,8 @@ export const orderApi = {
   checkCoupon: (couponCode, subtotal) => {
     return axiosClient.post("/orders/check-coupon", { couponCode, subtotal });
   },
+
+  getOrderById: (id) => {
+    return axiosClient.get(`/orders/${id}`);
+  },
 };
