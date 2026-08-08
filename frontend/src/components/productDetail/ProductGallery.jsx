@@ -21,7 +21,7 @@ export default function ProductGallery({
           src={mainImage}
           alt={productName}
           className="img-fluid object-fit-contain"
-          style={{ maxHeight: "300px", maxWidth: "100%", width: "auto" }}
+          style={{ minHeight: "500px", maxWidth: "100%", width: "auto" }}
           onError={(e) => {
             e.target.onerror = null;
             e.target.src = "/images/no-image.png";

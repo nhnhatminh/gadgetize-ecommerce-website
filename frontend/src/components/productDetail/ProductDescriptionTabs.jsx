@@ -56,7 +56,6 @@ export default function ProductDescriptionTabs({
                     src={productImage}
                     alt="Product Details"
                     className="img-fluid w-75 object-fit-contain"
-                    style={{ maxHeight: "350px" }}
                     onError={(e) => {
                       e.target.onerror = null;
                       e.target.src = "/images/no-image.png";

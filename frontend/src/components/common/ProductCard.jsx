@@ -42,7 +42,7 @@ export default function ProductCard({ product }) {
           src={product.image}
           alt={product.name}
           className="img-fluid object-fit-contain"
-          style={{ maxHeight: "120px" }}
+          style={{ maxHeight: "300px" }}
           onError={(e) => {
             e.target.onerror = null;
             e.target.src = "/images/no-image.png";
