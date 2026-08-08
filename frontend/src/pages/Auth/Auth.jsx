@@ -11,7 +11,6 @@ export default function Auth() {
   const { user } = useAuth();
   const [activeTab, setActiveTab] = useState("login");
 
-  // Chuyển về trang chủ nếu đã đăng nhập
   useEffect(() => {
     if (user) {
       navigate("/", { replace: true });
@@ -19,11 +18,11 @@ export default function Auth() {
   }, [user, navigate]);
 
   return (
-    <div className="auth-page-container d-flex align-items-center justify-content-center min-vh-100">
-      <div className="auth-card bg-white rounded-4 shadow-sm border border-light-subtle p-4 p-sm-5 m-3">
-        <div className="text-center mb-4">
+    <div className="auth-page-wrapper">
+      <div className="auth-card">
+        <div className="auth-header">
           <div
-            className="cursor-pointer d-inline-block mb-3"
+            className="auth-logo-box"
             onClick={() => navigate("/")}
           >
             <img
@@ -32,27 +31,24 @@ export default function Auth() {
               className="auth-logo"
             />
           </div>
-          <p className="text-muted text-des mb-0">
+          <p className="auth-subtitle">
             Hệ thống kết nối và mua sắm thiết bị công nghệ hàng đầu
           </p>
         </div>
 
-        <ul
-          className="nav nav-tabs auth-tabs justify-content-center border-bottom mb-4"
-          role="tablist"
-        >
-          <li className="nav-item">
+        <ul className="auth-tabs-list" role="tablist">
+          <li className="auth-tab-item">
             <button
-              className={`nav-link ${activeTab === "login" ? "active" : ""}`}
+              className={`auth-tab-button ${activeTab === "login" ? "auth-tab-button--active" : ""}`}
               type="button"
               onClick={() => setActiveTab("login")}
             >
               Đăng Nhập
             </button>
           </li>
-          <li className="nav-item">
+          <li className="auth-tab-item">
             <button
-              className={`nav-link ${activeTab === "register" ? "active" : ""}`}
+              className={`auth-tab-button ${activeTab === "register" ? "auth-tab-button--active" : ""}`}
               type="button"
               onClick={() => setActiveTab("register")}
             >
@@ -61,13 +57,13 @@ export default function Auth() {
           </li>
         </ul>
 
-        <div className="tab-content">
+        <div className="auth-tab-content">
           {activeTab === "login" ? (
-            <div className="tab-pane fade show active">
-              <LoginForm/>
+            <div className="auth-tab-pane">
+              <LoginForm />
             </div>
           ) : (
-            <div className="tab-pane fade show active">
+            <div className="auth-tab-pane">
               <RegisterForm onRegisterSuccess={() => setActiveTab("login")} />
             </div>
           )}

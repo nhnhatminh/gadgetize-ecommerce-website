@@ -15,5 +15,5 @@ createRoot(document.getElementById("root")).render(
         </BrowserRouter>
       </CartProvider>
     </AuthProvider>
-  </StrictMode>,
+  </StrictMode>
 );

@@ -7,14 +7,13 @@ import RelatedProducts from "../../components/productDetail/RelatedProducts";
 import { productApi } from "../../api/productApi";
 import { useCart } from "../../context/CartContext";
 import "../../styles/layouts/product_detail_page.css";
-import "../../styles/components/showcase.css";
 
 export default function ProductDetail() {
   const { slug } = useParams();
   const navigate = useNavigate();
   const { addToCart } = useCart();
 
-  // State quản lý sản phẩm
+  // Trạng thái quản lý thông tin và thiết lập sản phẩm
   const [quantity, setQuantity] = useState(1);
   const [selectedColor, setSelectedColor] = useState("");
   const [activeTab, setActiveTab] = useState("desc");
@@ -28,13 +27,12 @@ export default function ProductDetail() {
     const fetchProductDetail = async () => {
       try {
         setIsLoading(true);
-        setQuantity(1); // Reset khi đổi sản phẩm
+        setQuantity(1);
 
         const data = await productApi.getProducts({ limit: 100 });
         if (data.products && data.products.length > 0) {
           const foundProduct = data.products.find((item) => item.slug === slug);
 
-          // Quay về trang Cửa hàng nếu không tìm thấy sản phẩm
           if (!foundProduct) {
             navigate("/shop", { replace: true });
             return;
@@ -69,7 +67,6 @@ export default function ProductDetail() {
           setMainImage(defaultImage);
           setSelectedColor(foundProduct.color_name || "Mặc định");
 
-          // Danh sách sản phẩm liên quan
           const formattedRelated = data.products
             .filter((item) => item.id !== foundProduct.id)
             .slice(0, 6)
@@ -138,9 +135,9 @@ export default function ProductDetail() {
 
   if (isLoading) {
     return (
-      <div className="d-flex justify-content-center align-items-center min-vh-50 py-5">
-        <div className="spinner-border text-success" role="status">
-          <span className="visually-hidden">Loading...</span>
+      <div className="product-detail-loading-screen">
+        <div className="product-detail-loading-spinner" role="status">
+          <span className="product-detail-loading-text">Loading...</span>
         </div>
       </div>
     );
@@ -150,23 +147,15 @@ export default function ProductDetail() {
 
   return (
     <div className="product-detail-page-wrapper">
-      <section
-        className="page-banner position-relative py-5 overflow-hidden"
-        style={{ backgroundColor: "var(--light-grey)" }}
-      >
+      <section className="product-detail-banner">
         <div className="container">
-          <div
-            className="row align-items-center justify-content-center"
-            style={{ minHeight: "180px" }}
-          >
-            <div className="col-12 text-center z-2">
-              <h1 className="fw-bold text-dark mb-0">{currentProduct.name}</h1>
-            </div>
+          <div className="product-detail-banner-content">
+            <h1 className="product-detail-banner-title">{currentProduct.name}</h1>
           </div>
         </div>
       </section>
 
-      <main className="py-5">
+      <main className="product-detail-main-content">
         <div className="container">
           <div className="row g-4">
             <div className="col-lg-6">
@@ -192,7 +181,7 @@ export default function ProductDetail() {
             </div>
           </div>
 
-          <div className="row mt-4">
+          <div className="row product-tabs-row">
             <div className="col-12">
               <ProductDescriptionTabs
                 activeTab={activeTab}

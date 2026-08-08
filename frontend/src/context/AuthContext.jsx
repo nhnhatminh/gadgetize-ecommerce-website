@@ -6,7 +6,6 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  // Tự động khôi phục phiên đăng nhập khi F5 hoặc mở lại web
   useEffect(() => {
     const checkLoggedInUser = async () => {
       const token = localStorage.getItem("token");
@@ -26,7 +25,6 @@ export const AuthProvider = ({ children }) => {
     checkLoggedInUser();
   }, []);
 
-  // Hàm Đăng nhập
   const login = async (email, password) => {
     const response = await axiosClient.post("/auth/login", { email, password });
     localStorage.setItem("token", response.token);
@@ -34,13 +32,11 @@ export const AuthProvider = ({ children }) => {
     return response;
   };
 
-  // Hàm Đăng ký
   const register = async (formData) => {
     const response = await axiosClient.post("/auth/register", formData);
     return response;
   };
 
-  // Hàm Đăng xuất
   const logout = () => {
     localStorage.removeItem("token");
     setUser(null);

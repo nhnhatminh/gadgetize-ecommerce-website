@@ -1,3 +1,5 @@
+import "../../styles/layouts/checkout.css";
+
 export default function CheckoutForm({ formData, setFormData, errors }) {
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -5,53 +7,53 @@ export default function CheckoutForm({ formData, setFormData, errors }) {
   };
 
   return (
-    <div>
-      <h4 className="fw-bold text-dark mb-3">Thông Tin Giao Hàng</h4>
+    <div className="checkout-form-wrapper">
+      <h4 className="checkout-form-heading">Thông Tin Giao Hàng</h4>
 
       <div className="row g-3">
         <div className="col-md-6">
-          <label className="form-label text-muted fw-medium fs-7">Họ và tên người nhận *</label>
+          <label className="checkout-field-label">Họ và tên người nhận *</label>
           <input
             type="text"
-            className={`form-control ${errors.fullName ? "is-invalid" : ""}`}
+            className={`checkout-field-input ${errors.fullName ? "checkout-field-input--error" : ""}`}
             name="fullName"
             placeholder="Nguyễn Văn A"
             value={formData.fullName}
             onChange={handleInputChange}
           />
-          {errors.fullName && <div className="invalid-feedback">{errors.fullName}</div>}
+          {errors.fullName && <div className="checkout-error-text">{errors.fullName}</div>}
         </div>
 
         <div className="col-md-6">
-          <label className="form-label text-muted fw-medium fs-7">Số điện thoại *</label>
+          <label className="checkout-field-label">Số điện thoại *</label>
           <input
             type="text"
-            className={`form-control ${errors.phone ? "is-invalid" : ""}`}
+            className={`checkout-field-input ${errors.phone ? "checkout-field-input--error" : ""}`}
             name="phone"
             placeholder="0901234567"
             value={formData.phone}
             onChange={handleInputChange}
           />
-          {errors.phone && <div className="invalid-feedback">{errors.phone}</div>}
+          {errors.phone && <div className="checkout-error-text">{errors.phone}</div>}
         </div>
 
         <div className="col-12">
-          <label className="form-label text-muted fw-medium fs-7">Địa chỉ giao hàng chi tiết *</label>
+          <label className="checkout-field-label">Địa chỉ giao hàng chi tiết *</label>
           <input
             type="text"
-            className={`form-control ${errors.address ? "is-invalid" : ""}`}
+            className={`checkout-field-input ${errors.address ? "checkout-field-input--error" : ""}`}
             name="address"
             placeholder="Số nhà, tên đường, phường/xã, quận/huyện, tỉnh/thành"
             value={formData.address}
             onChange={handleInputChange}
           />
-          {errors.address && <div className="invalid-feedback">{errors.address}</div>}
+          {errors.address && <div className="checkout-error-text">{errors.address}</div>}
         </div>
 
         <div className="col-12">
-          <label className="form-label text-muted fw-medium fs-7">Ghi chú đơn hàng (Tùy chọn)</label>
+          <label className="checkout-field-label">Ghi chú đơn hàng (Tùy chọn)</label>
           <textarea
-            className="form-control"
+            className="checkout-field-textarea"
             name="notes"
             rows="2"
             placeholder="Ghi chú thêm về thời gian giao hàng hoặc chỉ dẫn..."
@@ -61,13 +63,13 @@ export default function CheckoutForm({ formData, setFormData, errors }) {
         </div>
       </div>
 
-      <hr className="my-4" />
+      <div className="checkout-divider" />
 
-      <h4 className="fw-bold text-dark mb-3">Phương Thức Thanh Toán</h4>
-      <div className="d-flex flex-column gap-3">
-        <div className="form-check p-3 border rounded-3 bg-light">
+      <h4 className="checkout-form-heading">Phương Thức Thanh Toán</h4>
+      <div className="checkout-payment-options">
+        <div className="checkout-payment-card">
           <input
-            className="form-check-input ms-1 me-3"
+            className="checkout-payment-radio"
             type="radio"
             name="paymentMethod"
             id="codMethod"
@@ -75,17 +77,17 @@ export default function CheckoutForm({ formData, setFormData, errors }) {
             checked={formData.paymentMethod === "cod"}
             onChange={handleInputChange}
           />
-          <label className="form-check-label fw-bold text-dark" htmlFor="codMethod">
+          <label className="checkout-payment-label" htmlFor="codMethod">
             Thanh toán khi nhận hàng (COD)
-            <span className="d-block text-muted fw-normal fs-8 mt-1">
+            <span className="checkout-payment-desc">
               Thanh toán trực tiếp bằng tiền mặt cho nhân viên giao hàng khi nhận sản phẩm.
             </span>
           </label>
         </div>
 
-        <div className="form-check p-3 border rounded-3 bg-light">
+        <div className="checkout-payment-card">
           <input
-            className="form-check-input ms-1 me-3"
+            className="checkout-payment-radio"
             type="radio"
             name="paymentMethod"
             id="bankMethod"
@@ -93,9 +95,9 @@ export default function CheckoutForm({ formData, setFormData, errors }) {
             checked={formData.paymentMethod === "bank_transfer"}
             onChange={handleInputChange}
           />
-          <label className="form-check-label fw-bold text-dark" htmlFor="bankMethod">
+          <label className="checkout-payment-label" htmlFor="bankMethod">
             Chuyển khoản Ngân hàng / Ví điện tử
-            <span className="d-block text-muted fw-normal fs-8 mt-1">
+            <span className="checkout-payment-desc">
               Chuyển khoản qua QR Code ngân hàng. Đơn hàng sẽ được xử lý ngay sau khi nhận thanh toán.
             </span>
           </label>

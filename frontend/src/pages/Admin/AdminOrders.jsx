@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { adminApi } from "../../api/adminApi";
+import "../../styles/layouts/admin.css";
 
 export default function AdminOrders() {
   const [orders, setOrders] = useState([]);
@@ -28,74 +29,71 @@ export default function AdminOrders() {
 
   return (
     <div className="admin-orders-view">
-      <div className="mb-4">
-        <h4 className="fw-bold text-dark mb-1">Quản Lý Trạng Thái Đơn Hàng</h4>
-        <p className="text-muted text-des mb-0">
+      <div className="admin-orders-header">
+        <h4 className="admin-orders-title">Quản Lý Trạng Thái Đơn Hàng</h4>
+        <p className="admin-orders-subtitle">
           Hệ thống phê duyệt tiến trình hóa đơn và vận chuyển toàn sàn giao
           dịch.
         </p>
       </div>
 
-      <div className="card border-0 rounded-4 shadow-sm overflow-hidden bg-white">
-        <div className="table-responsive">
-          <table className="table table-hover align-middle mb-0">
-            <thead
-              className="table-light"
-              style={{ backgroundColor: "#f8f9fa" }}
-            >
-              <tr className="text-secondary fs-7 border-bottom">
-                <th className="ps-4 py-3">Mã đơn</th>
-                <th>Khách hàng</th>
-                <th>Địa chỉ giao hàng</th>
-                <th>Phương thức</th>
-                <th>Thời gian đặt</th>
-                <th>Tổng thanh toán</th>
-                <th>Trạng thái kiểm soát</th>
-                <th className="pe-4">Cập nhật nhanh</th>
+      <div className="admin-table-card">
+        <div className="admin-table-responsive">
+          <table className="admin-table">
+            <thead>
+              <tr className="admin-table-header-row">
+                <th className="admin-table-th admin-table-th--first">Mã đơn</th>
+                <th className="admin-table-th">Khách hàng</th>
+                <th className="admin-table-th">Địa chỉ giao hàng</th>
+                <th className="admin-table-th">Phương thức</th>
+                <th className="admin-table-th">Thời gian đặt</th>
+                <th className="admin-table-th">Tổng thanh toán</th>
+                <th className="admin-table-th">Trạng thái kiểm soát</th>
+                <th className="admin-table-th admin-table-th--last">Cập nhật nhanh</th>
               </tr>
             </thead>
             <tbody>
               {orders.map((ord) => (
-                <tr key={ord.id} className="fs-7 text-dark border-bottom">
-                  <td className="ps-4 fw-bold text-primary">#{ord.id}</td>
-                  <td>
-                    <div className="fw-bold">
+                <tr key={ord.id} className="admin-table-row">
+                  <td className="admin-table-td admin-table-td--first admin-order-id">
+                    #{ord.id}
+                  </td>
+                  <td className="admin-table-td">
+                    <div className="admin-customer-name">
                       {ord.first_name} {ord.last_name}
                     </div>
-                    <div className="text-muted fs-8">{ord.email}</div>
+                    <div className="admin-customer-email">{ord.email}</div>
                   </td>
-                  <td>
+                  <td className="admin-table-td">
                     <div
-                      className="text-truncate"
-                      style={{ maxWidth: "200px" }}
+                      className="admin-shipping-address"
                       title={ord.shipping_address}
                     >
                       {ord.shipping_address}
                     </div>
                   </td>
-                  <td>
-                    <span className="badge bg-light text-dark text-uppercase border px-2 py-1 rounded">
+                  <td className="admin-table-td">
+                    <span className="admin-payment-badge">
                       {ord.payment_method}
                     </span>
                   </td>
-                  <td>{new Date(ord.created_at).toLocaleString("vi-VN")}</td>
-                  <td className="fw-bold text-dark">
+                  <td className="admin-table-td">
+                    {new Date(ord.created_at).toLocaleString("vi-VN")}
+                  </td>
+                  <td className="admin-table-td admin-order-price">
                     {parseFloat(ord.final_total).toLocaleString("vi-VN")}₫
                   </td>
-                  <td>
+                  <td className="admin-table-td">
                     <span
-                      className={`badge px-2 py-1 rounded-1 fw-semibold ${
+                      className={`admin-status-badge ${
                         ord.status === "pending"
-                          ? "bg-warning-subtle text-warning-custom"
+                          ? "admin-status-badge--pending"
                           : ord.status === "processing"
-                            ? "bg-primary-subtle text-primary"
+                            ? "admin-status-badge--processing"
                             : ord.status === "shipping"
-                              ? "bg-info-subtle text-info"
-                              : "bg-success-subtle text-success"
+                              ? "admin-status-badge--shipping"
+                              : "admin-status-badge--delivered"
                       }`}
-                      style={
-                        ord.status === "pending" ? { color: "#b25e00" } : {}
-                      }
                     >
                       {ord.status === "pending"
                         ? "Chờ xử lý"
@@ -106,14 +104,13 @@ export default function AdminOrders() {
                             : "Đã giao hàng"}
                     </span>
                   </td>
-                  <td className="pe-4">
+                  <td className="admin-table-td admin-table-td--last">
                     <select
-                      className="form-select form-select-sm border-light-subtle rounded-2 text-dark fs-7"
+                      className="admin-status-select"
                       value={ord.status}
                       onChange={(e) =>
                         handleStatusChange(ord.id, e.target.value)
                       }
-                      style={{ width: "130px" }}
                     >
                       <option value="pending">Chờ xử lý</option>
                       <option value="processing">Đang xử lý</option>

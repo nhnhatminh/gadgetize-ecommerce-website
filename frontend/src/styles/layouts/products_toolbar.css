@@ -1,0 +1,71 @@
+.products-toolbar {
+  background-color: var(--white);
+  border-radius: 16px;
+  padding: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid var(--light-grey);
+}
+
+.products-toolbar-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.products-toolbar-layout-toggle {
+  display: flex;
+  gap: 8px;
+  font-size: var(--font-size-h6);
+  cursor: pointer;
+}
+
+.products-toolbar-layout-toggle i {
+  color: var(--text-muted);
+  transition: color var(--transition-speed);
+}
+
+.products-toolbar-layout-toggle i.active,
+.products-toolbar-layout-toggle i:hover {
+  color: var(--text-main);
+}
+
+.products-toolbar-count {
+  color: var(--text-main);
+  font-size: var(--font-size-des);
+  font-weight: var(--fw-medium);
+}
+
+.products-toolbar-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.products-toolbar-label {
+  color: var(--text-muted);
+  font-size: var(--font-size-des);
+  white-space: nowrap;
+  margin-bottom: 0;
+}
+
+.products-toolbar-select {
+  width: 180px;
+  padding: 6px 12px;
+  font-size: var(--font-size-des);
+  font-family: "Jamjuree-r", sans-serif;
+  color: var(--text-main);
+  border: 1px solid var(--light-grey);
+  border-radius: 6px;
+  outline: none;
+  background-color: var(--white);
+  cursor: pointer;
+  transition: border-color var(--transition-speed);
+}
+
+.products-toolbar-select:focus {
+  border-color: var(--primary-color);
+}

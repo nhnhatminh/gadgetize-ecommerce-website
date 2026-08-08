@@ -1,11 +1,10 @@
 import { createContext, useState, useEffect, useContext } from "react";
 import { cartApi } from "../api/cartApi";
 import { useAuth } from "./useAuth";
+import "../styles/layouts/cart.css";
 
-// Không export trực tiếp để tránh lỗi Fast Refresh
 const CartContext = createContext();
 
-// Custom hook truy cập CartContext
 export const useCart = () => {
   const context = useContext(CartContext);
   if (!context) {
@@ -20,7 +19,6 @@ export const CartProvider = ({ children }) => {
   const [loading, setLoading] = useState(false);
   const [toast, setToast] = useState({ show: false, message: "", type: "success" });
 
-  // Hiển thị Toast
   const showToast = (message, type = "success") => {
     setToast({ show: true, message, type });
     setTimeout(() => {
@@ -28,7 +26,6 @@ export const CartProvider = ({ children }) => {
     }, 3000);
   };
 
-  // Tải giỏ hàng
   const fetchCart = async () => {
     if (!user) return;
     try {
@@ -39,7 +36,6 @@ export const CartProvider = ({ children }) => {
     }
   };
 
-  // Đồng bộ giỏ hàng theo trạng thái đăng nhập
   useEffect(() => {
     let isMounted = true;
 
@@ -70,7 +66,6 @@ export const CartProvider = ({ children }) => {
     };
   }, [user]);
 
-  // Thêm sản phẩm vào giỏ
   const addToCart = async (variantId, quantity = 1) => {
     if (!user) {
       showToast("Vui lòng đăng nhập để thêm sản phẩm vào giỏ hàng!", "warning");
@@ -90,7 +85,6 @@ export const CartProvider = ({ children }) => {
     }
   };
 
-  // Cập nhật số lượng
   const updateCartItem = async (id, quantity) => {
     if (quantity <= 0) {
       return removeFromCart(id);
@@ -108,7 +102,6 @@ export const CartProvider = ({ children }) => {
     }
   };
 
-  // Xóa sản phẩm khỏi giỏ
   const removeFromCart = async (id) => {
     try {
       await cartApi.removeFromCart(id);
@@ -122,7 +115,6 @@ export const CartProvider = ({ children }) => {
     }
   };
 
-  // Xóa toàn bộ giỏ hàng
   const clearCart = async () => {
     try {
       await cartApi.clearCart();
@@ -134,7 +126,6 @@ export const CartProvider = ({ children }) => {
     }
   };
 
-  // Tính tổng số lượng và tổng tiền
   const totalQuantity = cartItems.reduce((sum, item) => sum + item.quantity, 0);
 
   const totalPrice = cartItems.reduce((sum, item) => {
@@ -164,29 +155,17 @@ export const CartProvider = ({ children }) => {
       {children}
 
       {toast.show && (
-        <div
-          className="position-fixed bottom-0 end-0 p-3 z-3"
-          style={{ maxWidth: "380px" }}
-        >
-          <div
-            className={`toast show align-items-center text-white border-0 p-2 rounded-3 shadow ${
-              toast.type === "success"
-                ? "bg-success"
-                : toast.type === "warning"
-                  ? "bg-warning text-dark"
-                  : toast.type === "info"
-                    ? "bg-info text-dark"
-                    : "bg-danger"
-            }`}
-            role="alert"
-          >
-            <div className="d-flex align-items-center justify-content-between">
-              <div className="toast-body fw-medium fs-7">{toast.message}</div>
+        <div className="app-toast-container">
+          <div className={`app-toast app-toast--${toast.type}`}>
+            <div className="app-toast-content">
+              <div className="app-toast-body">{toast.message}</div>
               <button
                 type="button"
-                className="btn-close btn-close-white me-2 m-auto"
+                className="app-toast-close"
                 onClick={() => setToast({ ...toast, show: false })}
-              ></button>
+              >
+                <i className="fa-solid fa-xmark"></i>
+              </button>
             </div>
           </div>
         </div>

@@ -3,10 +3,8 @@ import { useAuth } from "../../context/useAuth";
 import "../../styles/layouts/auth.css";
 
 export default function RegisterForm({ onRegisterSuccess }) {
-  // Lấy hàm register từ AuthContext
   const { register } = useAuth();
 
-  // State quản lý form và trạng thái submit
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
@@ -16,7 +14,6 @@ export default function RegisterForm({ onRegisterSuccess }) {
   const [success, setSuccess] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  // Xử lý đăng ký
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     setError("");
@@ -24,7 +21,6 @@ export default function RegisterForm({ onRegisterSuccess }) {
     setIsSubmitting(true);
 
     try {
-      // Gửi dữ liệu đăng ký
       await register({ firstName, lastName, email, password, phone });
 
       setSuccess("Tạo tài khoản thành công! Đang chuyển sang trang đăng nhập...");
@@ -45,17 +41,15 @@ export default function RegisterForm({ onRegisterSuccess }) {
 
   return (
     <form className="auth-form" onSubmit={handleFormSubmit}>
-      {error && <div className="alert alert-danger py-2 small">{error}</div>}
-      {success && (
-        <div className="alert alert-success py-2 small">{success}</div>
-      )}
+      {error && <div className="auth-alert auth-alert--error">{error}</div>}
+      {success && <div className="auth-alert auth-alert--success">{success}</div>}
 
-      <div className="row g-3 mb-3">
+      <div className="row g-3 auth-form-row">
         <div className="col-sm-6">
-          <label className="form-label text-dark fw-medium">Họ</label>
+          <label className="auth-form-label">Họ</label>
           <input
             type="text"
-            className="form-control py-3 text-p"
+            className="auth-form-input"
             placeholder="Nhập họ"
             value={lastName}
             onChange={(e) => setLastName(e.target.value)}
@@ -64,10 +58,10 @@ export default function RegisterForm({ onRegisterSuccess }) {
           />
         </div>
         <div className="col-sm-6">
-          <label className="form-label text-dark fw-medium">Tên</label>
+          <label className="auth-form-label">Tên</label>
           <input
             type="text"
-            className="form-control py-3 text-p"
+            className="auth-form-input"
             placeholder="Nhập tên"
             value={firstName}
             onChange={(e) => setFirstName(e.target.value)}
@@ -77,11 +71,11 @@ export default function RegisterForm({ onRegisterSuccess }) {
         </div>
       </div>
 
-      <div className="mb-3">
-        <label className="form-label text-dark fw-medium">Địa chỉ Email</label>
+      <div className="auth-form-group">
+        <label className="auth-form-label">Địa chỉ Email</label>
         <input
           type="email"
-          className="form-control py-3 text-p"
+          className="auth-form-input"
           placeholder="example@domain.com"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
@@ -90,11 +84,11 @@ export default function RegisterForm({ onRegisterSuccess }) {
         />
       </div>
 
-      <div className="mb-3">
-        <label className="form-label text-dark fw-medium">Số điện thoại</label>
+      <div className="auth-form-group">
+        <label className="auth-form-label">Số điện thoại</label>
         <input
           type="text"
-          className="form-control py-3 text-p"
+          className="auth-form-input"
           placeholder="Nhập số điện thoại"
           value={phone}
           onChange={(e) => setPhone(e.target.value)}
@@ -103,11 +97,11 @@ export default function RegisterForm({ onRegisterSuccess }) {
         />
       </div>
 
-      <div className="mb-3">
-        <label className="form-label text-dark fw-medium">Mật khẩu</label>
+      <div className="auth-form-group">
+        <label className="auth-form-label">Mật khẩu</label>
         <input
           type="password"
-          className="form-control py-3 text-p"
+          className="auth-form-input"
           placeholder="Tối thiểu 6 ký tự"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
@@ -116,20 +110,17 @@ export default function RegisterForm({ onRegisterSuccess }) {
         />
       </div>
 
-      <div className="mb-4 form-check d-flex align-items-center gap-2">
+      <div className="auth-checkbox-group">
         <input
           type="checkbox"
-          className="form-check-input m-0"
+          className="auth-checkbox-input"
           id="agreeTerms"
           required
           disabled={isSubmitting}
         />
-        <label
-          className="form-check-label text-des text-muted mt-1"
-          htmlFor="agreeTerms"
-        >
+        <label className="auth-checkbox-label" htmlFor="agreeTerms">
           Tôi đồng ý với các{" "}
-          <a href="#" className="text-dark fw-medium text-decoration-none">
+          <a href="#" className="auth-terms-link">
             Điều khoản dịch vụ
           </a>
         </label>
@@ -137,7 +128,7 @@ export default function RegisterForm({ onRegisterSuccess }) {
 
       <button
         type="submit"
-        className="btn btn-auth-submit w-100 py-3 fw-medium text-white rounded-3 mb-3"
+        className="btn-auth-submit"
         disabled={isSubmitting}
       >
         {isSubmitting ? "Đang xử lý..." : "Tạo Tài Khoản"}

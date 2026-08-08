@@ -1,15 +1,13 @@
-import { useState, useEffect } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
-import "../../styles/layouts/home.css";
 import "../../styles/components/hero.css";
-import "../../styles/components/showcase.css";
-
 import "swiper/css";
 
 export default function BrandSlider() {
+  const brandList = [1, 2, 3, 4, 5];
+
   return (
-    <section className="brands-section py-5 border-top bg-light">
+    <section className="brands-section">
       <div className="container">
         <Swiper
           modules={[Autoplay]}
@@ -23,17 +21,13 @@ export default function BrandSlider() {
             1200: { slidesPerView: 5 },
           }}
         >
-          {[1, 2, 3, 4, 5].map((num) => (
+          {brandList.map((num) => (
             <SwiperSlide key={num}>
-              <div
-                className="brand-item text-center p-3 bg-white rounded-3 border d-flex align-items-center justify-content-center"
-                style={{ height: "80px" }}
-              >
+              <div className="brand-card">
                 <img
                   src={`/images/brand-${num}.png`}
                   alt={`Brand ${num}`}
-                  className="img-fluid"
-                  style={{ maxHeight: "70%" }}
+                  className="brand-img"
                 />
               </div>
             </SwiperSlide>

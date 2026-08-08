@@ -11,15 +11,16 @@ import Auth from "./pages/Auth/Auth";
 import AdminProducts from "./pages/Admin/AdminProducts";
 import AdminOrders from "./pages/Admin/AdminOrders";
 import { AuthContext } from "./context/AuthContext";
+import "./App.css";
 
 export default function App() {
   const { user, loading } = useContext(AuthContext);
 
   if (loading) {
     return (
-      <div className="d-flex align-items-center justify-content-center min-vh-100 bg-light">
-        <div className="spinner-border text-success" role="status">
-          <span className="visually-hidden">Loading session...</span>
+      <div className="app-loading-screen">
+        <div className="app-loading-spinner" role="status">
+          <span className="app-loading-text">Loading session...</span>
         </div>
       </div>
     );
@@ -55,9 +56,9 @@ export default function App() {
         <Route
           index
           element={
-            <div className="bg-white p-4 rounded-4 shadow-sm border border-light-subtle">
-              <h4 className="fw-bold text-dark mb-2">Tổng Quan Hệ Thống</h4>
-              <p className="text-muted mb-0">
+            <div className="admin-overview-card">
+              <h4 className="admin-overview-title">Tổng Quan Hệ Thống</h4>
+              <p className="admin-overview-desc">
                 Hạ tầng khung vỏ quản trị đã thiết lập thành công. Sẵn sàng nạp
                 dữ liệu ma trận.
               </p>

@@ -6,16 +6,13 @@ export default function CartItemRow({ item, onUpdateQuantity, onRemoveItem }) {
   const isMaxStock = item.quantity >= (item.stock_quantity || 99);
 
   return (
-    <div className="row align-items-center g-3 py-3 border-bottom">
-      <div className="col-12 col-md-5 d-flex align-items-center gap-3">
-        <div
-          className="cart-item-img bg-light rounded-3 p-2 d-flex align-items-center justify-content-center border"
-          style={{ width: "90px", height: "90px" }}
-        >
+    <div className="row cart-item-row">
+      <div className="col-12 col-md-5 cart-item-info-col">
+        <div className="cart-item-img-box">
           <img
             src={item.image_url || "/images/no-image.png"}
             alt={item.name}
-            className="img-fluid object-fit-contain"
+            className="cart-item-img"
             onError={(e) => {
               e.target.onerror = null;
               e.target.src = "/images/no-image.png";
@@ -23,19 +20,19 @@ export default function CartItemRow({ item, onUpdateQuantity, onRemoveItem }) {
           />
         </div>
 
-        <div>
-          <h6 className="fw-bold text-dark mb-1">{item.name}</h6>
-          <p className="text-muted small mb-1">
+        <div className="cart-item-details">
+          <h6 className="cart-item-title">{item.name}</h6>
+          <p className="cart-item-meta">
             Màu: {item.color_name || "Mặc định"} | SKU: {item.sku}
           </p>
 
-          <div className="d-flex align-items-center gap-2">
-            <span className="fw-bold text-success">
+          <div className="cart-item-price-wrapper">
+            <span className="cart-item-price-current">
               {unitPrice.toLocaleString("vi-VN")}₫
             </span>
 
             {oldPrice > unitPrice && (
-              <span className="text-muted text-decoration-line-through small">
+              <span className="cart-item-price-old">
                 {oldPrice.toLocaleString("vi-VN")}₫
               </span>
             )}
@@ -43,45 +40,44 @@ export default function CartItemRow({ item, onUpdateQuantity, onRemoveItem }) {
         </div>
       </div>
 
-      <div className="col-6 col-md-3 d-flex justify-content-md-center">
-        <div className="quantity-selector d-flex align-items-center border border-light-subtle rounded-3 overflow-hidden bg-light">
+      <div className="col-6 col-md-3 cart-item-quantity-col">
+        <div className="cart-quantity-selector">
           <button
             type="button"
-            className="btn btn-light border-0 rounded-0 px-3 py-1"
+            className="cart-quantity-btn"
             onClick={() => onUpdateQuantity(item.id, item.quantity - 1)}
           >
-            <i className="fa-solid fa-minus fs-8"></i>
+            <i className="fa-solid fa-minus"></i>
           </button>
           <input
             type="text"
-            className="form-control border-0 text-center fw-bold p-0 bg-transparent text-dark"
+            className="cart-quantity-input"
             value={item.quantity}
             readOnly
-            style={{ width: "40px", fontSize: "0.9rem" }}
           />
           <button
             type="button"
-            className="btn btn-light border-0 rounded-0 px-3 py-1"
+            className="cart-quantity-btn"
             disabled={isMaxStock}
             onClick={() => onUpdateQuantity(item.id, item.quantity + 1)}
             title={isMaxStock ? "Đã đạt số lượng tồn kho tối đa" : ""}
           >
-            <i className="fa-solid fa-plus fs-8"></i>
+            <i className="fa-solid fa-plus"></i>
           </button>
         </div>
       </div>
 
-      <div className="col-6 col-md-2 text-md-center text-end fw-bold text-dark fs-6">
+      <div className="col-6 col-md-2 cart-item-subtotal-col">
         {(unitPrice * item.quantity).toLocaleString("vi-VN")}₫
       </div>
 
-      <div className="col-12 col-md-2 text-end remove-btn-container">
+      <div className="col-12 col-md-2 cart-item-action-col">
         <button
           type="button"
-          className="btn btn-outline-danger btn-sm rounded-2 px-3"
+          className="cart-remove-item-btn"
           onClick={() => onRemoveItem(item.id)}
         >
-          <i className="fa-solid fa-trash-can me-1"></i> Xóa
+          <i className="fa-solid fa-trash-can"></i> Xóa
         </button>
       </div>
     </div>

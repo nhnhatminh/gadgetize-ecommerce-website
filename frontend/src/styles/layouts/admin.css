@@ -8,14 +8,14 @@
 .admin-sidebar {
   width: 260px;
   background-color: #0e1118;
-  color: #ffffff;
+  color: var(--white);
   display: flex;
   flex-direction: column;
   flex-shrink: 0;
   border-right: 1px solid #1e2433;
 }
 
-.admin-sidebar__brand {
+.admin-sidebar-brand {
   height: 75px;
   padding: 0 24px;
   display: flex;
@@ -24,27 +24,27 @@
   border-bottom: 1px solid #1e2433;
 }
 
-.admin-sidebar__logo-box {
+.admin-sidebar-logo-box {
   display: flex;
   align-items: center;
   gap: 10px;
 }
 
-.admin-sidebar__logo-icon {
+.admin-sidebar-logo-icon {
   font-size: 1.3rem;
   color: var(--light-green);
 }
 
-.admin-sidebar__logo-text {
+.admin-sidebar-logo-text {
   margin-bottom: 0;
   font-size: 1.25rem;
   font-weight: var(--fw-bold);
   font-family: "Jamjuree-b", sans-serif;
   letter-spacing: 0.5px;
-  color: #ffffff;
+  color: var(--white);
 }
 
-.admin-sidebar__version {
+.admin-sidebar-version {
   font-size: 0.7rem;
   background-color: #1e2433;
   color: var(--grey);
@@ -52,7 +52,7 @@
   border-radius: 4px;
 }
 
-.admin-sidebar__menu {
+.admin-sidebar-menu {
   flex-grow: 1;
   padding: 24px 16px;
   display: flex;
@@ -61,7 +61,7 @@
   overflow-y: auto;
 }
 
-.admin-sidebar__category {
+.admin-sidebar-category {
   font-size: 0.7rem;
   text-transform: uppercase;
   letter-spacing: 1px;
@@ -70,13 +70,13 @@
   padding: 12px 16px 6px 16px;
 }
 
-.admin-sidebar__nav {
+.admin-sidebar-nav {
   display: flex;
   flex-direction: column;
   gap: 2px;
 }
 
-.admin-sidebar__link {
+.admin-sidebar-link {
   display: flex;
   align-items: center;
   gap: 12px;
@@ -84,45 +84,54 @@
   color: #98a6ad;
   border-radius: 6px;
   cursor: pointer;
-  font-size: 0.875rem;
+  font-size: var(--font-size-des);
   font-weight: var(--fw-medium);
   transition: all var(--transition-speed) ease;
 }
 
-.admin-sidebar__link:hover {
-  color: #ffffff;
+.admin-sidebar-link:hover {
+  color: var(--white);
   background-color: #161b26;
 }
 
-.admin-sidebar__link--active {
-  color: #ffffff !important;
+.admin-sidebar-link--active {
+  color: var(--white) !important;
   background-color: var(--primary-color) !important;
 }
 
-.admin-sidebar__icon {
+.admin-sidebar-link--danger {
+  color: var(--danger-color);
+}
+
+.admin-sidebar-link--danger:hover {
+  background-color: rgba(221, 56, 66, 0.1);
+  color: var(--danger-color);
+}
+
+.admin-sidebar-icon {
   font-size: 1rem;
   width: 20px;
   text-align: center;
 }
 
-.admin-sidebar__footer {
+.admin-sidebar-footer {
   padding: 20px 16px;
   border-top: 1px solid #1e2433;
   background-color: #0a0d13;
 }
 
-.admin-sidebar__profile {
+.admin-sidebar-profile {
   display: flex;
   align-items: center;
   gap: 12px;
 }
 
-.admin-sidebar__avatar-box {
+.admin-sidebar-avatar-box {
   width: 40px;
   height: 40px;
   border-radius: 8px;
   background-color: var(--primary-color);
-  color: #ffffff;
+  color: var(--white);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -130,19 +139,19 @@
   font-size: 1.1rem;
 }
 
-.admin-sidebar__profile-info {
+.admin-sidebar-profile-info {
   display: flex;
   flex-direction: column;
 }
 
-.admin-sidebar__username {
+.admin-sidebar-username {
   margin-bottom: 0;
   font-size: 0.85rem;
   font-weight: var(--fw-semibold);
-  color: #ffffff;
+  color: var(--white);
 }
 
-.admin-sidebar__user-role {
+.admin-sidebar-user-role {
   font-size: 0.75rem;
   color: #526484;
 }
@@ -156,7 +165,7 @@
 
 .admin-header {
   height: 75px;
-  background-color: #ffffff;
+  background-color: var(--white);
   border-bottom: 1px solid var(--light-grey);
   display: flex;
   align-items: center;
@@ -164,7 +173,7 @@
   padding: 0 30px;
 }
 
-.admin-header__search-wrapper {
+.admin-header-search-wrapper {
   display: flex;
   align-items: center;
   gap: 10px;
@@ -174,12 +183,12 @@
   width: 320px;
 }
 
-.admin-header__search-icon {
+.admin-header-search-icon {
   color: var(--grey);
   font-size: 0.9rem;
 }
 
-.admin-header__search-input {
+.admin-header-search-input {
   border: none;
   background: transparent;
   outline: none;
@@ -188,28 +197,32 @@
   width: 100%;
 }
 
-.admin-header__actions {
+.admin-header-actions {
   display: flex;
   align-items: center;
   gap: 16px;
 }
 
-.admin-header__btn-action {
+.admin-header-action-btn {
   background-color: var(--primary-color);
-  color: #ffffff;
+  color: var(--white);
   border: none;
   padding: 8px 16px;
   border-radius: 8px;
   font-size: 0.85rem;
   font-weight: var(--fw-bold);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
   transition: opacity var(--transition-speed);
 }
 
-.admin-header__btn-action:hover {
+.admin-header-action-btn:hover {
   opacity: 0.9;
 }
 
-.admin-header__icon-btn {
+.admin-header-icon-btn {
   width: 38px;
   height: 38px;
   border-radius: 8px;
@@ -222,11 +235,15 @@
   transition: background-color var(--transition-speed);
 }
 
-.admin-header__icon-btn:hover {
+.admin-header-icon-btn--has-badge {
+  position: relative;
+}
+
+.admin-header-icon-btn:hover {
   background-color: #f1f3f5;
 }
 
-.admin-header__badge-dot {
+.admin-header-badge-dot {
   position: absolute;
   top: 10px;
   right: 10px;
@@ -236,13 +253,13 @@
   border-radius: 50%;
 }
 
-.admin-header__divider {
+.admin-header-divider {
   width: 1px;
   height: 24px;
   background-color: var(--light-grey);
 }
 
-.admin-header__avatar-mini {
+.admin-header-avatar-mini {
   width: 36px;
   height: 36px;
   border-radius: 50%;
@@ -262,52 +279,426 @@
   flex-grow: 1;
 }
 
-.admin-card-metric {
-  background-color: #ffffff;
-  border: 1px solid #eef2f6;
-  border-radius: 12px;
-  padding: 24px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
-}
-
-.admin-card-metric__header {
+.admin-orders-header,
+.admin-products-header {
   display: flex;
-  align-items: center;
   justify-content: space-between;
-  margin-bottom: 12px;
+  align-items: center;
+  margin-bottom: 24px;
 }
 
-.admin-card-metric__title {
-  font-size: 0.85rem;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  color: var(--grey);
+.admin-orders-title,
+.admin-products-title {
+  font-family: "Jamjuree-b", sans-serif;
   font-weight: var(--fw-bold);
+  color: var(--text-main);
+  margin-bottom: 4px;
+  font-size: var(--font-size-h5);
+}
+
+.admin-orders-subtitle {
+  color: var(--text-muted);
+  font-size: var(--font-size-des);
   margin-bottom: 0;
 }
 
-.admin-card-metric__icon-box {
-  width: 36px;
-  height: 36px;
+.admin-add-product-btn {
+  background-color: var(--primary-color);
+  color: var(--white);
+  border: none;
+  padding: 10px 24px;
   border-radius: 8px;
+  font-family: "Jamjuree-b", sans-serif;
+  font-weight: var(--fw-bold);
+  font-size: var(--font-size-des);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: opacity var(--transition-speed);
+}
+
+.admin-add-product-btn:hover {
+  opacity: 0.9;
+}
+
+.admin-table-card {
+  background-color: var(--white);
+  border-radius: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  border: 1px solid var(--light-grey);
+  overflow: hidden;
+}
+
+.admin-table-responsive {
+  overflow-x: auto;
+}
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.admin-table-header-row {
+  background-color: var(--light);
+  border-bottom: 1px solid var(--light-grey);
+}
+
+.admin-table-th {
+  padding: 12px 16px;
+  font-size: var(--font-size-des);
+  color: var(--text-muted);
+  font-weight: var(--fw-medium);
+}
+
+.admin-table-th--first {
+  padding-left: 24px;
+}
+
+.admin-table-th--last {
+  padding-right: 24px;
+}
+
+.admin-table-th--right {
+  text-align: right;
+}
+
+.admin-table-row {
+  border-bottom: 1px solid var(--light-grey);
+  transition: background-color var(--transition-speed);
+}
+
+.admin-table-row:hover {
+  background-color: #f8f9fa;
+}
+
+.admin-table-td {
+  padding: 12px 16px;
+  font-size: var(--font-size-des);
+  color: var(--text-main);
+  vertical-align: middle;
+}
+
+.admin-table-td--first {
+  padding-left: 24px;
+}
+
+.admin-table-td--last {
+  padding-right: 24px;
+}
+
+.admin-table-td--right {
+  text-align: right;
+}
+
+.admin-order-id {
+  font-family: "Jamjuree-b", sans-serif;
+  font-weight: var(--fw-bold);
+  color: var(--primary-color);
+}
+
+.admin-customer-name {
+  font-family: "Jamjuree-b", sans-serif;
+  font-weight: var(--fw-bold);
+  color: var(--text-main);
+}
+
+.admin-customer-email {
+  color: var(--text-muted);
+  font-size: 0.75rem;
+}
+
+.admin-shipping-address {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 200px;
+}
+
+.admin-payment-badge {
+  background-color: var(--light);
+  color: var(--text-main);
+  text-transform: uppercase;
+  border: 1px solid var(--light-grey);
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+}
+
+.admin-order-price {
+  font-family: "Jamjuree-b", sans-serif;
+  font-weight: var(--fw-bold);
+}
+
+.admin-status-badge {
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-weight: var(--fw-semibold);
+  font-size: 0.75rem;
+}
+
+.admin-status-badge--pending {
+  background-color: rgba(255, 230, 3, 0.2);
+  color: #b25e00;
+}
+
+.admin-status-badge--processing {
+  background-color: rgba(69, 181, 128, 0.15);
+  color: var(--primary-color);
+}
+
+.admin-status-badge--shipping {
+  background-color: rgba(0, 105, 55, 0.1);
+  color: var(--dark-green);
+}
+
+.admin-status-badge--delivered {
+  background-color: rgba(0, 255, 134, 0.2);
+  color: var(--dark-green);
+}
+
+.admin-status-select {
+  padding: 4px 8px;
+  border-radius: 6px;
+  border: 1px solid var(--light-grey);
+  font-size: var(--font-size-des);
+  color: var(--text-main);
+  outline: none;
+  background-color: var(--white);
+  width: 130px;
+}
+
+.admin-product-thumb {
+  width: 45px;
+  height: 45px;
+  border-radius: 6px;
+  border: 1px solid var(--light-grey);
+  background-color: var(--light);
+  object-fit: contain;
+}
+
+.admin-product-name {
+  font-family: "Jamjuree-b", sans-serif;
+  font-weight: var(--fw-bold);
+  max-width: 250px;
+}
+
+.admin-discount-badge {
+  background-color: rgba(221, 56, 66, 0.1);
+  color: var(--danger-color);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-weight: var(--fw-bold);
+}
+
+.admin-color-indicator {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.admin-color-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 1px solid var(--light-grey);
+  display: inline-block;
+}
+
+.admin-stock-status {
+  font-weight: var(--fw-bold);
+}
+
+.admin-stock-status--instock {
+  color: var(--primary-color);
+}
+
+.admin-stock-status--outstock {
+  color: var(--danger-color);
+}
+
+.admin-action-btn-edit,
+.admin-action-btn-delete {
+  padding: 4px 10px;
+  border-radius: 6px;
+  border: 1px solid var(--light-grey);
+  background-color: var(--white);
+  cursor: pointer;
+  margin-left: 4px;
+  transition: all var(--transition-speed);
+}
+
+.admin-action-btn-edit {
+  color: var(--primary-color);
+}
+
+.admin-action-btn-edit:hover {
+  border-color: var(--primary-color);
+  background-color: var(--primary-color);
+  color: var(--white);
+}
+
+.admin-action-btn-delete {
+  color: var(--danger-color);
+}
+
+.admin-action-btn-delete:hover {
+  border-color: var(--danger-color);
+  background-color: var(--danger-color);
+  color: var(--white);
+}
+
+.admin-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1rem;
+  z-index: 9999;
 }
 
-.admin-card-metric__value {
-  font-size: 1.75rem;
-  font-weight: var(--fw-bold);
-  color: var(--black);
-  margin-bottom: 6px;
-  font-family: "Jamjuree-b", sans-serif;
+.admin-modal-dialog {
+  width: 100%;
+  max-width: 800px;
+  padding: 16px;
 }
 
-.admin-card-metric__trend {
-  font-size: 0.75rem;
-  font-weight: var(--fw-semibold);
+.admin-modal-content {
+  background-color: var(--white);
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+}
+
+.admin-modal-header {
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  gap: 4px;
+  padding: 16px 24px;
+  border-bottom: 1px solid var(--light-grey);
+}
+
+.admin-modal-title {
+  font-family: "Jamjuree-b", sans-serif;
+  font-weight: var(--fw-bold);
+  color: var(--text-main);
+  font-size: var(--font-size-h5);
+  margin-bottom: 0;
+}
+
+.admin-modal-close-btn {
+  background: transparent;
+  border: none;
+  font-size: var(--font-size-h5);
+  color: var(--text-muted);
+  cursor: pointer;
+}
+
+.admin-modal-body {
+  padding: 24px;
+  max-height: calc(100vh - 200px);
+  overflow-y: auto;
+}
+
+.admin-modal-error-alert {
+  padding: 8px 12px;
+  background-color: rgba(221, 56, 66, 0.1);
+  color: var(--danger-color);
+  border: 1px solid var(--danger-color);
+  border-radius: 6px;
+  font-size: var(--font-size-des);
+  margin-bottom: 16px;
+}
+
+.admin-form-label {
+  display: block;
+  font-size: var(--font-size-des);
+  color: var(--text-muted);
+  font-weight: var(--fw-medium);
+  margin-bottom: 6px;
+}
+
+.admin-form-input,
+.admin-form-select,
+.admin-form-textarea,
+.admin-form-file-input {
+  width: 100%;
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: 1px solid var(--light-grey);
+  font-family: "Jamjuree-r", sans-serif;
+  font-size: var(--font-size-des);
+  color: var(--text-main);
+  outline: none;
+  background-color: var(--white);
+  transition: border-color var(--transition-speed);
+}
+
+.admin-form-input:focus,
+.admin-form-select:focus,
+.admin-form-textarea:focus,
+.admin-form-file-input:focus {
+  border-color: var(--primary-color);
+}
+
+.admin-form-color-picker {
+  width: 100%;
+  height: 38px;
+  padding: 2px;
+  border-radius: 6px;
+  border: 1px solid var(--light-grey);
+  cursor: pointer;
+}
+
+.admin-img-preview-box {
+  margin-top: 8px;
+  text-align: center;
+}
+
+.admin-img-preview {
+  max-height: 120px;
+  object-fit: contain;
+  border-radius: 6px;
+  border: 1px solid var(--light-grey);
+  padding: 4px;
+  background-color: var(--light);
+}
+
+.admin-modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  padding: 16px 24px;
+  border-top: 1px solid var(--light-grey);
+}
+
+.admin-modal-cancel-btn {
+  padding: 8px 20px;
+  border-radius: 6px;
+  border: 1px solid var(--light-grey);
+  background-color: var(--white);
+  color: var(--text-main);
+  font-family: "Jamjuree-md", sans-serif;
+  cursor: pointer;
+}
+
+.admin-modal-submit-btn {
+  padding: 8px 24px;
+  border-radius: 6px;
+  border: none;
+  background-color: var(--primary-color);
+  color: var(--white);
+  font-family: "Jamjuree-b", sans-serif;
+  font-weight: var(--fw-bold);
+  cursor: pointer;
+  transition: opacity var(--transition-speed);
+}
+
+.admin-modal-submit-btn:hover {
+  opacity: 0.9;
 }

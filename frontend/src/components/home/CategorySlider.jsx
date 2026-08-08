@@ -1,10 +1,6 @@
-import { useState, useEffect } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Navigation } from "swiper/modules";
-import "../../styles/layouts/home.css";
 import "../../styles/components/hero.css";
-import "../../styles/components/showcase.css";
-
 import "swiper/css";
 import "swiper/css/navigation";
 
@@ -41,7 +37,7 @@ export default function CategorySlider() {
   ];
 
   return (
-    <div className="container category-container mb-5">
+    <div className="container category-slider-container">
       <Swiper
         modules={[Autoplay, Navigation]}
         spaceBetween={24}
@@ -58,27 +54,17 @@ export default function CategorySlider() {
       >
         {categories.map((cat) => (
           <SwiperSlide key={cat.id}>
-            <div className="category-item text-center">
-              <div
-                className="grey-bg rounded-circle d-flex align-items-center justify-content-center mx-auto mb-2"
-                style={{
-                  width: "100px",
-                  height: "100px",
-                  backgroundColor: "#f5f5f7",
-                }}
-              >
+            <div className="category-card">
+              <div className="category-img-box">
                 <img
                   src={cat.image}
                   alt={cat.name}
-                  className="img-fluid"
-                  style={{ maxWidth: "60%" }}
+                  className="category-img"
                 />
               </div>
               <div className="category-label">
-                <h6 className="fw-semibold mb-0 text-dark fs-7">{cat.name}</h6>
-                <p className="text-muted mb-0" style={{ fontSize: "0.75rem" }}>
-                  {cat.count} Sản phẩm
-                </p>
+                <h6 className="category-name">{cat.name}</h6>
+                <p className="category-count">{cat.count} Sản phẩm</p>
               </div>
             </div>
           </SwiperSlide>

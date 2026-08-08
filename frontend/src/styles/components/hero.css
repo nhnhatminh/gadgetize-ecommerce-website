@@ -1,26 +1,25 @@
-#banner-container {
+.home-banner-container {
   padding-top: 30px;
-  padding-bottom: 30px;
+  margin-bottom: 40px;
 }
 
-.left-banner #main-banner .carousel-indicators [data-bs-target] {
-  width: 30px;
-  height: 4px;
-  border: 0;
-  border-radius: 2px;
-  background-color: var(--white);
-  opacity: 0.5;
+.main-banner-swiper {
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  height: 100%;
 }
 
-.left-banner #main-banner .carousel-indicators .active {
-  opacity: 1;
+.main-banner-slide {
+  position: relative;
 }
 
-.left-banner
-  #main-banner
-  .carousel-inner
-  .carousel-item
-  .hero-carousel-caption {
+.main-banner-image {
+  width: 100%;
+  display: block;
+}
+
+.hero-carousel-caption {
   text-align: left;
   position: absolute;
   top: 20%;
@@ -30,30 +29,30 @@
   padding: 0;
 }
 
-.hero-carousel-caption .top-slider-label {
+.top-slider-label {
   font-family: "Jamjuree-sb", sans-serif;
   font-size: var(--font-size-h6);
   color: var(--yellow);
   margin-bottom: 4px;
 }
 
-.hero-carousel-caption h3 {
+.slider-title {
   font-family: "Jamjuree-r", sans-serif;
   font-size: var(--font-size-h3);
-  font-weight: 700;
+  font-weight: var(--fw-bold);
   color: var(--white);
   margin: 4px 0;
-  letter-spacing: 4%;
+  letter-spacing: 0.04em;
 }
 
-.hero-carousel-caption h3 span {
-  color: var(--yellow);
+.slider-title-highlight {
+  color: var(--primary-color);
 }
 
-.hero-carousel-caption .bottom-slider-label {
+.bottom-slider-label {
   font-family: "Jamjuree-r", sans-serif;
-  font-weight: 600;
-  font-size: 18px;
+  font-weight: var(--fw-semibold);
+  font-size: 1.125rem;
   color: var(--white);
   margin-top: 14px;
   margin-bottom: 28px;
@@ -75,17 +74,27 @@
   transform: scale(1.05);
 }
 
-.right-banner {
+.home-banner-sidebar {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  gap: 24px;
 }
 
 .hero-side-item {
-  height: 48%;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  position: relative;
+  flex: 1;
 }
 
-.right-banner .carousel-item .hero-side-caption {
+.hero-side-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hero-side-caption {
   text-align: left;
   position: absolute;
   top: 18%;
@@ -110,55 +119,74 @@
   margin: 0;
 }
 
-.category-container {
-  padding-bottom: 50px;
+.category-slider-container {
+  margin-bottom: 48px;
 }
 
-.category-container #owl-category .category-item a {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-decoration: none;
+.category-card {
+  text-align: center;
 }
 
-.category-container #owl-category .category-item a .grey-bg {
-  height: 135px;
-  width: 135px;
-  background-color: var(--secondary-color);
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.category-img-box {
+  width: 100px;
+  height: 100px;
+  background-color: var(--light);
   border-radius: 50%;
-  transition:
-    transform var(--transition-speed),
-    box-shadow var(--transition-speed);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 8px auto;
+  transition: transform var(--transition-speed), box-shadow var(--transition-speed);
 }
 
-.category-container #owl-category .category-item a:hover .grey-bg {
+.category-card:hover .category-img-box {
   transform: translateY(-5px);
   box-shadow: 0 10px 15px rgba(0, 0, 0, 0.05);
 }
 
-.category-container #owl-category .category-item a .grey-bg img {
-  width: 70%;
+.category-img {
+  max-width: 60%;
+  height: auto;
 }
 
-.category-container #owl-category .category-item a .category-label {
+.category-label {
   text-align: center;
 }
 
-.category-container #owl-category .category-item a .category-label h6 {
-  font-family: "Jamjuree-md", sans-serif;
-  font-size: var(--font-size-p);
+.category-name {
+  font-family: "Jamjuree-sb", sans-serif;
+  font-weight: var(--fw-semibold);
   color: var(--text-main);
-  padding: 16px 0 8px 0;
-  margin: 0;
+  font-size: var(--font-size-des);
+  margin-bottom: 0;
 }
 
-.category-container #owl-category .category-item a .category-label p {
-  font-family: "Jamjuree-r", sans-serif;
-  font-size: var(--font-size-des);
+.category-count {
   color: var(--text-muted);
-  margin: 0;
+  font-size: 0.75rem;
+  margin-bottom: 0;
+}
+
+.brands-section {
+  padding: 48px 0;
+  border-top: 1px solid var(--light-grey);
+  background-color: var(--light);
+}
+
+.brand-card {
+  text-align: center;
+  padding: 16px;
+  background-color: var(--white);
+  border-radius: 8px;
+  border: 1px solid var(--light-grey);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 80px;
+}
+
+.brand-img {
+  max-height: 70%;
+  max-width: 100%;
+  height: auto;
 }

@@ -25,10 +25,8 @@ axiosClient.interceptors.response.use(
     return response.data;
   },
   (error) => {
-    // Bỏ qua API đăng nhập
     const isLoginApi = error.config?.url?.includes("/auth/login");
 
-    // Tự động đăng xuất khi token không còn hợp lệ
     if (
       error.response &&
       (error.response.status === 401 || error.response.status === 403) &&
@@ -38,7 +36,6 @@ axiosClient.interceptors.response.use(
       window.location.href = "/auth";
     }
 
-    // Chuyển lỗi cho nơi gọi API xử lý
     return Promise.reject(error);
   }
 );

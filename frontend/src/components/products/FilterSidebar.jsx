@@ -15,29 +15,27 @@ export default function FilterSidebar({
 }) {
   return (
     <aside className="col-lg-3">
-      <div className="filter-sidebar bg-white rounded-4 p-4 shadow-sm border border-light-subtle">
-        <div className="mb-4">
+      <div className="filter-sidebar-card">
+        <div className="filter-search-box">
           <input
             type="text"
-            className="form-control py-2 px-3 fs-7"
+            className="filter-search-input"
             placeholder="Tìm kiếm trong cửa hàng..."
             value={searchKeyword}
             onChange={(e) => setSearchKeyword(e.target.value)}
           />
         </div>
 
-        <div className="mb-4">
-          <div className="d-flex justify-content-between align-items-center mb-3">
-            <h5 className="fw-bold text-dark mb-0 fs-6">Danh Mục Sản Phẩm</h5>
+        <div className="filter-section">
+          <div className="filter-section-header">
+            <h5 className="filter-section-title">Danh Mục Sản Phẩm</h5>
           </div>
-          <ul className="list-unstyled d-flex flex-column gap-2 mb-0">
+          <ul className="filter-category-list">
             {categories.map((cat) => (
               <li
                 key={cat.id}
-                className={`cursor-pointer d-flex justify-content-between align-items-center fs-7 ${
-                  selectedCategory === cat.id
-                    ? "text-success fw-bold"
-                    : "text-dark"
+                className={`filter-category-item ${
+                  selectedCategory === cat.id ? "filter-category-item--active" : ""
                 }`}
                 onClick={() => setSelectedCategory(cat.id)}
               >
@@ -47,25 +45,25 @@ export default function FilterSidebar({
           </ul>
         </div>
 
-        <hr className="text-muted my-4" />
+        <div className="filter-divider" />
 
-        <div className="mb-4">
-          <div className="d-flex justify-content-between align-items-center mb-3">
-            <h5 className="fw-bold text-dark mb-0 fs-6">Khoảng Giá Tối Đa</h5>
+        <div className="filter-section">
+          <div className="filter-section-header">
+            <h5 className="filter-section-title">Khoảng Giá Tối Đa</h5>
             <span
-              className="text-muted fs-8 cursor-pointer"
+              className="filter-reset-link"
               onClick={() => setPriceRange(50000000)}
             >
               Đặt Lại
             </span>
           </div>
-          <div className="price-range-selector">
-            <p className="text-success fw-semibold fs-7 mb-2">
+          <div className="filter-price-selector">
+            <p className="filter-price-value">
               Dưới {priceRange.toLocaleString("vi-VN")}₫
             </p>
             <input
               type="range"
-              className="form-range custom-range-slider"
+              className="filter-price-slider"
               min="1000000"
               max="50000000"
               step="1000000"
@@ -75,22 +73,22 @@ export default function FilterSidebar({
           </div>
         </div>
 
-        <hr className="text-muted my-4" />
+        <div className="filter-divider" />
 
-        <div className="mb-4">
-          <div className="d-flex justify-content-between align-items-center mb-3">
-            <h5 className="fw-bold text-dark mb-0 fs-6">Thương Hiệu</h5>
+        <div className="filter-section">
+          <div className="filter-section-header">
+            <h5 className="filter-section-title">Thương Hiệu</h5>
             <span
-              className="text-muted fs-8 cursor-pointer"
+              className="filter-reset-link"
               onClick={() => setSelectedBrand("all")}
             >
               Tất Cả
             </span>
           </div>
-          <div className="d-flex flex-column gap-2">
+          <div className="filter-brand-list">
             <div
-              className={`cursor-pointer fs-7 ${
-                selectedBrand === "all" ? "text-success fw-bold" : "text-dark"
+              className={`filter-brand-item ${
+                selectedBrand === "all" ? "filter-brand-item--active" : ""
               }`}
               onClick={() => setSelectedBrand("all")}
             >
@@ -99,8 +97,8 @@ export default function FilterSidebar({
             {brands.map((brand, idx) => (
               <div
                 key={idx}
-                className={`cursor-pointer fs-7 ${
-                  selectedBrand === brand ? "text-success fw-bold" : "text-dark"
+                className={`filter-brand-item ${
+                  selectedBrand === brand ? "filter-brand-item--active" : ""
                 }`}
                 onClick={() => setSelectedBrand(brand)}
               >
@@ -110,11 +108,11 @@ export default function FilterSidebar({
           </div>
         </div>
 
-        <hr className="text-muted my-4" />
+        <div className="filter-divider" />
 
         <button
           type="button"
-          className="btn btn-outline-secondary w-100 py-2 fs-7 fw-medium rounded-3"
+          className="filter-reset-all-btn"
           onClick={onResetFilters}
         >
           Xóa Tất Cả Bộ Lọc

@@ -1,5 +1,4 @@
 import "../../styles/layouts/product_detail_page.css";
-import "../../styles/components/showcase.css";
 
 export default function ProductDescriptionTabs({
   activeTab,
@@ -8,32 +7,29 @@ export default function ProductDescriptionTabs({
   description,
 }) {
   return (
-   <div className="product-description-tabs bg-white rounded-4 p-4 p-lg-5 mb-5 shadow-sm">
-      <ul
-        className="nav nav-tabs justify-content-center border-bottom mb-4"
-        role="tablist"
-      >
-        <li className="nav-item">
+    <div className="product-tabs-card">
+      <ul className="product-tabs-header" role="tablist">
+        <li className="product-tab-item">
           <button
-            className={`nav-link ${activeTab === "desc" ? "active" : ""}`}
+            className={`product-tab-button ${activeTab === "desc" ? "product-tab-button--active" : ""}`}
             onClick={() => setActiveTab("desc")}
             type="button"
           >
             Mô Tả
           </button>
         </li>
-        <li className="nav-item">
+        <li className="product-tab-item">
           <button
-            className={`nav-link ${activeTab === "info" ? "active" : ""}`}
+            className={`product-tab-button ${activeTab === "info" ? "product-tab-button--active" : ""}`}
             onClick={() => setActiveTab("info")}
             type="button"
           >
             Thông Tin Bổ Sung
           </button>
         </li>
-        <li className="nav-item">
+        <li className="product-tab-item">
           <button
-            className={`nav-link ${activeTab === "review" ? "active" : ""}`}
+            className={`product-tab-button ${activeTab === "review" ? "product-tab-button--active" : ""}`}
             onClick={() => setActiveTab("review")}
             type="button"
           >
@@ -42,20 +38,20 @@ export default function ProductDescriptionTabs({
         </li>
       </ul>
 
-      <div className="tab-content">
+      <div className="product-tab-content">
         {activeTab === "desc" && (
-          <div className="tab-pane fade show active">
-            <h4 className="fw-bold mb-4">Mô Tả Sản Phẩm</h4>
-            <p className="text-muted text-des mb-4 lh-base">
+          <div className="product-tab-pane">
+            <h4 className="product-tab-heading">Mô Tả Sản Phẩm</h4>
+            <p className="product-tab-description">
               {description}
             </p>
-            <div className="text-center mb-5">
+            <div className="product-tab-image-wrapper">
               <div className="row g-4 justify-content-center">
-                <div className="col-lg-6">
+                <div className="col-lg-6 text-center">
                   <img
                     src={productImage}
                     alt="Product Details"
-                    className="img-fluid w-75 object-fit-contain"
+                    className="product-tab-detail-image"
                     onError={(e) => {
                       e.target.onerror = null;
                       e.target.src = "/images/no-image.png";
@@ -66,18 +62,20 @@ export default function ProductDescriptionTabs({
             </div>
           </div>
         )}
+
         {activeTab === "info" && (
-          <div className="tab-pane fade show active">
-            <h4 className="fw-bold mb-4">Thông Tin Bổ Sung</h4>
-            <p className="text-muted text-des">
+          <div className="product-tab-pane">
+            <h4 className="product-tab-heading">Thông Tin Bổ Sung</h4>
+            <p className="product-tab-description">
               Nội dung thông tin bổ sung đang được cập nhật...
             </p>
           </div>
         )}
+
         {activeTab === "review" && (
-          <div className="tab-pane fade show active">
-            <h4 className="fw-bold mb-4">Đánh Giá Sản Phẩm</h4>
-            <p className="text-muted text-des">
+          <div className="product-tab-pane">
+            <h4 className="product-tab-heading">Đánh Giá Sản Phẩm</h4>
+            <p className="product-tab-description">
               Chưa có đánh giá nào cho sản phẩm này.
             </p>
           </div>

@@ -13,18 +13,17 @@ export default function Header() {
   const location = useLocation();
   const currentPath = location.pathname;
 
-  // State quản lý menu 
+  // Trạng thái quản lý đóng/mở menu danh mục và menu di động
   const [isCategoryOpen, setIsCategoryOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-  // State quản lý Live Search
+  // Trạng thái quản lý ô tìm kiếm trực tiếp
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [isSearching, setIsSearching] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
   const searchRef = useRef(null);
 
-  // Xử lý tìm kiếm
   const handleInputChange = (e) => {
     const value = e.target.value;
     setSearchQuery(value);
@@ -47,7 +46,6 @@ export default function Header() {
     };
   }, []);
 
-  // Debounce tìm kiếm
   useEffect(() => {
     if (!searchQuery.trim()) return;
 
@@ -67,7 +65,6 @@ export default function Header() {
     return () => clearTimeout(timer);
   }, [searchQuery]);
 
-  // Tìm kiếm sản phẩm
   const handleSearchSubmit = (e) => {
     e.preventDefault();
     if (searchQuery.trim()) {
@@ -76,36 +73,34 @@ export default function Header() {
     }
   };
 
-  // Chọn sản phẩm từ gợi ý
   const handleSelectSearchItem = (slug) => {
     setShowDropdown(false);
     setSearchQuery("");
     navigate(`/product/${slug}`);
   };
 
-  // Tính tổng giỏ hàng
   const totalCartQuantity = cartItems.reduce(
     (acc, item) => acc + item.quantity,
     0
   );
+
   const totalCartPrice = cartItems.reduce(
     (acc, item) => acc + parseFloat(item.final_unit_price || 0) * item.quantity,
     0
   );
 
-  // Xử lý đăng xuất
   const handleLogout = () => {
     logout();
     navigate("/auth");
   };
 
   return (
-    <header className="bg-white site-header">
+    <header className="site-header">
       <div className="header-topbar">
         <div className="container">
           <div className="row">
             <div className="col-12">
-              <p className="mb-0">
+              <p className="header-topbar-text">
                 Chào mừng đến với Cửa Hàng Điện Tử Gadgetize
               </p>
             </div>
@@ -115,10 +110,10 @@ export default function Header() {
 
       <div className="header-middle">
         <div className="container">
-          <div className="row align-items-center">
+          <div className="row header-middle-row">
             <div className="col-xl-3 col-lg-3 col-md-4 col-6">
               <div
-                className="header-logo cursor-pointer"
+                className="header-logo"
                 onClick={() => navigate("/")}
               >
                 <img src="/images/logo.png" alt="Gadgetize Logo" />
@@ -127,13 +122,13 @@ export default function Header() {
 
             <div className="col-xl-6 col-lg-6 d-none d-lg-block">
               <form
-                className="header-search"
+                className="header-search-form"
                 ref={searchRef}
                 onSubmit={handleSearchSubmit}
               >
                 <div className="header-search-category">
                   Tất cả danh mục{" "}
-                  <i className="fa-solid fa-angle-down ms-1"></i>
+                  <i className="fa-solid fa-angle-down"></i>
                 </div>
                 <input
                   type="text"
@@ -145,7 +140,7 @@ export default function Header() {
                     if (searchResults.length > 0) setShowDropdown(true);
                   }}
                 />
-                <button type="submit" className="header-search-btn">
+                <button type="submit" className="header-search-button">
                   {isSearching ? (
                     <i className="fa-solid fa-spinner fa-spin"></i>
                   ) : (
@@ -161,64 +156,66 @@ export default function Header() {
               </form>
             </div>
 
-            <div className="col-xl-3 col-lg-3 col-md-8 col-6 d-flex justify-content-end align-items-center gap-3">
-              {user?.role === "admin" && (
+            <div className="col-xl-3 col-lg-3 col-md-8 col-6">
+              <div className="header-actions-wrapper">
+                {user?.role === "admin" && (
+                  <div
+                    className="header-action-item header-action-item--admin d-none d-sm-flex"
+                    onClick={() => navigate("/admin")}
+                  >
+                    <div className="header-action-icon">
+                      <i className="fa-solid fa-user-gear"></i>
+                    </div>
+                    <div className="header-action-text">
+                      <span>Hệ thống</span>
+                      <strong>Quản trị</strong>
+                    </div>
+                  </div>
+                )}
+
                 <div
-                  className="header-action-item d-none d-sm-flex text-success"
-                  onClick={() => navigate("/admin")}
+                  className="header-action-item d-none d-sm-flex"
+                  onClick={() => (user ? handleLogout() : navigate("/auth"))}
                 >
-                  <div className="header-action-icon text-success">
-                    <i className="fa-solid fa-user-gear"></i>
+                  <div className="header-action-icon">
+                    <i className="fa-regular fa-user"></i>
                   </div>
                   <div className="header-action-text">
-                    <span className="text-success">Hệ thống</span>
-                    <strong className="text-success">Quản trị</strong>
+                    <span>{user ? `Hi, ${user.firstName}` : "Đăng nhập"}</span>
+                    <strong>{user ? "Đăng xuất" : "Tài khoản"}</strong>
                   </div>
                 </div>
-              )}
 
-              <div
-                className="header-action-item d-none d-sm-flex"
-                onClick={() => (user ? handleLogout() : navigate("/auth"))}
-              >
-                <div className="header-action-icon">
-                  <i className="fa-regular fa-user"></i>
+                <div className="header-action-item">
+                  <div className="header-action-icon">
+                    <i className="fa-regular fa-heart"></i>
+                    <span className="header-action-badge">0</span>
+                  </div>
                 </div>
-                <div className="header-action-text">
-                  <span>{user ? `Hi, ${user.firstName}` : "Đăng nhập"}</span>
-                  <strong>{user ? "Đăng xuất" : "Tài khoản"}</strong>
-                </div>
-              </div>
 
-              <div className="header-action-item">
-                <div className="header-action-icon">
-                  <i className="fa-regular fa-heart"></i>
-                  <span className="header-action-badge">0</span>
+                <div
+                  className="header-action-item"
+                  onClick={() => navigate("/cart")}
+                >
+                  <div className="header-action-icon">
+                    <i className="fa-solid fa-cart-shopping"></i>
+                    <span className="header-action-badge">
+                      {totalCartQuantity}
+                    </span>
+                  </div>
+                  <div className="header-action-text d-none d-sm-block">
+                    <span>Giỏ hàng</span>
+                    <strong>{totalCartPrice.toLocaleString("vi-VN")} VND</strong>
+                  </div>
                 </div>
-              </div>
 
-              <div
-                className="header-action-item"
-                onClick={() => navigate("/cart")}
-              >
-                <div className="header-action-icon">
-                  <i className="fa-solid fa-cart-shopping"></i>
-                  <span className="header-action-badge">
-                    {totalCartQuantity}
-                  </span>
-                </div>
-                <div className="header-action-text d-none d-sm-block">
-                  <span>Giỏ hàng</span>
-                  <strong>{totalCartPrice.toLocaleString("vi-VN")} VND</strong>
-                </div>
-              </div>
-
-              <div
-                className="header-action-item d-lg-none"
-                onClick={() => setIsMobileMenuOpen(true)}
-              >
-                <div className="header-action-icon">
-                  <i className="fa-solid fa-bars"></i>
+                <div
+                  className="header-action-item d-lg-none"
+                  onClick={() => setIsMobileMenuOpen(true)}
+                >
+                  <div className="header-action-icon">
+                    <i className="fa-solid fa-bars"></i>
+                  </div>
                 </div>
               </div>
             </div>
@@ -227,23 +224,23 @@ export default function Header() {
       </div>
 
       <div className="header-bottom d-none d-lg-block">
-        <div className="container position-relative">
-          <div className="row align-items-center">
+        <div className="container header-bottom-container">
+          <div className="row header-bottom-row">
             <div className="col-xl-3 col-lg-3">
               <div
-                className="nav-category-btn d-flex align-items-center"
+                className="nav-category-button"
                 onClick={() => setIsCategoryOpen(!isCategoryOpen)}
               >
-                <i className="fa-solid fa-bars me-2"></i>
+                <i className="fa-solid fa-bars"></i>
                 <span>Tất Cả Danh Mục</span>
               </div>
             </div>
 
             <div className="col-xl-6 col-lg-6">
-              <ul className="nav-menu">
+              <ul className="nav-menu-list">
                 <li>
                   <span
-                    className={`cursor-pointer fw-medium ${currentPath === "/" ? "text-success" : ""}`}
+                    className={`nav-menu-link ${currentPath === "/" ? "nav-menu-link--active" : ""}`}
                     onClick={() => navigate("/")}
                   >
                     Trang chủ
@@ -251,34 +248,34 @@ export default function Header() {
                 </li>
                 <li>
                   <span
-                    className={`cursor-pointer fw-medium ${currentPath === "/shop" ? "text-success" : ""}`}
+                    className={`nav-menu-link ${currentPath === "/shop" ? "nav-menu-link--active" : ""}`}
                     onClick={() => navigate("/shop")}
                   >
                     Sản phẩm{" "}
-                    <i className="fa-solid fa-angle-down ms-1 fs-7"></i>
+                    <i className="fa-solid fa-angle-down"></i>
                   </span>
                 </li>
                 <li>
-                  <span className="cursor-pointer fw-medium">
-                    Blog <i className="fa-solid fa-angle-down ms-1 fs-7"></i>
+                  <span className="nav-menu-link">
+                    Blog <i className="fa-solid fa-angle-down"></i>
                   </span>
                 </li>
                 <li>
-                  <span className="cursor-pointer fw-medium">
-                    Trang <i className="fa-solid fa-angle-down ms-1 fs-7"></i>
+                  <span className="nav-menu-link">
+                    Trang <i className="fa-solid fa-angle-down"></i>
                   </span>
                 </li>
                 <li>
-                  <span className="cursor-pointer fw-medium">
+                  <span className="nav-menu-link">
                     Cửa hàng{" "}
-                    <i className="fa-solid fa-angle-down ms-1 fs-7"></i>
+                    <i className="fa-solid fa-angle-down"></i>
                   </span>
                 </li>
               </ul>
             </div>
 
-            <div className="col-xl-3 col-lg-3 text-end">
-              <div className="nav-promo">
+            <div className="col-xl-3 col-lg-3">
+              <div className="nav-promo-banner">
                 <i className="fa-solid fa-certificate"></i>{" "}
                 <span>Ưu Đãi 500.000đ Đơn Đầu Tiên.</span>
               </div>
@@ -286,41 +283,40 @@ export default function Header() {
           </div>
 
           {isCategoryOpen && (
-            <div
-              className="categories bg-white p-3 border position-absolute top-100 start-0 z-3 rounded-3 shadow-sm w-100"
-              style={{ maxWidth: "300px" }}
-            >
-              <ul className="mb-0">
-                <li className="py-2 border-bottom cursor-pointer">
+            <div className="category-dropdown-panel">
+              <ul className="category-dropdown-list">
+                <li className="category-dropdown-item">
                   Laptop & Máy Tính
                 </li>
-                <li className="py-2 border-bottom cursor-pointer">
+                <li className="category-dropdown-item">
                   Smartphone & Máy Tính Bảng
                 </li>
-                <li className="py-2 border-bottom cursor-pointer">
+                <li className="category-dropdown-item">
                   Tai Nghe & Loa
                 </li>
-                <li className="py-2 cursor-pointer">Bàn Phím & Chuột</li>
+                <li className="category-dropdown-item category-dropdown-item--last">
+                  Bàn Phím & Chuột
+                </li>
               </ul>
             </div>
           )}
         </div>
       </div>
 
-      <div className={`slide-in-menu ${isMobileMenuOpen ? "active" : ""}`}>
-        <div className="p-4 d-flex flex-column h-100">
-          <div className="d-flex justify-content-between align-items-center mb-4">
-            <h5 className="fw-bold mb-0">Menu</h5>
+      <div className={`slide-in-menu ${isMobileMenuOpen ? "slide-in-menu--active" : ""}`}>
+        <div className="slide-in-menu-container">
+          <div className="slide-in-menu-header">
+            <h5 className="slide-in-menu-title">Menu</h5>
             <button
-              className="btn border-0 p-0"
+              className="slide-in-menu-close"
               onClick={() => setIsMobileMenuOpen(false)}
             >
-              <i className="fa-solid fa-xmark fs-4"></i>
+              <i className="fa-solid fa-xmark"></i>
             </button>
           </div>
-          <ul className="d-flex flex-column gap-3 fs-5">
+          <ul className="slide-in-menu-list">
             <li
-              className="cursor-pointer"
+              className="slide-in-menu-item"
               onClick={() => {
                 navigate("/");
                 setIsMobileMenuOpen(false);
@@ -329,7 +325,7 @@ export default function Header() {
               Trang chủ
             </li>
             <li
-              className="cursor-pointer"
+              className="slide-in-menu-item"
               onClick={() => {
                 navigate("/shop");
                 setIsMobileMenuOpen(false);
@@ -337,9 +333,9 @@ export default function Header() {
             >
               Sản phẩm
             </li>
-            <li className="cursor-pointer">Blog</li>
+            <li className="slide-in-menu-item">Blog</li>
             <li
-              className="cursor-pointer"
+              className="slide-in-menu-item"
               onClick={() => {
                 navigate("/cart");
                 setIsMobileMenuOpen(false);
@@ -348,7 +344,7 @@ export default function Header() {
               Giỏ hàng
             </li>
             <li
-              className="cursor-pointer"
+              className="slide-in-menu-item"
               onClick={() => {
                 if (user) {
                   handleLogout();
@@ -362,7 +358,7 @@ export default function Header() {
             </li>
             {user?.role === "admin" && (
               <li
-                className="cursor-pointer text-success fw-bold border-top pt-2"
+                className="slide-in-menu-item slide-in-menu-item--admin"
                 onClick={() => {
                   navigate("/admin");
                   setIsMobileMenuOpen(false);

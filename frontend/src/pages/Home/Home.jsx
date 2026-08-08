@@ -5,13 +5,11 @@ import CategorySlider from "../../components/home/CategorySlider";
 import FeaturedShowcase from "../../components/home/FeaturedShowcase";
 import PopularGrid from "../../components/home/PopularGrid";
 import BrandSlider from "../../components/home/BrandSlider";
-
 import "../../styles/layouts/home.css";
-import "../../styles/components/hero.css";
-import "../../styles/components/showcase.css";
 
 export default function Home() {
   const navigate = useNavigate();
+
   const [activeTab, setActiveTab] = useState("all");
   const [activePopularTab, setActivePopularTab] = useState("all");
 
@@ -85,7 +83,7 @@ export default function Home() {
   };
 
   return (
-    <main className="bg-white">
+    <main className="home-page-main">
       <HomeBanner navigate={handleLegacyNavigate} />
       <CategorySlider />
       <FeaturedShowcase

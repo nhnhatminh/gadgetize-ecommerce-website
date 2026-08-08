@@ -1,8 +1,6 @@
 import { useState, useEffect } from "react";
 import ProductCard from "../common/ProductCard";
 import { productApi } from "../../api/productApi";
-import "../../styles/layouts/home.css";
-import "../../styles/components/hero.css";
 import "../../styles/components/showcase.css";
 
 export default function PopularGrid({
@@ -20,6 +18,7 @@ export default function PopularGrid({
           params.category = activePopularTab;
         }
         const data = await productApi.getProducts(params);
+        
         const formatted = data.products.map((p) => ({
           id: p.id,
           variantId: p.variant_id,
@@ -44,17 +43,17 @@ export default function PopularGrid({
   }, [activePopularTab]);
 
   return (
-    <section className="products-grid-section py-5">
+    <section className="popular-grid-section">
       <div className="container">
-        <div className="d-flex flex-wrap justify-content-between align-items-center bg-white p-3 rounded-4 mb-4 shadow-sm gap-3">
-          <h3 className="mb-0 fs-5 fw-bold ms-2 text-dark">
+        <div className="popular-filter-header">
+          <h3 className="popular-filter-title">
             Sản Phẩm Phổ Biến
           </h3>
-          <ul className="nav nav-pills showcase-filter gap-1" role="tablist">
+          <ul className="popular-filter-list" role="tablist">
             {["all", "laptop", "keyboard", "mouse", "headphone"].map((tab) => (
-              <li className="nav-item" key={tab}>
+              <li className="popular-filter-item" key={tab}>
                 <button
-                  className={`nav-link rounded-pill px-3 py-1 text-des fw-medium border-0 ${activePopularTab === tab ? "active" : "text-muted bg-transparent"}`}
+                  className={`popular-filter-button ${activePopularTab === tab ? "popular-filter-button--active" : ""}`}
                   onClick={() => setActivePopularTab(tab)}
                 >
                   {tab === "all"
@@ -69,7 +68,7 @@ export default function PopularGrid({
         <div className="row g-4">
           {products.map((prod) => (
             <div
-              className="col-xl-2 col-lg-3 col-md-4 col-sm-6"
+              className="col-xl-2 col-lg-3 col-md-4 col-sm-6 popular-product-col"
               key={prod.id}
               onClick={() => navigate("product-detail", prod.slug)}
             >

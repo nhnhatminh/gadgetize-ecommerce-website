@@ -1,11 +1,37 @@
-.auth-page-container {
+.auth-page-wrapper {
   background-color: var(--bg-main);
-  font-family: "Jamjuree-r", sans-serif;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
 }
 
 .auth-card {
   width: 100%;
   max-width: 520px;
+  background-color: var(--white);
+  border-radius: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  border: 1px solid var(--light-grey);
+  padding: 24px;
+}
+
+@media (min-width: 576px) {
+  .auth-card {
+    padding: 40px;
+  }
+}
+
+.auth-header {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.auth-logo-box {
+  cursor: pointer;
+  display: inline-block;
+  margin-bottom: 12px;
 }
 
 .auth-logo {
@@ -13,12 +39,27 @@
   object-fit: contain;
 }
 
-.auth-tabs {
-  border-bottom-color: var(--light-grey) !important;
-  gap: 30px;
+.auth-subtitle {
+  color: var(--text-muted);
+  font-size: var(--font-size-des);
+  margin-bottom: 0;
 }
 
-.auth-tabs .nav-link {
+.auth-tabs-list {
+  display: flex;
+  justify-content: center;
+  border-bottom: 1px solid var(--light-grey);
+  margin-bottom: 24px;
+  gap: 30px;
+  list-style: none;
+  padding: 0;
+}
+
+.auth-tab-item {
+  display: inline-block;
+}
+
+.auth-tab-button {
   font-family: "Jamjuree-sb", sans-serif;
   font-size: var(--font-size-p);
   color: var(--text-muted);
@@ -26,80 +67,216 @@
   border-bottom: 2px solid transparent;
   padding: 8px 0;
   background: transparent;
+  cursor: pointer;
   transition: all var(--transition-speed);
 }
 
-.auth-tabs .nav-link:hover {
+.auth-tab-button:hover {
   color: var(--primary-color);
 }
 
-.auth-tabs .nav-link.active {
+.auth-tab-button--active {
   color: var(--primary-color);
   border-bottom-color: var(--primary-color);
   font-family: "Jamjuree-b", sans-serif;
 }
 
-.auth-form .form-label {
-  font-size: var(--font-size-des);
+.auth-tab-content {
+  margin-bottom: 16px;
 }
 
-.auth-form .form-control {
+.auth-tab-pane {
+  display: block;
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.auth-alert {
+  padding: 8px 12px;
   border-radius: 6px;
-  border-color: var(--light-grey);
+  font-size: var(--font-size-des);
+  margin-bottom: 16px;
+}
+
+.auth-alert--error {
+  background-color: rgba(221, 56, 66, 0.1);
+  color: var(--danger-color);
+  border: 1px solid var(--danger-color);
+}
+
+.auth-alert--success {
+  background-color: rgba(69, 181, 128, 0.1);
+  color: var(--primary-color);
+  border: 1px solid var(--primary-color);
+}
+
+.auth-form-row {
+  margin-bottom: 16px;
+}
+
+.auth-form-group {
+  margin-bottom: 16px;
+  display: flex;
+  flex-direction: column;
+}
+
+.auth-form-group-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 4px;
+}
+
+.auth-form-label {
+  font-size: var(--font-size-des);
+  color: var(--text-main);
+  font-weight: var(--fw-medium);
+  margin-bottom: 6px;
+}
+
+.auth-form-input {
+  width: 100%;
+  padding: 10px 14px;
+  border-radius: 6px;
+  border: 1px solid var(--light-grey);
+  font-family: "Jamjuree-r", sans-serif;
   font-size: var(--font-size-p);
   color: var(--text-main);
+  outline: none;
+  background-color: var(--white);
+  transition: border-color var(--transition-speed);
 }
 
-.auth-form .form-control:focus {
+.auth-form-input:focus {
   border-color: var(--primary-color);
-  box-shadow: 0 0 0 1px var(--primary-color);
 }
 
-.auth-form .form-control::placeholder {
+.auth-form-input::placeholder {
   color: var(--text-muted);
 }
 
-.form-check-input {
-  width: 1.1rem;
-  height: 1.1rem;
-  border-color: var(--light-grey);
-  cursor: pointer;
-}
-
-.form-check-input:checked {
-  background-color: var(--primary-color);
-  border-color: var(--primary-color);
-}
-
 .forgot-password-link {
+  font-size: var(--font-size-des);
+  color: var(--text-muted);
+  text-decoration: none;
   transition: color var(--transition-speed);
 }
 
 .forgot-password-link:hover {
-  color: var(--primary-color) !important;
+  color: var(--primary-color);
+}
+
+.auth-checkbox-group {
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.auth-checkbox-input {
+  accent-color: var(--primary-color);
+  cursor: pointer;
+  margin: 0;
+}
+
+.auth-checkbox-label {
+  font-size: var(--font-size-des);
+  color: var(--text-muted);
+  cursor: pointer;
+}
+
+.auth-terms-link {
+  color: var(--text-main);
+  font-weight: var(--fw-medium);
+  text-decoration: none;
+}
+
+.auth-terms-link:hover {
+  color: var(--primary-color);
 }
 
 .btn-auth-submit {
+  width: 100%;
+  padding: 12px 0;
   background-color: var(--primary-color);
-  border-color: var(--primary-color);
+  border: none;
+  color: var(--white);
   font-family: "Jamjuree-md", sans-serif;
+  font-weight: var(--fw-medium);
   font-size: var(--font-size-p);
+  border-radius: 8px;
+  cursor: pointer;
+  margin-bottom: 16px;
   transition: opacity var(--transition-speed);
 }
 
-.btn-auth-submit:hover {
+.btn-auth-submit:hover:not(:disabled) {
   opacity: 0.9;
-  color: var(--white);
+}
+
+.btn-auth-submit:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.social-divider-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 24px 0;
+}
+
+.social-divider-line {
+  position: absolute;
+  width: 100%;
+  border-top: 1px solid var(--light-grey);
+}
+
+.social-divider-text {
+  position: relative;
+  background-color: var(--white);
+  padding: 0 12px;
+  color: var(--text-muted);
+  font-size: var(--font-size-des);
+}
+
+.social-buttons-group {
+  display: flex;
+  gap: 16px;
 }
 
 .btn-social-login {
-  background-color: var(--white);
-  border-color: var(--light-grey) !important;
+  width: 50%;
+  padding: 8px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border-radius: 8px;
+  color: var(--text-main);
   font-family: "Jamjuree-md", sans-serif;
+  font-weight: var(--fw-medium);
   font-size: var(--font-size-des);
+  border: 1px solid var(--light-grey);
+  background-color: var(--white);
+  cursor: pointer;
   transition: background-color var(--transition-speed);
 }
 
 .btn-social-login:hover {
   background-color: var(--light);
+}
+
+.google-icon {
+  color: var(--danger-color);
+  font-size: var(--font-size-h6);
+}
+
+.facebook-icon {
+  color: #1877f2;
+  font-size: var(--font-size-h6);
 }

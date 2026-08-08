@@ -2,16 +2,16 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Pagination } from "swiper/modules";
 import ProductCard from "../common/ProductCard";
 import "../../styles/layouts/product_detail_page.css";
-import "../../styles/components/showcase.css";
 import "swiper/css";
 import "swiper/css/pagination";
 
 export default function RelatedProducts({ relatedProducts, navigate }) {
   return (
-    <div className="row mt-5">
+    <div className="row related-products-row">
       <div className="col-12">
-        <div className="related-products-wrapper mb-5">
-          <h4 className="fw-bold mb-4">Sản Phẩm Gợi Ý</h4>
+        <div className="related-products-card">
+          <h4 className="related-products-title">Sản Phẩm Gợi Ý</h4>
+          
           <Swiper
             modules={[Autoplay, Pagination]}
             spaceBetween={24}

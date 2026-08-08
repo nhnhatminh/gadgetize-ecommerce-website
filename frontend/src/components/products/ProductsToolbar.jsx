@@ -1,21 +1,22 @@
+import "../../styles/layouts/products_toolbar.css";
+
 export default function ProductsToolbar({ productsCount, sortBy, setSortBy }) {
   return (
-    <div className="products-toolbar bg-white rounded-4 p-3 shadow-sm mb-4 d-flex align-items-center justify-content-between">
-      <div className="d-flex align-items-center gap-3">
-        <div className="layout-buttons d-flex gap-2 text-muted fs-5 cursor-pointer">
-          <i className="fa-solid fa-border-all text-dark"></i>
+    <div className="products-toolbar">
+      <div className="products-toolbar-left">
+        <div className="products-toolbar-layout-toggle">
+          <i className="fa-solid fa-border-all active"></i>
           <i className="fa-solid fa-list"></i>
         </div>
-        <span className="text-dark fs-7 fw-medium">
+        <span className="products-toolbar-count">
           {productsCount} sản phẩm
         </span>
       </div>
 
-      <div className="d-flex align-items-center gap-2">
-        <label className="text-muted fs-7 text-nowrap mb-0">Lọc theo:</label>
+      <div className="products-toolbar-right">
+        <label className="products-toolbar-label">Lọc theo:</label>
         <select
-          className="form-select form-select-sm border-light-subtle fs-7 py-1 px-3 text-dark"
-          style={{ width: "180px", borderRadius: "6px" }}
+          className="products-toolbar-select"
           value={sortBy}
           onChange={(e) => setSortBy(e.target.value)}
         >

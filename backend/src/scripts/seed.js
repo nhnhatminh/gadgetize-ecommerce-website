@@ -133,23 +133,23 @@ const seedDatabase = async () => {
       laptop: {
         brands: ["Apple", "Dell", "ASUS", "Lenovo", "HP", "Razer", "MSI", "Acer"],
         items: [
-          { name: "Laptop Apple MacBook Pro 16 inch", desc: "Dòng laptop cao cấp sở hữu hiệu năng đỉnh cao, màn hình Liquid Retina XDR rực rỡ cùng thiết kế chuẩn studio chuyên nghiệp." },
+          { name: "Laptop Apple MacBook Pro 16 inch", desc: "Dòng laptop cao cấp sở hữu hiệu năng đỉnh cao, màn hình Liquid Retina XDR sắc nét cùng thiết kế chuẩn studio chuyên nghiệp." },
           { name: "Laptop Dell XPS 15 (Phiên bản Air)", desc: "Laptop mỏng nhẹ sang trọng với thiết kế viền màn hình siêu mỏng, hiệu năng ổn định tối ưu cho công việc văn phòng và đồ họa." },
           { name: "Laptop ASUS XPS 15 Ultra", desc: "Mẫu máy tính xách tay cao cấp kết hợp hoàn hảo giữa thiết kế mỏng nhẹ và sức mạnh xử lý đồ họa vượt trội." },
           { name: "Laptop Gaming Lenovo ROG Strix", desc: "Laptop chơi game chuyên nghiệp với hệ thống tản nhiệt tiên tiến, màn hình tần số quét cao cho trải nghiệm chiến game mượt mà." },
-          { name: "Laptop Doanh Nhân HP ThinkPad X1", desc: "Dòng laptop doanh nhân huyền thoại với độ bền chuẩn quân đội, bàn phím gõ êm ái và tính năng bảo mật tối tân." },
+          { name: "Laptop HP ThinkPad X1", desc: "Dòng laptop huyền thoại với độ bền chuẩn doanh nghiệp, bàn phím gõ êm ái và tính năng bảo mật tối tân." },
           { name: "Laptop Razer Spectre x360", desc: "Thiết kế xoay gập 360 độ linh hoạt kết hợp vỏ nhôm nguyên khối sang trọng, đáp ứng trọn vẹn nhu cầu làm việc và giải trí." },
           { name: "Laptop Gaming MSI Blade 16", desc: "Mẫu laptop gaming mỏng nhẹ cao cấp, trang bị cấu hình phần cứng mạnh mẽ cùng khả năng hiển thị màu sắc chính xác." },
           { name: "Laptop Acer Stealth 16 Studio", desc: "Dòng laptop tối ưu cho nhà sáng tạo nội dung với thiết kế tinh tế, vi xử lý thế hệ mới và màn hình chuẩn màu sắc nét." },
           { name: "Laptop Apple Predator 16 Pro", desc: "Sự kết hợp giữa hiệu năng xử lý tốc độ cao và thiết kế hiện đại, phù hợp cho mọi tác vụ từ lập trình đến thiết kế đồ họa." },
-          { name: "Laptop Dell Zenbook 14 OLED", desc: "Laptop siêu mỏng nhẹ sở hữu màn hình OLED rực rỡ, thời lượng pin ấn tượng, lý tưởng cho người dùng thường xuyên di chuyển." },
+          { name: "Laptop Dell Zenbook 14 OLED", desc: "Laptop siêu mỏng nhẹ sở hữu màn hình OLED sắc nét, thời lượng pin ấn tượng, lý tưởng cho người dùng thường xuyên di chuyển." },
           { name: "Laptop Gaming ASUS Legion Pro", desc: "Cỗ máy chiến game đỉnh cao với vi xử lý thế hệ mới, bàn phím phản hồi nhanh và hệ thống tản nhiệt AI thông minh." },
           { name: "Laptop Gaming Lenovo Alienware x16", desc: "Thiết kế đậm chất tương lai cùng sức mạnh đồ họa vượt giới hạn, đáp ứng những tựa game AAA nặng nhất hiện nay." },
-          { name: "Laptop Mỏng Nhẹ HP Gram 17", desc: "Trọng lượng siêu nhẹ trong một màn hình 17 inch rộng lớn, đem lại không gian hiển thị thoải mái mà vẫn tối ưu khả năng di động." },
+          { name: "Laptop HP Gram 17", desc: "Trọng lượng siêu nhẹ trong một màn hình 17 inch rộng lớn, đem lại không gian hiển thị thoải mái mà vẫn tối ưu khả năng di động." },
           { name: "Laptop Razer Envy 14 Creator", desc: "Mẫu laptop chuyên biệt cho dân thiết kế với màn hình tỉ lệ chuẩn, màu sắc trung thực và khả năng tản nhiệt tối ưu." },
           { name: "Laptop Cảm Ứng MSI Yoga Slim", desc: "Thân máy siêu mỏng, màn hình cảm ứng sắc nét cùng khả năng xử lý đa nhiệm mượt mà cho mọi tác vụ công việc hằng ngày." },
-          { name: "Laptop Gaming Acer TUF Gaming", desc: "Laptop chơi game chuẩn độ bền quân đội, thiết kế hầm hố cùng hiệu năng mạnh mẽ trong tầm giá cực kỳ hấp dẫn." },
-          { name: "Laptop Apple Vivobook Pro 15", desc: "Màn hình rực rỡ, vi xử lý tốc độ cao giúp tối ưu hóa quy trình làm việc sáng tạo nội dung và xử lý hình ảnh chuyên nghiệp." },
+          { name: "Laptop Gaming Acer TUF Gaming", desc: "Laptop chơi game chuẩn độ bền quân đội, thiết kế ấn tượng cùng hiệu năng mạnh mẽ trong tầm giá cực kỳ hấp dẫn." },
+          { name: "Laptop Apple Vivobook Pro 15", desc: "Màn hình sắc nét, vi xử lý tốc độ cao giúp tối ưu hóa quy trình làm việc sáng tạo nội dung và xử lý hình ảnh chuyên nghiệp." },
           { name: "Laptop Gaming Dell Katana 15", desc: "Được lấy cảm hứng từ thanh kiếm Katana sắc bén, cỗ máy mang lại sức mạnh chiến game mượt mà và thiết kế đầy cá tính." },
           { name: "Laptop Gaming ASUS Nitro 5", desc: "Dòng laptop gaming quốc dân với cấu hình vượt trội, hệ thống quạt đôi tản nhiệt mát mẻ và màn hình 144Hz mượt mà." },
           { name: "Laptop Lenovo Swift Go 14", desc: "Thiết kế nhôm nguyên khối thời trang, tích hợp vi xử lý AI thế hệ mới giúp nâng cao hiệu suất làm việc mọi lúc mọi nơi." }
@@ -185,7 +185,7 @@ const seedDatabase = async () => {
         items: [
           { name: "Bàn Phím Không Dây Logitech MX Keys Mini", desc: "Bàn phím nhỏ gọn cao cấp, phím bấm lõm ôm đầu ngón tay gõ êm ái, tối ưu không gian làm việc cho lập trình viên và văn phòng." },
           { name: "Bàn Phím Cơ Gaming Razer G Pro X TKL", desc: "Bàn phím cơ nhỏ gọn lược bỏ phím số chuẩn thi đấu Esports, switch cơ học phản hồi siêu tốc và cáp tháo rời tiện lợi." },
-          { name: "Bàn Phím Cơ Quang Học Corsair Huntsman V2", desc: "Trang bị switch quang học cho tốc độ phản hồi gần như tức thì, độ bền 100 triệu lần nhấn cùng dải đèn LED RGB rực rỡ." },
+          { name: "Bàn Phím Cơ Quang Học Corsair Huntsman V2", desc: "Trang bị switch quang học cho tốc độ phản hồi gần như tức thì, độ bền 100 triệu lần nhấn cùng dải đèn LED RGB sắc nét." },
           { name: "Bàn Phím Cơ SteelSeries BlackWidow V4", desc: "Hệ thống phím macro chuyên dụng, núm xoay đa phương tiện tiện lợi và đệm nghỉ tay bọc da êm ái cho thời gian sử dụng dài." },
           { name: "Bàn Phím Cơ Không Dây Keychron K100 RGB", desc: "Tương thích hoàn hảo cả Mac và Windows, hỗ trợ kết nối đa thiết bị qua Bluetooth và switch cơ học gõ cực kỳ đã tay." },
           { name: "Bàn Phím Cơ Akko Apex Pro TKL", desc: "Keycap PBT Double-Shot siêu bền chống bám mồ hôi, phối màu độc đáo và trải nghiệm gõ phím mượt mà chắc chắn." },
@@ -216,7 +216,7 @@ const seedDatabase = async () => {
           { name: "Màn Hình Chuyên Nghiệp ViewSonic ColorPro 4K", desc: "Đạt chuẩn màu 100% sRGB và Adobe RGB, đi kèm cân bằng màu phần cứng tích hợp sẵn cho nhiếp ảnh gia và artist." },
           { name: "Màn Hình Gaming Gigabyte M27Q X 240Hz", desc: "Tích hợp bộ chuyển mạch KVM điều khiển nhiều thiết bị cùng lúc, độ phân giải 2K sắc nét cùng tần số quét 240Hz." },
           { name: "Màn Hình Cong AOC 32 inch 165Hz Quad HD", desc: "Độ cong 1000R tối ưu cho góc nhìn tự nhiên, màn hình lớn 32 inch cho không gian làm việc và giải trí cực kỳ thoải mái." },
-          { name: "Smart TV Samsung 65 inch Crystal UHD 4K", desc: "Thiết kế viền siêu mỏng 3 cạnh, công nghệ PurColor hiển thị dải màu rộng rực rỡ và hệ điều hành Tizen OS mượt mà." },
+          { name: "Smart TV Samsung 65 inch Crystal UHD 4K", desc: "Thiết kế viền siêu mỏng 3 cạnh, công nghệ PurColor hiển thị dải màu rộng sắc nét và hệ điều hành Tizen OS mượt mà." },
           { name: "Smart TV OLED LG Evo C3 55 inch 4K", desc: "Các điểm ảnh tự phát sáng mang lại độ tương phản tuyệt đối, hỗ trợ chuẩn Dolby Vision IQ & Dolby Atmos đỉnh cao điện ảnh." },
           { name: "Màn Hình Cong Dell Odyssey OLED G8", desc: "Độ phân giải UWQHD sắc nét, công nghệ làm mát vi mô bảo vệ tấm nền OLED và vi xử lý Neo Quantum cải thiện hình ảnh tức thì." },
           { name: "Màn Hình Đồ Họa ASUS DualUp 28 inch Tỉ Lệ Độc Đáo", desc: "Tỉ lệ màn hình 16:18 độc đáo tương đương 2 màn hình ghép lại, tối ưu không gian cuộn trang cho lập trình viên và sáng tạo." },
@@ -252,7 +252,7 @@ const seedDatabase = async () => {
           { name: "Chuột Gaming Ergonomic Logitech Model D 2", desc: "Thiết kế uốn cong tự nhiên hỗ trợ nâng đỡ lòng bàn tay, lót chuột PTFE nguyên chất di chuyển cực mượt trên lót chuột." },
           { name: "Chuột Gaming Không Dây Razer FK2-C", desc: "Thân chuột thấp gầm phù hợp cho kiểu cầm Fingertip-grip, đầu cắm dây cáp hướng lên góc cao giảm ma sát tối đa." },
           { name: "Chuột Gaming Không Dây SteelSeries G703 LIGHTSPEED", desc: "Thiết kế ôm tay chắc chắn với lớp tạ tùy chỉnh trọng lượng 10g tháo rời, hỗ trợ công nghệ sạc không dây POWERPLAY." },
-          { name: "Chuột Gaming Nhỏ Gọn ASUS Cobra Pro", desc: "Kích thước gọn nhẹ tích hợp 10 nút bấm tùy chỉnh, hệ thống đèn LED RGB 11 vùng rực rỡ và cảm biến quang học 30K." }
+          { name: "Chuột Gaming Nhỏ Gọn ASUS Cobra Pro", desc: "Kích thước gọn nhẹ tích hợp 10 nút bấm tùy chỉnh, hệ thống đèn LED RGB 11 vùng sắc nét và cảm biến quang học 30K." }
         ]
       },
       "dien-thoai": {
@@ -296,7 +296,7 @@ const seedDatabase = async () => {
           { name: "Tai Nghe Kiểm Âm Sennheiser ATH-M40x", desc: "Phản hồi tần số phẳng cho khả năng theo dõi âm thanh chính xác trên toàn bộ dải tần, chụp tai xoay 90 độ tiện lợi." },
           { name: "Tai Nghe Gaming Razer Cloud II 7.1", desc: "Hộp điều khiển âm thanh USB tích hợp card âm thanh giả lập 7.1, khung nhôm phay chắc chắn bền bỉ theo thời gian." },
           { name: "Tai Nghe Chụp Tai Sony HD 560S", desc: "Màng loa đặt góc nghiêng tái tạo vị trí nghe nhạc tối ưu, dải âm trầm mở rộng mang lại trải nghiệm nghe nhạc thư giãn." },
-          { name: "Tai Nghe Gaming Beyerdynamic Kraken V3", desc: "Đèn LED RGB Razer Chroma 16.8 triệu màu rực rỡ, driver Titanium 50mm cung cấp âm thanh vô cùng sống động." },
+          { name: "Tai Nghe Gaming Beyerdynamic Kraken V3", desc: "Đèn LED RGB Razer Chroma 16.8 triệu màu sắc nét, driver Titanium 50mm cung cấp âm thanh vô cùng sống động." },
           { name: "Tai Nghe Chụp Tai SteelSeries MDR-1AM2", desc: "Hỗ trợ dải tần siêu rộng từ 3Hz đến 100kHz, màng loa Polymer tinh thể lỏng tráng bạc cho âm thanh chuẩn High-Res." },
           { name: "Tai Nghe Studio Logitech DT 770 Pro 80 Ohm", desc: "Khả năng cách âm thụ động tuyệt vời chống nhiễu âm môi trường ngoài, âm thanh chi tiết hoàn hảo cho việc mix nhạc." },
           { name: "Tai Nghe Gaming Audio-Technica Arctis 3", desc: "Micro ClearCast cản tiếng ồn chuẩn hàng không, đệm tai vải thể thao AirWeave giữ tai luôn khô thoáng mát mẻ." },

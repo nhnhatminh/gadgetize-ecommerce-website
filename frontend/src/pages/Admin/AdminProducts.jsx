@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { adminApi } from "../../api/adminApi";
 import { productApi } from "../../api/productApi";
+import "../../styles/layouts/admin.css";
 
 export default function AdminProducts() {
   const [products, setProducts] = useState([]);
@@ -27,7 +28,6 @@ export default function AdminProducts() {
     priceModifier: "0",
   });
 
-  // Tải danh sách sản phẩm 
   const loadAdminProducts = async () => {
     try {
       const data = await productApi.getProducts({ limit: 100 });
@@ -37,7 +37,6 @@ export default function AdminProducts() {
     }
   };
 
-  // Tải danh mục và thương hiệu
   useEffect(() => {
     const fetchInitialData = async () => {
       try {
@@ -58,13 +57,11 @@ export default function AdminProducts() {
     fetchInitialData();
   }, []);
 
-  // Cập nhật dữ liệu form
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setForm((prev) => ({ ...prev, [name]: value }));
   };
 
-  // Chọn ảnh xem trước
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -73,7 +70,6 @@ export default function AdminProducts() {
     }
   };
 
-  // Mở modal thêm sản phẩm 
   const handleOpenAddModal = () => {
     setEditingId(null);
     setSelectedFile(null);
@@ -96,7 +92,6 @@ export default function AdminProducts() {
     setIsModalOpen(true);
   };
 
-  // Mở modal chỉnh sửa
   const handleOpenEditModal = (prod) => {
     setEditingId(prod.id);
     setSelectedFile(null);
@@ -119,7 +114,6 @@ export default function AdminProducts() {
     setIsModalOpen(true);
   };
 
-  // Xóa sản phẩm
   const handleDelete = async (id) => {
     if (window.confirm("Bạn có chắc chắn muốn xóa sản phẩm này?")) {
       try {
@@ -134,7 +128,6 @@ export default function AdminProducts() {
     }
   };
 
-  // Lưu sản phẩm
   const handleSubmit = async (e) => {
     e.preventDefault();
     setErrorMessage("");
@@ -165,90 +158,88 @@ export default function AdminProducts() {
 
   return (
     <div className="admin-products-view">
-      <div className="d-flex justify-content-between align-items-center mb-4">
-        <h4 className="fw-bold text-dark mb-0">Quản Lý Danh Sách Sản Phẩm</h4>
+      <div className="admin-products-header">
+        <h4 className="admin-products-title">Quản Lý Danh Sách Sản Phẩm</h4>
         <button
-          className="btn btn-success px-4 fw-bold"
+          className="admin-add-product-btn"
           onClick={handleOpenAddModal}
-          style={{ backgroundColor: "#006837" }}
         >
-          <i className="fa-solid fa-plus me-2"></i> Thêm Sản Phẩm Mới
+          <i className="fa-solid fa-plus"></i> Thêm Sản Phẩm Mới
         </button>
       </div>
 
-      <div className="card border rounded-4 shadow-sm overflow-hidden bg-white">
-        <div className="table-responsive">
-          <table className="table table-hover align-middle mb-0">
-            <thead className="table-light">
-              <tr className="text-secondary fs-7">
-                <th className="ps-4">Hình ảnh</th>
-                <th>Tên sản phẩm</th>
-                <th>Giá cơ bản</th>
-                <th>Chiết khấu</th>
-                <th>Màu sắc</th>
-                <th>Kho hàng</th>
-                <th className="pe-4 text-end">Hành động</th>
+      <div className="admin-table-card">
+        <div className="admin-table-responsive">
+          <table className="admin-table">
+            <thead>
+              <tr className="admin-table-header-row">
+                <th className="admin-table-th admin-table-th--first">Hình ảnh</th>
+                <th className="admin-table-th">Tên sản phẩm</th>
+                <th className="admin-table-th">Giá cơ bản</th>
+                <th className="admin-table-th">Chiết khấu</th>
+                <th className="admin-table-th">Màu sắc</th>
+                <th className="admin-table-th">Kho hàng</th>
+                <th className="admin-table-th admin-table-th--last admin-table-th--right">
+                  Hành động
+                </th>
               </tr>
             </thead>
             <tbody>
               {products.map((prod) => (
-                <tr key={prod.id} className="fs-7 text-dark">
-                  <td className="ps-4">
+                <tr key={prod.id} className="admin-table-row">
+                  <td className="admin-table-td admin-table-td--first">
                     <img
                       src={prod.image_url || "/images/no-image.png"}
                       alt={prod.name}
-                      className="rounded border bg-light"
-                      style={{
-                        width: "45px",
-                        height: "45px",
-                        objectFit: "contain",
-                      }}
+                      className="admin-product-thumb"
                       onError={(e) => {
                         e.target.onerror = null;
                         e.target.src = "/images/no-image.png";
                       }}
                     />
                   </td>
-                  <td className="fw-bold" style={{ maxWidth: "250px" }}>
+                  <td className="admin-table-td admin-product-name">
                     {prod.name}
                   </td>
-                  <td>
+                  <td className="admin-table-td">
                     {parseFloat(prod.base_price || 0).toLocaleString("vi-VN")}₫
                   </td>
-                  <td>
-                    <span className="badge bg-danger-subtle text-danger rounded-1">
+                  <td className="admin-table-td">
+                    <span className="admin-discount-badge">
                       {prod.discount_percent || 0}%
                     </span>
                   </td>
-                  <td>
-                    <div className="d-flex align-items-center gap-1">
+                  <td className="admin-table-td">
+                    <div className="admin-color-indicator">
                       <span
-                        className="d-inline-block rounded-circle border"
+                        className="admin-color-dot"
                         style={{
-                          width: "12px",
-                          height: "12px",
                           backgroundColor: prod.color_hex || "#ccc",
                         }}
                       ></span>
                       <span>{prod.color_name || "N/A"}</span>
                     </div>
                   </td>
-                  <td>
+                  <td className="admin-table-td">
                     <span
-                      className={`fw-bold ${parseInt(prod.stock_quantity || 0, 10) > 0 ? "text-success" : "text-danger"}`}
+                      className={`admin-stock-status ${
+                        parseInt(prod.stock_quantity || 0, 10) > 0
+                          ? "admin-stock-status--instock"
+                          : "admin-stock-status--outstock"
+                      }`}
                     >
                       {prod.stock_quantity || 0} pcs
                     </span>
                   </td>
-                  <td className="pe-4 text-end">
+                  <td className="admin-table-td admin-table-td--last admin-table-td--right">
                     <button
-                      className="btn btn-sm btn-outline-primary me-2 rounded-2"
+                      className="admin-action-btn-edit"
                       onClick={() => handleOpenEditModal(prod)}
                     >
                       <i className="fa-regular fa-pen-to-square"></i>
                     </button>
                     <button
-                      className="btn btn-sm btn-outline-danger rounded-2"
+                      className="admin-action-btn-delete"
                       onClick={() => handleDelete(prod.id)}
                     >
                       <i className="fa-regular fa-trash-can"></i>
@@ -262,72 +253,61 @@ export default function AdminProducts() {
       </div>
 
       {isModalOpen && (
-        <div
-          className="modal fade show d-block"
-          style={{ backgroundColor: "rgba(0,0,0,0.5)" }}
-          role="dialog"
-        >
-          <div className="modal-dialog modal-lg modal-dialog-centered">
-            <div className="modal-content border-0 rounded-4 shadow">
+        <div className="admin-modal-overlay">
+          <div className="admin-modal-dialog">
+            <div className="admin-modal-content">
               <form onSubmit={handleSubmit}>
-                <div className="modal-header border-bottom px-4">
-                  <h5 className="modal-title fw-bold text-dark">
+                <div className="admin-modal-header">
+                  <h5 className="admin-modal-title">
                     {editingId
                       ? "Cập Nhật Thông Tin Sản Phẩm"
                       : "Thêm Thiết Bị Công Nghệ Mới"}
                   </h5>
                   <button
                     type="button"
-                    className="btn-close"
+                    className="admin-modal-close-btn"
                     onClick={() => setIsModalOpen(false)}
-                  ></button>
+                  >
+                    <i className="fa-solid fa-xmark"></i>
+                  </button>
                 </div>
-                <div
-                  className="modal-body p-4 overflow-auto"
-                  style={{ maxHeight: "calc(100vh - 200px)" }}
-                >
+
+                <div className="admin-modal-body">
                   {errorMessage && (
-                    <div
-                      className="alert alert-danger py-2 fs-7 mb-3"
-                      role="alert"
-                    >
+                    <div className="admin-modal-error-alert">
                       {errorMessage}
                     </div>
                   )}
 
                   <div className="row g-3">
                     <div className="col-md-6">
-                      <label className="form-label text-muted fw-medium fs-7">
-                        Tên sản phẩm *
-                      </label>
+                      <label className="admin-form-label">Tên sản phẩm *</label>
                       <input
                         type="text"
-                        className="form-control"
+                        className="admin-form-input"
                         name="name"
                         value={form.name}
                         onChange={handleInputChange}
                         required
                       />
                     </div>
+
                     <div className="col-md-6">
-                      <label className="form-label text-muted fw-medium fs-7">
-                        Chuỗi liên kết URL (Slug) *
-                      </label>
+                      <label className="admin-form-label">Chuỗi liên kết URL (Slug) *</label>
                       <input
                         type="text"
-                        className="form-control"
+                        className="admin-form-input"
                         name="slug"
                         value={form.slug}
                         onChange={handleInputChange}
                         required
                       />
                     </div>
+
                     <div className="col-md-4">
-                      <label className="form-label text-muted fw-medium fs-7">
-                        Danh mục sản phẩm *
-                      </label>
+                      <label className="admin-form-label">Danh mục sản phẩm *</label>
                       <select
-                        className="form-select"
+                        className="admin-form-select"
                         name="categoryId"
                         value={form.categoryId}
                         onChange={handleInputChange}
@@ -340,12 +320,11 @@ export default function AdminProducts() {
                         ))}
                       </select>
                     </div>
+
                     <div className="col-md-4">
-                      <label className="form-label text-muted fw-medium fs-7">
-                        Thương hiệu nhà sản xuất *
-                      </label>
+                      <label className="admin-form-label">Thương hiệu nhà sản xuất *</label>
                       <select
-                        className="form-select"
+                        className="admin-form-select"
                         name="brandId"
                         value={form.brandId}
                         onChange={handleInputChange}
@@ -358,111 +337,102 @@ export default function AdminProducts() {
                         ))}
                       </select>
                     </div>
+
                     <div className="col-md-4">
-                      <label className="form-label text-muted fw-medium fs-7">
-                        Mã định danh sản phẩm (SKU) *
-                      </label>
+                      <label className="admin-form-label">Mã định danh sản phẩm (SKU) *</label>
                       <input
                         type="text"
-                        className="form-control"
+                        className="admin-form-input"
                         name="sku"
                         value={form.sku}
                         onChange={handleInputChange}
                         required
                       />
                     </div>
+
                     <div className="col-md-4">
-                      <label className="form-label text-muted fw-medium fs-7">
-                        Giá niêm yết cơ bản (VND) *
-                      </label>
+                      <label className="admin-form-label">Giá niêm yết cơ bản (VND) *</label>
                       <input
                         type="number"
-                        className="form-control"
+                        className="admin-form-input"
                         name="basePrice"
                         value={form.basePrice}
                         onChange={handleInputChange}
                         required
                       />
                     </div>
+
                     <div className="col-md-4">
-                      <label className="form-label text-muted fw-medium fs-7">
-                        Chiết khấu (%)
-                      </label>
+                      <label className="admin-form-label">Chiết khấu (%)</label>
                       <input
                         type="number"
-                        className="form-control"
+                        className="admin-form-input"
                         name="discountPercent"
                         value={form.discountPercent}
                         onChange={handleInputChange}
                       />
                     </div>
+
                     <div className="col-md-4">
-                      <label className="form-label text-muted fw-medium fs-7">
-                        Giá trị điều chỉnh biến thể
-                      </label>
+                      <label className="admin-form-label">Giá trị điều chỉnh biến thể</label>
                       <input
                         type="number"
-                        className="form-control"
+                        className="admin-form-input"
                         name="priceModifier"
                         value={form.priceModifier}
                         onChange={handleInputChange}
                       />
                     </div>
+
                     <div className="col-md-4">
-                      <label className="form-label text-muted fw-medium fs-7">
-                        Tên màu sắc
-                      </label>
+                      <label className="admin-form-label">Tên màu sắc</label>
                       <input
                         type="text"
-                        className="form-control"
+                        className="admin-form-input"
                         name="colorName"
                         value={form.colorName}
                         onChange={handleInputChange}
                         placeholder="E.g., Cosmic Black"
                       />
                     </div>
+
                     <div className="col-md-4">
-                      <label className="form-label text-muted fw-medium fs-7">
-                        Mã màu đồ họa (Hex)
-                      </label>
+                      <label className="admin-form-label">Mã màu đồ họa (Hex)</label>
                       <input
                         type="color"
-                        className="form-control form-control-color w-100"
+                        className="admin-form-color-picker"
                         name="colorHex"
                         value={form.colorHex}
                         onChange={handleInputChange}
                       />
                     </div>
+
                     <div className="col-md-4">
-                      <label className="form-label text-muted fw-medium fs-7">
-                        Số lượng nhập kho *
-                      </label>
+                      <label className="admin-form-label">Số lượng nhập kho *</label>
                       <input
                         type="number"
-                        className="form-control"
+                        className="admin-form-input"
                         name="stockQuantity"
                         value={form.stockQuantity}
                         onChange={handleInputChange}
                         required
                       />
                     </div>
+
                     <div className="col-12">
-                      <label className="form-label text-muted fw-medium fs-7">
-                        Hình ảnh đại diện sản phẩm
-                      </label>
+                      <label className="admin-form-label">Hình ảnh đại diện sản phẩm</label>
                       <input
                         type="file"
-                        className="form-control mb-2"
+                        className="admin-form-file-input"
                         onChange={handleFileChange}
                         accept="image/*"
                       />
                       {previewUrl && (
-                        <div className="mt-2 text-center">
+                        <div className="admin-img-preview-box">
                           <img
                             src={previewUrl}
                             alt="Preview"
-                            className="rounded border p-1 bg-light"
-                            style={{ maxHeight: "120px", objectFit: "contain" }}
+                            className="admin-img-preview"
                             onError={(e) => {
                               e.target.onerror = null;
                               e.target.src = "/images/no-image.png";
@@ -471,12 +441,11 @@ export default function AdminProducts() {
                         </div>
                       )}
                     </div>
+
                     <div className="col-12">
-                      <label className="form-label text-muted fw-medium fs-7">
-                        Mô tả cấu hình chi tiết
-                      </label>
+                      <label className="admin-form-label">Mô tả cấu hình chi tiết</label>
                       <textarea
-                        className="form-control"
+                        className="admin-form-textarea"
                         name="description"
                         value={form.description}
                         onChange={handleInputChange}
@@ -485,18 +454,18 @@ export default function AdminProducts() {
                     </div>
                   </div>
                 </div>
-                <div className="modal-footer border-top px-4">
+
+                <div className="admin-modal-footer">
                   <button
                     type="button"
-                    className="btn btn-light"
+                    className="admin-modal-cancel-btn"
                     onClick={() => setIsModalOpen(false)}
                   >
                     Hủy bỏ
                   </button>
                   <button
                     type="submit"
-                    className="btn btn-success fw-bold px-4"
-                    style={{ backgroundColor: "#006837" }}
+                    className="admin-modal-submit-btn"
                   >
                     Lưu dữ liệu
                   </button>

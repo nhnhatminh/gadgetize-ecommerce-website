@@ -1,7 +1,6 @@
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
 import "../../styles/layouts/product_detail_page.css";
-import "../../styles/components/showcase.css";
 import "swiper/css";
 import "swiper/css/navigation";
 
@@ -12,16 +11,12 @@ export default function ProductGallery({
   productName,
 }) {
   return (
-    <div className="gallery-wrapper bg-white rounded-4 p-4 p-lg-5 h-100 d-flex flex-column border border-light-subtle">
-      <div
-        className="product-gallery-main flex-grow-1 d-flex align-items-center justify-content-center mb-4 rounded-4 bg-light"
-        style={{ minHeight: "400px", padding: "40px" }}
-      >
+    <div className="product-gallery-card">
+      <div className="product-gallery-main-box">
         <img
           src={mainImage}
           alt={productName}
-          className="img-fluid object-fit-contain"
-          style={{ minHeight: "500px", maxWidth: "100%", width: "auto" }}
+          className="product-gallery-main-image"
           onError={(e) => {
             e.target.onerror = null;
             e.target.src = "/images/no-image.png";
@@ -29,7 +24,7 @@ export default function ProductGallery({
         />
       </div>
 
-      <div className="product-gallery-thumbs mt-auto">
+      <div className="product-gallery-thumbs-wrapper">
         <Swiper
           modules={[Navigation]}
           spaceBetween={15}
@@ -45,24 +40,15 @@ export default function ProductGallery({
           {images.map((img, idx) => (
             <SwiperSlide key={idx}>
               <div
-                className={`thumb-item cursor-pointer rounded-circle d-flex align-items-center justify-content-center mx-auto bg-light border ${
-                  mainImage === img
-                    ? "border-success border-2 shadow-sm"
-                    : "border-light-subtle"
+                className={`gallery-thumb-item ${
+                  mainImage === img ? "gallery-thumb-item--active" : ""
                 }`}
                 onClick={() => setMainImage(img)}
-                style={{
-                  width: "70px",
-                  height: "70px",
-                  padding: "10px",
-                  transition: "all 0.2s ease",
-                }}
               >
                 <img
                   src={img}
                   alt="Thumb"
-                  className="img-fluid object-fit-contain"
-                  style={{ maxHeight: "100%", maxWidth: "100%" }}
+                  className="gallery-thumb-image"
                   onError={(e) => {
                     e.target.onerror = null;
                     e.target.src = "/images/no-image.png";

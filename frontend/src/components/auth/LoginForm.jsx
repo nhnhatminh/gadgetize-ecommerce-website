@@ -4,18 +4,14 @@ import { useAuth } from "../../context/useAuth";
 import "../../styles/layouts/auth.css";
 
 export default function LoginForm() {
-  // Lấy hàm login từ AuthContext
   const { login } = useAuth();
-
   const navigate = useNavigate();
 
-  // State quản lý form và trạng thái submit
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  // Xử lý đăng nhập
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     setError("");
@@ -24,14 +20,12 @@ export default function LoginForm() {
     try {
       const response = await login(email, password);
 
-      // Điều hướng theo role
       if (response?.user?.role === "admin") {
         navigate("/admin");
       } else {
         navigate("/");
       }
     } catch (err) {
-      // Hiển thị lỗi từ server hoặc thông báo mặc định
       setError(
         err.response?.data?.message ||
           "Địa chỉ email hoặc mật khẩu không chính xác"
@@ -43,13 +37,13 @@ export default function LoginForm() {
 
   return (
     <form className="auth-form" onSubmit={handleFormSubmit}>
-      {error && <div className="alert alert-danger py-2 small">{error}</div>}
+      {error && <div className="auth-alert auth-alert--error">{error}</div>}
 
-      <div className="mb-3">
-        <label className="form-label text-dark fw-medium">Địa chỉ Email</label>
+      <div className="auth-form-group">
+        <label className="auth-form-label">Địa chỉ Email</label>
         <input
           type="email"
-          className="form-control py-3 text-p"
+          className="auth-form-input"
           placeholder="Nhập email của bạn"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
@@ -58,21 +52,16 @@ export default function LoginForm() {
         />
       </div>
 
-      <div className="mb-3">
-        <div className="d-flex justify-content-between align-items-center mb-1">
-          <label className="form-label text-dark fw-medium mb-0">
-            Mật khẩu
-          </label>
-          <a
-            href="#"
-            className="forgot-password-link text-des text-muted text-decoration-none"
-          >
+      <div className="auth-form-group">
+        <div className="auth-form-group-header">
+          <label className="auth-form-label">Mật khẩu</label>
+          <a href="#" className="forgot-password-link">
             Quên mật khẩu?
           </a>
         </div>
         <input
           type="password"
-          className="form-control py-3 text-p"
+          className="auth-form-input"
           placeholder="Nhập mật khẩu của bạn"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
@@ -81,24 +70,21 @@ export default function LoginForm() {
         />
       </div>
 
-      <div className="mb-4 form-check d-flex align-items-center gap-2">
+      <div className="auth-checkbox-group">
         <input
           type="checkbox"
-          className="form-check-input m-0"
+          className="auth-checkbox-input"
           id="rememberMe"
           disabled={isSubmitting}
         />
-        <label
-          className="form-check-label text-des text-muted mt-1"
-          htmlFor="rememberMe"
-        >
+        <label className="auth-checkbox-label" htmlFor="rememberMe">
           Ghi nhớ đăng nhập
         </label>
       </div>
 
       <button
         type="submit"
-        className="btn btn-auth-submit w-100 py-3 fw-medium text-white rounded-3 mb-3"
+        className="btn-auth-submit"
         disabled={isSubmitting}
       >
         {isSubmitting ? "Đang xử lý..." : "Đăng Nhập"}

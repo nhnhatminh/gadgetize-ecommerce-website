@@ -113,3 +113,7 @@
   background-color: transparent !important;
   color: var(--primary-color) !important;
 }
+
+.home-page-main {
+  background-color: var(--white);
+}

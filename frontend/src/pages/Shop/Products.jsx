@@ -10,16 +10,13 @@ export default function Products() {
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
 
-  // Đồng bộ bộ lọc với URL
   const searchKeyword = searchParams.get("search") || "";
   const selectedCategory = searchParams.get("category") || "all";
 
-  // State quản lý bộ lọc
   const [selectedBrand, setSelectedBrand] = useState("all");
   const [priceRange, setPriceRange] = useState(50000000);
   const [sortBy, setSortBy] = useState("newest");
 
-  // State quản lý sản phẩm
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([
     { id: "all", name: "Tất Cả Danh Mục" },
@@ -30,7 +27,6 @@ export default function Products() {
   const [totalProductsCount, setTotalProductsCount] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
 
-  // Tải danh mục và thương hiệu
   useEffect(() => {
     const fetchMetadata = async () => {
       try {
@@ -52,7 +48,6 @@ export default function Products() {
     fetchMetadata();
   }, []);
 
-  // Tải danh sách sản phẩm
   useEffect(() => {
     const fetchProducts = async () => {
       try {
@@ -109,7 +104,6 @@ export default function Products() {
     fetchProducts();
   }, [selectedCategory, selectedBrand, priceRange, sortBy, searchKeyword, currentPage]);
 
-  // Cập nhật URL theo bộ lọc
   const handleCategoryChange = (category) => {
     setSearchParams((prev) => {
       if (category === "all") prev.delete("category");
@@ -128,7 +122,6 @@ export default function Products() {
     setCurrentPage(1);
   };
 
-  // Đặt lại bộ lọc
   const handleResetFilters = () => {
     setSelectedBrand("all");
     setPriceRange(50000000);
@@ -139,23 +132,15 @@ export default function Products() {
 
   return (
     <div className="products-page-wrapper">
-      <section
-        className="page-banner position-relative py-5 overflow-hidden"
-        style={{ backgroundColor: "var(--light-grey)" }}
-      >
+      <section className="products-page-banner">
         <div className="container">
-          <div
-            className="row align-items-center justify-content-center"
-            style={{ minHeight: "180px" }}
-          >
-            <div className="col-12 text-center z-2">
-              <h1 className="fw-bold text-dark mb-0">Danh Sách Sản Phẩm</h1>
-            </div>
+          <div className="products-page-banner-content">
+            <h1 className="products-page-banner-title">Danh Sách Sản Phẩm</h1>
           </div>
         </div>
       </section>
 
-      <div className="container py-5">
+      <div className="container products-page-container">
         <div className="row g-4">
           <FilterSidebar
             categories={categories}
@@ -177,7 +162,7 @@ export default function Products() {
             onResetFilters={handleResetFilters}
           />
 
-          <main className="col-lg-9">
+          <main className="col-lg-9 products-main-content">
             <ProductsToolbar
               productsCount={totalProductsCount}
               sortBy={sortBy}
@@ -188,9 +173,9 @@ export default function Products() {
             />
 
             {isLoading ? (
-              <div className="text-center py-5">
-                <div className="spinner-border text-success" role="status">
-                  <span className="visually-hidden">Loading...</span>
+              <div className="products-loading-wrapper">
+                <div className="products-loading-spinner" role="status">
+                  <span className="products-loading-text">Loading...</span>
                 </div>
               </div>
             ) : products.length > 0 ? (
@@ -198,7 +183,7 @@ export default function Products() {
                 <div className="row g-3">
                   {products.map((prod) => (
                     <div
-                      className="col-xxl-3 col-xl-4 col-md-4 col-sm-6"
+                      className="col-xxl-3 col-xl-4 col-md-4 col-sm-6 products-grid-col"
                       key={prod.id}
                       onClick={() => navigate(`/product/${prod.slug}`)}
                     >
@@ -208,19 +193,19 @@ export default function Products() {
                 </div>
 
                 {totalPages > 1 && (
-                  <div className="d-flex justify-content-center align-items-center gap-2 mt-5">
+                  <div className="products-pagination">
                     <button
-                      className="btn btn-outline-secondary btn-sm px-3"
+                      className="pagination-button"
                       disabled={currentPage === 1}
                       onClick={() => setCurrentPage((prev) => prev - 1)}
                     >
                       Trước
                     </button>
-                    <span className="fs-7 fw-medium text-dark px-2">
+                    <span className="pagination-info">
                       Trang {currentPage} / {totalPages}
                     </span>
                     <button
-                      className="btn btn-outline-secondary btn-sm px-3"
+                      className="pagination-button"
                       disabled={currentPage === totalPages}
                       onClick={() => setCurrentPage((prev) => prev + 1)}
                     >
@@ -230,8 +215,8 @@ export default function Products() {
                 )}
               </>
             ) : (
-              <div className="col-12 text-center py-5 bg-white rounded-4 border">
-                <p className="text-muted fs-6 mb-0">
+              <div className="products-empty-state">
+                <p className="products-empty-text">
                   Không tìm thấy sản phẩm nào phù hợp với bộ lọc.
                 </p>
               </div>
