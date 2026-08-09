@@ -13,31 +13,28 @@ export default function Header() {
   const location = useLocation();
   const currentPath = location.pathname;
 
-  // Trạng thái quản lý đóng/mở menu danh mục và menu di động
   const [isCategoryOpen, setIsCategoryOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isUserDropdownOpen, setIsUserDropdownOpen] = useState(false);
 
-  // Trạng thái quản lý ô tìm kiếm trực tiếp
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [isSearching, setIsSearching] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
+
   const searchRef = useRef(null);
-
-  const handleInputChange = (e) => {
-    const value = e.target.value;
-    setSearchQuery(value);
-
-    if (!value.trim()) {
-      setSearchResults([]);
-      setShowDropdown(false);
-    }
-  };
+  const userDropdownRef = useRef(null);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (searchRef.current && !searchRef.current.contains(event.target)) {
         setShowDropdown(false);
+      }
+      if (
+        userDropdownRef.current &&
+        !userDropdownRef.current.contains(event.target)
+      ) {
+        setIsUserDropdownOpen(false);
       }
     };
     document.addEventListener("mousedown", handleClickOutside);
@@ -46,9 +43,17 @@ export default function Header() {
     };
   }, []);
 
+  const handleInputChange = (e) => {
+    const value = e.target.value;
+    setSearchQuery(value);
+    if (!value.trim()) {
+      setSearchResults([]);
+      setShowDropdown(false);
+    }
+  };
+
   useEffect(() => {
     if (!searchQuery.trim()) return;
-
     const timer = setTimeout(async () => {
       try {
         setIsSearching(true);
@@ -83,15 +88,21 @@ export default function Header() {
     (acc, item) => acc + item.quantity,
     0
   );
-
   const totalCartPrice = cartItems.reduce(
     (acc, item) => acc + parseFloat(item.final_unit_price || 0) * item.quantity,
     0
   );
 
   const handleLogout = () => {
+    setIsUserDropdownOpen(false);
     logout();
     navigate("/auth");
+  };
+
+  const handleNavigateProfileTab = (tab = "info") => {
+    setIsUserDropdownOpen(false);
+    setIsMobileMenuOpen(false);
+    navigate(`/profile?tab=${tab}`);
   };
 
   return (
@@ -112,10 +123,7 @@ export default function Header() {
         <div className="container">
           <div className="row header-middle-row">
             <div className="col-xl-3 col-lg-3 col-md-4 col-6">
-              <div
-                className="header-logo"
-                onClick={() => navigate("/")}
-              >
+              <div className="header-logo" onClick={() => navigate("/")}>
                 <img src="/images/logo.png" alt="Gadgetize Logo" />
               </div>
             </div>
@@ -127,8 +135,7 @@ export default function Header() {
                 onSubmit={handleSearchSubmit}
               >
                 <div className="header-search-category">
-                  Tất cả danh mục{" "}
-                  <i className="fa-solid fa-angle-down"></i>
+                  Tất cả danh mục <i className="fa-solid fa-angle-down"></i>
                 </div>
                 <input
                   type="text"
@@ -174,16 +181,61 @@ export default function Header() {
                 )}
 
                 <div
-                  className="header-action-item d-none d-sm-flex"
-                  onClick={() => (user ? handleLogout() : navigate("/auth"))}
+                  className="header-action-item header-user-action-wrapper d-none d-sm-flex"
+                  ref={userDropdownRef}
                 >
-                  <div className="header-action-icon">
-                    <i className="fa-regular fa-user"></i>
+                  <div
+                    className="header-user-trigger"
+                    onClick={() => {
+                      if (user) {
+                        setIsUserDropdownOpen(!isUserDropdownOpen);
+                      } else {
+                        navigate("/auth");
+                      }
+                    }}
+                  >
+                    <div className="header-action-icon">
+                      <i className="fa-regular fa-user"></i>
+                    </div>
+                    <div className="header-action-text">
+                      <span>{user ? `Hi, ${user.firstName}` : "Đăng nhập"}</span>
+                      <strong>{user ? "Tài khoản" : "Đăng nhập"}</strong>
+                    </div>
                   </div>
-                  <div className="header-action-text">
-                    <span>{user ? `Hi, ${user.firstName}` : "Đăng nhập"}</span>
-                    <strong>{user ? "Đăng xuất" : "Tài khoản"}</strong>
-                  </div>
+
+                  {user && isUserDropdownOpen && (
+                    <div className="header-user-dropdown">
+                      <div
+                        className="user-dropdown-item"
+                        onClick={() => handleNavigateProfileTab("info")}
+                      >
+                        <i className="fa-regular fa-id-card"></i>
+                        <span>Thông tin cá nhân</span>
+                      </div>
+                      <div
+                        className="user-dropdown-item"
+                        onClick={() => handleNavigateProfileTab("orders")}
+                      >
+                        <i className="fa-solid fa-box-archive"></i>
+                        <span>Đơn hàng của tôi</span>
+                      </div>
+                      <div
+                        className="user-dropdown-item"
+                        onClick={() => handleNavigateProfileTab("notifications")}
+                      >
+                        <i className="fa-regular fa-bell"></i>
+                        <span>Thông báo hệ thống</span>
+                      </div>
+                      <div className="user-dropdown-divider"></div>
+                      <div
+                        className="user-dropdown-item user-dropdown-item--logout"
+                        onClick={handleLogout}
+                      >
+                        <i className="fa-solid fa-right-from-bracket"></i>
+                        <span>Đăng xuất</span>
+                      </div>
+                    </div>
+                  )}
                 </div>
 
                 <div className="header-action-item">
@@ -240,7 +292,9 @@ export default function Header() {
               <ul className="nav-menu-list">
                 <li>
                   <span
-                    className={`nav-menu-link ${currentPath === "/" ? "nav-menu-link--active" : ""}`}
+                    className={`nav-menu-link ${
+                      currentPath === "/" ? "nav-menu-link--active" : ""
+                    }`}
                     onClick={() => navigate("/")}
                   >
                     Trang chủ
@@ -248,11 +302,12 @@ export default function Header() {
                 </li>
                 <li>
                   <span
-                    className={`nav-menu-link ${currentPath === "/shop" ? "nav-menu-link--active" : ""}`}
+                    className={`nav-menu-link ${
+                      currentPath === "/shop" ? "nav-menu-link--active" : ""
+                    }`}
                     onClick={() => navigate("/shop")}
                   >
-                    Sản phẩm{" "}
-                    <i className="fa-solid fa-angle-down"></i>
+                    Sản phẩm <i className="fa-solid fa-angle-down"></i>
                   </span>
                 </li>
                 <li>
@@ -267,8 +322,7 @@ export default function Header() {
                 </li>
                 <li>
                   <span className="nav-menu-link">
-                    Cửa hàng{" "}
-                    <i className="fa-solid fa-angle-down"></i>
+                    Cửa hàng <i className="fa-solid fa-angle-down"></i>
                   </span>
                 </li>
               </ul>
@@ -285,15 +339,11 @@ export default function Header() {
           {isCategoryOpen && (
             <div className="category-dropdown-panel">
               <ul className="category-dropdown-list">
-                <li className="category-dropdown-item">
-                  Laptop & Máy Tính
-                </li>
+                <li className="category-dropdown-item">Laptop & Máy Tính</li>
                 <li className="category-dropdown-item">
                   Smartphone & Máy Tính Bảng
                 </li>
-                <li className="category-dropdown-item">
-                  Tai Nghe & Loa
-                </li>
+                <li className="category-dropdown-item">Tai Nghe & Loa</li>
                 <li className="category-dropdown-item category-dropdown-item--last">
                   Bàn Phím & Chuột
                 </li>
@@ -303,7 +353,11 @@ export default function Header() {
         </div>
       </div>
 
-      <div className={`slide-in-menu ${isMobileMenuOpen ? "slide-in-menu--active" : ""}`}>
+      <div
+        className={`slide-in-menu ${
+          isMobileMenuOpen ? "slide-in-menu--active" : ""
+        }`}
+      >
         <div className="slide-in-menu-container">
           <div className="slide-in-menu-header">
             <h5 className="slide-in-menu-title">Menu</h5>
@@ -333,7 +387,6 @@ export default function Header() {
             >
               Sản phẩm
             </li>
-            <li className="slide-in-menu-item">Blog</li>
             <li
               className="slide-in-menu-item"
               onClick={() => {
@@ -343,19 +396,43 @@ export default function Header() {
             >
               Giỏ hàng
             </li>
-            <li
-              className="slide-in-menu-item"
-              onClick={() => {
-                if (user) {
-                  handleLogout();
-                } else {
+
+            {user ? (
+              <>
+                <li
+                  className="slide-in-menu-item slide-in-menu-item--highlight"
+                  onClick={() => handleNavigateProfileTab("info")}
+                >
+                  Thông tin cá nhân
+                </li>
+                <li
+                  className="slide-in-menu-item slide-in-menu-item--highlight"
+                  onClick={() => handleNavigateProfileTab("orders")}
+                >
+                  Đơn hàng của tôi
+                </li>
+                <li
+                  className="slide-in-menu-item slide-in-menu-item--highlight"
+                  onClick={() => handleNavigateProfileTab("notifications")}
+                >
+                  Thông báo hệ thống
+                </li>
+                <li className="slide-in-menu-item" onClick={handleLogout}>
+                  Đăng xuất ({user.firstName})
+                </li>
+              </>
+            ) : (
+              <li
+                className="slide-in-menu-item"
+                onClick={() => {
                   navigate("/auth");
-                }
-                setIsMobileMenuOpen(false);
-              }}
-            >
-              {user ? `Đăng xuất (${user.firstName})` : "Tài khoản / Đăng nhập"}
-            </li>
+                  setIsMobileMenuOpen(false);
+                }}
+              >
+                Tài khoản / Đăng nhập
+              </li>
+            )}
+
             {user?.role === "admin" && (
               <li
                 className="slide-in-menu-item slide-in-menu-item--admin"

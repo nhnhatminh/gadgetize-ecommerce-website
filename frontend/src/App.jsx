@@ -11,6 +11,7 @@ import Auth from "./pages/Auth/Auth";
 import AdminProducts from "./pages/Admin/AdminProducts";
 import AdminOrders from "./pages/Admin/AdminOrders";
 import { AuthContext } from "./context/AuthContext";
+import Profile from "./pages/Profile/Profile";
 import "./App.css";
 
 export default function App() {
@@ -70,6 +71,11 @@ export default function App() {
       </Route>
 
       <Route path="*" element={<Navigate to="/" replace />} />
+
+      <Route
+        path="/profile"
+        element={user ? <Profile /> : <Navigate to="/auth" replace />}
+      />
     </Routes>
   );
 }

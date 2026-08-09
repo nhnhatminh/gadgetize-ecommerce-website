@@ -1,0 +1,696 @@
+.profile-page-wrapper {
+  background-color: var(--bg-main);
+  padding: 48px 0;
+  min-height: 85vh;
+}
+
+.profile-page-header {
+  margin-bottom: 24px;
+}
+
+.profile-page-title {
+  font-family: "Jamjuree-b", sans-serif;
+  font-weight: var(--fw-bold);
+  color: var(--text-main);
+  font-size: var(--font-size-h3);
+  margin-bottom: 4px;
+}
+
+.profile-page-subtitle {
+  color: var(--text-muted);
+  font-size: var(--font-size-p);
+  margin-bottom: 0;
+}
+
+.profile-side-card {
+  background-color: var(--white);
+  border-radius: 16px;
+  border: 1px solid var(--light-grey);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  overflow: hidden;
+}
+
+.profile-cover-box {
+  position: relative;
+  height: 120px;
+  background-color: var(--primary-color);
+}
+
+.profile-cover-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.profile-avatar-wrapper {
+  position: absolute;
+  bottom: -35px;
+  left: 24px;
+}
+
+.profile-avatar-box {
+  position: relative;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background-color: var(--primary-color);
+  border: 3px solid var(--white);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.profile-avatar-img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.profile-avatar-initial {
+  font-family: "Jamjuree-b", sans-serif;
+  font-weight: var(--fw-bold);
+  font-size: var(--font-size-h3);
+  color: var(--white);
+}
+
+.profile-avatar-upload-btn {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background-color: var(--white);
+  border: 1px solid var(--light-grey);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  color: var(--text-main);
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: all var(--transition-speed);
+}
+
+.profile-avatar-upload-btn:hover {
+  background-color: var(--primary-color);
+  color: var(--white);
+
+}
+
+.profile-avatar-input {
+  display: none;
+}
+
+.profile-header-info {
+  padding: 48px 24px 16px 24px;
+  border-bottom: 1px solid var(--light-grey);
+}
+
+.profile-user-fullname {
+  font-family: "Jamjuree-b", sans-serif;
+  font-weight: var(--fw-bold);
+  color: var(--text-main);
+  font-size: var(--font-size-h5);
+  margin-bottom: 2px;
+}
+
+.profile-join-date {
+  font-size: var(--font-size-des);
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.profile-details-form {
+  padding: 24px;
+  border-bottom: 1px solid var(--light-grey);
+}
+
+.profile-section-heading {
+  font-family: "Jamjuree-b", sans-serif;
+  font-weight: var(--fw-bold);
+  color: var(--text-main);
+  font-size: var(--font-size-p);
+  margin-bottom: 16px;
+}
+
+.profile-alert-success {
+  background-color: rgba(69, 181, 128, 0.15);
+  color: var(--primary-color);
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: var(--font-size-des);
+  font-weight: var(--fw-medium);
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.profile-form-row {
+  display: flex;
+  gap: 12px;
+}
+
+.profile-form-group {
+  margin-bottom: 16px;
+  flex: 1;
+}
+
+.profile-form-label {
+  display: block;
+  font-size: var(--font-size-des);
+  color: var(--text-muted);
+  font-weight: var(--fw-medium);
+  margin-bottom: 6px;
+}
+
+.profile-form-input,
+.profile-form-textarea {
+  width: 100%;
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid var(--light-grey);
+  font-family: "Jamjuree-r", sans-serif;
+  font-size: var(--font-size-des);
+  color: var(--text-main);
+  outline: none;
+  background-color: var(--white);
+  transition: border-color var(--transition-speed);
+}
+
+.profile-form-input:focus,
+.profile-form-textarea:focus {
+  border-color: var(--primary-color);
+}
+
+.profile-form-input--disabled {
+  background-color: var(--light);
+  color: var(--text-muted);
+  cursor: not-allowed;
+}
+
+.profile-input-icon-box {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.profile-input-icon {
+  position: absolute;
+  right: 12px;
+  color: var(--text-muted);
+  font-size: var(--font-size-des);
+}
+
+.profile-form-textarea {
+  resize: none;
+}
+
+.profile-submit-btn {
+  width: 100%;
+  padding: 10px 0;
+  border-radius: 8px;
+  border: none;
+  background-color: var(--primary-color);
+  color: var(--white);
+  font-family: "Jamjuree-b", sans-serif;
+  font-weight: var(--fw-bold);
+  font-size: var(--font-size-des);
+  cursor: pointer;
+  transition: opacity var(--transition-speed);
+}
+
+.profile-submit-btn:hover:not(:disabled) {
+  opacity: 0.9;
+}
+
+.profile-submit-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.profile-membership-section {
+  padding: 24px;
+}
+
+.profile-badges-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.profile-badge-item {
+  padding: 4px 10px;
+  border-radius: 50px;
+  font-size: 0.75rem;
+  font-weight: var(--fw-semibold);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.profile-badge-item--vip {
+  background-color: rgba(255, 230, 3, 0.2);
+  color: #a88100;
+  border: 1px solid rgba(255, 230, 3, 0.5);
+}
+
+.profile-badge-item--buyer {
+  background-color: rgba(69, 181, 128, 0.15);
+  color: var(--primary-color);
+  border: 1px solid rgba(69, 181, 128, 0.3);
+}
+
+.profile-points-box {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--light);
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid var(--light-grey);
+}
+
+.profile-points-label {
+  font-size: var(--font-size-des);
+  color: var(--text-muted);
+}
+
+.profile-points-value {
+  font-family: "Jamjuree-b", sans-serif;
+  font-weight: var(--fw-bold);
+  color: var(--primary-color);
+}
+
+.order-live-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.order-tab-header {
+  display: flex;
+  gap: 12px;
+  background-color: var(--white);
+  padding: 8px;
+  border-radius: 12px;
+  border: 1px solid var(--light-grey);
+}
+
+.order-tab-btn {
+  flex: 1;
+  padding: 10px 16px;
+  border: none;
+  background: transparent;
+  border-radius: 8px;
+  font-family: "Jamjuree-b", sans-serif;
+  font-weight: var(--fw-bold);
+  font-size: var(--font-size-des);
+  color: var(--text-muted);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all var(--transition-speed);
+}
+
+.order-tab-btn--active {
+  background-color: var(--primary-color);
+  color: var(--white);
+}
+
+.timeline-view-card,
+.purchases-view-card {
+  background-color: var(--white);
+  border-radius: 16px;
+  border: 1px solid var(--light-grey);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  padding: 24px;
+}
+
+.order-summary-top {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--light-grey);
+  margin-bottom: 20px;
+}
+
+.order-summary-item-box {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.order-summary-img {
+  width: 65px;
+  height: 65px;
+  border-radius: 8px;
+  border: 1px solid var(--light-grey);
+  padding: 4px;
+  object-fit: contain;
+  background-color: var(--light);
+}
+
+.order-summary-code {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  display: block;
+}
+
+.order-summary-title {
+  font-family: "Jamjuree-b", sans-serif;
+  font-weight: var(--fw-bold);
+  color: var(--text-main);
+  margin-bottom: 2px;
+  font-size: var(--font-size-p);
+}
+
+.order-summary-price {
+  font-family: "Jamjuree-b", sans-serif;
+  font-weight: var(--fw-bold);
+  color: var(--primary-color);
+  margin-bottom: 0;
+  font-size: var(--font-size-p);
+}
+
+.order-courier-box {
+  text-align: right;
+  display: flex;
+  flex-direction: column;
+}
+
+.courier-label {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.courier-name {
+  font-family: "Jamjuree-b", sans-serif;
+  color: var(--text-main);
+}
+
+.courier-tracking {
+  font-size: 0.75rem;
+  color: var(--primary-color);
+  font-weight: var(--fw-medium);
+}
+
+.driver-info-card {
+  background-color: var(--light);
+  border: 1px solid var(--light-grey);
+  border-radius: 12px;
+  padding: 16px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 32px;
+}
+
+.driver-details {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.driver-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: var(--white);
+  border: 1px solid var(--light-grey);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--primary-color);
+  font-size: 1.1rem;
+}
+
+.driver-title {
+  display: block;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.driver-name {
+  color: var(--text-main);
+  font-family: "Jamjuree-b", sans-serif;
+}
+
+.driver-call-btn {
+  background-color: var(--white);
+  border: 1px solid var(--primary-color);
+  color: var(--primary-color);
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-family: "Jamjuree-b", sans-serif;
+  font-weight: var(--fw-bold);
+  font-size: var(--font-size-des);
+  text-decoration: none;
+  transition: all var(--transition-speed);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.driver-call-btn:hover {
+  background-color: var(--primary-color);
+  color: var(--white);
+}
+
+.timeline-stepper-title {
+  font-family: "Jamjuree-b", sans-serif;
+  font-weight: var(--fw-bold);
+  color: var(--text-main);
+  margin-bottom: 24px;
+  font-size: var(--font-size-p);
+}
+
+.timeline-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.timeline-item {
+  display: flex;
+  gap: 20px;
+  position: relative;
+}
+
+.timeline-node {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.timeline-icon-box {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background-color: var(--white);
+  border: 2px solid var(--light-grey);
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+  z-index: 2;
+  transition: all var(--transition-speed);
+}
+
+.timeline-line {
+  width: 2px;
+  flex: 1;
+  background-color: var(--light-grey);
+  margin: 4px 0;
+}
+
+.timeline-item:last-child .timeline-line {
+  display: none;
+}
+
+.timeline-content {
+  padding-bottom: 28px;
+  flex: 1;
+}
+
+.timeline-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 4px;
+}
+
+.timeline-status-name {
+  font-family: "Jamjuree-b", sans-serif;
+  font-weight: var(--fw-bold);
+  color: var(--text-muted);
+  margin-bottom: 0;
+  font-size: var(--font-size-p);
+}
+
+.timeline-timestamp {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.timeline-location-text {
+  color: var(--text-muted);
+  font-size: var(--font-size-des);
+  margin-bottom: 0;
+  line-height: 1.4;
+}
+
+.timeline-item--completed .timeline-icon-box {
+  border-color: var(--light-green);
+  color: var(--dark-green);
+  background-color: rgba(69, 181, 128, 0.15);
+}
+
+.timeline-item--completed .timeline-line {
+  background-color: var(--light-green);
+}
+
+.timeline-item--completed .timeline-status-name {
+  color: var(--text-main);
+}
+
+.timeline-item--active .timeline-icon-box {
+  border-color: var(--primary-color);
+  background-color: var(--primary-color);
+  color: var(--white);
+  box-shadow: 0 0 0 4px rgba(0, 105, 55, 0.2);
+}
+
+.timeline-item--active .timeline-status-name {
+  color: var(--primary-color);
+}
+
+.timeline-item--active .timeline-location-text {
+  color: var(--text-main);
+  font-weight: var(--fw-medium);
+}
+
+.purchases-card-title {
+  font-family: "Jamjuree-b", sans-serif;
+  font-weight: var(--fw-bold);
+  color: var(--text-main);
+  margin-bottom: 20px;
+  font-size: var(--font-size-p);
+}
+
+.purchases-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.purchase-item-card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px;
+  border: 1px solid var(--light-grey);
+  border-radius: 12px;
+  background-color: var(--white);
+  transition: border-color var(--transition-speed);
+}
+
+.purchase-item-card:hover {
+  border-color: var(--primary-color);
+}
+
+.purchase-item-img {
+  width: 60px;
+  height: 60px;
+  border-radius: 8px;
+  border: 1px solid var(--light-grey);
+  padding: 4px;
+  object-fit: contain;
+  background-color: var(--light);
+}
+
+.purchase-item-details {
+  flex: 1;
+}
+
+.purchase-item-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 2px;
+}
+
+.purchase-id {
+  font-family: "Jamjuree-b", sans-serif;
+  font-weight: var(--fw-bold);
+  font-size: var(--font-size-des);
+  color: var(--text-main);
+}
+
+.purchase-status-badge {
+  background-color: rgba(69, 181, 128, 0.15);
+  color: var(--primary-color);
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 0.7rem;
+  font-weight: var(--fw-semibold);
+}
+
+.purchase-name {
+  font-family: "Jamjuree-b", sans-serif;
+  font-weight: var(--fw-bold);
+  color: var(--text-main);
+  margin-bottom: 2px;
+  font-size: var(--font-size-des);
+}
+
+.purchase-date {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  display: block;
+}
+
+.purchase-item-action {
+  text-align: right;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 6px;
+}
+
+.purchase-total {
+  font-family: "Jamjuree-b", sans-serif;
+  font-weight: var(--fw-bold);
+  color: var(--primary-color);
+  font-size: var(--font-size-des);
+}
+
+.purchase-reorder-btn {
+  background-color: transparent;
+  border: 1px solid var(--primary-color);
+  color: var(--primary-color);
+  padding: 4px 12px;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: var(--fw-bold);
+  cursor: pointer;
+  transition: all var(--transition-speed);
+}
+
+.purchase-reorder-btn:hover {
+  background-color: var(--primary-color);
+  color: var(--white);
+}
