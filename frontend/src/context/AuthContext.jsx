@@ -32,6 +32,13 @@ export const AuthProvider = ({ children }) => {
     return response;
   };
 
+  const adminLogin = async (email, password) => {
+    const response = await axiosClient.post("/auth/admin-login", { email, password });
+    localStorage.setItem("token", response.token);
+    setUser(response.user);
+    return response;
+  };
+
   const register = async (formData) => {
     const response = await axiosClient.post("/auth/register", formData);
     return response;
@@ -43,7 +50,9 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, loading, login, register, logout }}>
+    <AuthContext.Provider
+      value={{ user, loading, login, adminLogin, register, logout }}
+    >
       {children}
     </AuthContext.Provider>
   );

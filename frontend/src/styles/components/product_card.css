@@ -140,3 +140,25 @@
   opacity: 0.6;
   cursor: not-allowed;
 }
+
+.product-edit-btn {
+  width: 100%;
+  padding: 8px 0;
+  font-size: var(--font-size-des);
+  font-weight: var(--fw-medium);
+  border-radius: 8px;
+  margin-top: auto;
+  color: var(--white);
+  border: 1px solid var(--primary-color);
+  background-color: var(--primary-color);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: opacity var(--transition-speed);
+}
+
+.product-edit-btn:hover {
+  opacity: 0.9;
+}

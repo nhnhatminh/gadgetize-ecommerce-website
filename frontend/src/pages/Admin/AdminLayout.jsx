@@ -8,16 +8,23 @@ export default function AdminLayout() {
   const location = useLocation();
   const currentPath = location.pathname;
 
-  const handleLogout = () => {
+  // Xử lý đăng xuất tài khoản quản trị
+  function handleLogout() {
     logout();
     navigate("/auth");
-  };
+  }
+
+  // Điều hướng về trang chủ cửa hàng
+  function handleNavigateStore() {
+    navigate("/");
+  }
 
   return (
     <div className="admin-layout">
+      {/* Sidebar quản trị viên */}
       <aside className="admin-sidebar">
         <div className="admin-sidebar-brand">
-          <div className="admin-sidebar-logo-box">
+          <div className="admin-sidebar-logo-box" onClick={handleNavigateStore}>
             <i className="fa-solid fa-bolt admin-sidebar-logo-icon"></i>
             <h5 className="admin-sidebar-logo-text">Gadgetize</h5>
           </div>
@@ -25,44 +32,65 @@ export default function AdminLayout() {
         </div>
 
         <div className="admin-sidebar-menu">
-          <div className="admin-sidebar-category">Overview</div>
+          <div className="admin-sidebar-category">Tổng quan</div>
           <nav className="admin-sidebar-nav">
             <div
-              className={`admin-sidebar-link ${currentPath === "/admin" ? "admin-sidebar-link--active" : ""}`}
+              className={`admin-sidebar-link ${
+                currentPath === "/admin" ? "admin-sidebar-link--active" : ""
+              }`}
               onClick={() => navigate("/admin")}
             >
               <i className="fa-solid fa-chart-pie admin-sidebar-icon"></i>
-              <span>Dashboard</span>
+              <span>Bảng điều khiển</span>
             </div>
           </nav>
 
-          <div className="admin-sidebar-category">Commerce</div>
+          <div className="admin-sidebar-category">Thương mại</div>
           <nav className="admin-sidebar-nav">
             <div
-              className={`admin-sidebar-link ${currentPath === "/admin/products" ? "admin-sidebar-link--active" : ""}`}
+              className={`admin-sidebar-link ${
+                currentPath === "/admin/products"
+                  ? "admin-sidebar-link--active"
+                  : ""
+              }`}
               onClick={() => navigate("/admin/products")}
             >
               <i className="fa-solid fa-box-open admin-sidebar-icon"></i>
-              <span>Products</span>
+              <span>Sản phẩm</span>
             </div>
 
             <div
-              className={`admin-sidebar-link ${currentPath === "/admin/orders" ? "admin-sidebar-link--active" : ""}`}
+              className={`admin-sidebar-link ${
+                currentPath === "/admin/orders"
+                  ? "admin-sidebar-link--active"
+                  : ""
+              }`}
               onClick={() => navigate("/admin/orders")}
             >
               <i className="fa-solid fa-file-invoice-dollar admin-sidebar-icon"></i>
-              <span>Orders</span>
+              <span>Đơn hàng</span>
             </div>
           </nav>
 
-          <div className="admin-sidebar-category">System</div>
+          <div className="admin-sidebar-category">Cửa hàng</div>
+          <nav className="admin-sidebar-nav">
+            <div
+              className="admin-sidebar-link admin-sidebar-link--store"
+              onClick={handleNavigateStore}
+            >
+              <i className="fa-solid fa-store admin-sidebar-icon"></i>
+              <span>Xem Cửa Hàng</span>
+            </div>
+          </nav>
+
+          <div className="admin-sidebar-category">Hệ thống</div>
           <nav className="admin-sidebar-nav">
             <div
               className="admin-sidebar-link admin-sidebar-link--danger"
               onClick={handleLogout}
             >
               <i className="fa-solid fa-right-from-bracket admin-sidebar-icon"></i>
-              <span>Logout</span>
+              <span>Đăng xuất</span>
             </div>
           </nav>
         </div>
@@ -76,12 +104,13 @@ export default function AdminLayout() {
               <h6 className="admin-sidebar-username">
                 {user ? `${user.lastName} ${user.firstName}` : "Admin"}
               </h6>
-              <span className="admin-sidebar-user-role">Administrator</span>
+              <span className="admin-sidebar-user-role">Quản trị viên</span>
             </div>
           </div>
         </div>
       </aside>
 
+      {/* Bảng điều khiển chính */}
       <div className="admin-main-panel">
         <header className="admin-header">
           <div className="admin-header-search-wrapper">
@@ -89,23 +118,27 @@ export default function AdminLayout() {
             <input
               type="text"
               className="admin-header-search-input"
-              placeholder="Search anything... (Ctrl + K)"
+              placeholder="Tìm kiếm hoặc nhập lệnh... (Ctrl + K)"
             />
           </div>
 
           <div className="admin-header-actions">
             <button
+              type="button"
+              className="admin-header-store-btn"
+              onClick={handleNavigateStore}
+            >
+              <i className="fa-solid fa-store"></i> Xem Cửa Hàng
+            </button>
+            <button
+              type="button"
               className="admin-header-action-btn"
               onClick={() => navigate("/admin/products")}
             >
-              <i className="fa-solid fa-plus"></i> New Product
+              <i className="fa-solid fa-plus"></i> Thêm Sản Phẩm
             </button>
             <div className="admin-header-icon-btn">
-              <i className="fa-regular fa-moon"></i>
-            </div>
-            <div className="admin-header-icon-btn admin-header-icon-btn--has-badge">
               <i className="fa-regular fa-bell"></i>
-              <span className="admin-header-badge-dot"></span>
             </div>
             <div className="admin-header-divider"></div>
             <div className="admin-header-profile-badge">

@@ -28,4 +28,9 @@ export const adminApi = {
   updateOrderStatus: (id, status) => {
     return axiosClient.put(`/orders/${id}/status`, { status });
   },
+
+  // Lấy dữ liệu thống kê tổng quan cho Admin Dashboard
+  getDashboardStats: () => {
+    return axiosClient.get("/orders/admin/dashboard-stats");
+  },
 };

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useCart } from "../../context/CartContext";
+import { useAuth } from "../../context/useAuth";
 import { orderApi } from "../../api/orderApi";
 import CheckoutForm from "../../components/checkout/CheckoutForm";
 import CheckoutSummary from "../../components/checkout/CheckoutSummary";
@@ -8,6 +9,7 @@ import "../../styles/layouts/checkout.css";
 
 export default function Checkout() {
   const navigate = useNavigate();
+  const { user } = useAuth();
   const { cartItems, totalPrice, clearCart, fetchCart } = useCart();
 
   const [submitting, setSubmitting] = useState(false);
@@ -24,6 +26,25 @@ export default function Checkout() {
   });
 
   const [errors, setErrors] = useState({});
+
+  if (user?.role === "admin") {
+    return (
+      <div className="container checkout-page-container">
+        <div className="checkout-empty-card">
+          <p className="checkout-empty-text">
+            Tài khoản Quản trị viên không thực hiện chức năng thanh toán đơn hàng.
+          </p>
+          <button
+            type="button"
+            className="checkout-back-shop-btn"
+            onClick={() => navigate("/admin")}
+          >
+            Về Dashboard Admin
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   const validateForm = () => {
     const newErrors = {};

@@ -1,0 +1,321 @@
+.admin-dashboard-container {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.admin-dashboard-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+}
+
+.dashboard-spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid var(--primary-color);
+  border-right-color: transparent;
+  border-radius: 50%;
+  animation: dashboard-spin 0.75s linear infinite;
+}
+
+@keyframes dashboard-spin {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.admin-dashboard-title {
+  font-family: "Jamjuree-b", sans-serif;
+  font-weight: var(--fw-bold);
+  color: var(--text-main);
+  font-size: var(--font-size-h4);
+  margin-bottom: 0;
+}
+
+.admin-dashboard-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+}
+
+@media (min-width: 1200px) {
+  .admin-dashboard-grid {
+    grid-template-columns: 1fr 340px;
+  }
+}
+
+.admin-dashboard-main {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.overview-card,
+.income-chart-card,
+.widget-card {
+  background-color: var(--white);
+  border-radius: 16px;
+  border: 1px solid var(--light-grey);
+  padding: 24px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+}
+
+.overview-card-header,
+.income-chart-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.overview-card-title,
+.income-chart-title,
+.widget-title {
+  font-family: "Jamjuree-b", sans-serif;
+  font-weight: var(--fw-bold);
+  font-size: var(--font-size-h5);
+  color: var(--text-main);
+  margin-bottom: 0;
+}
+
+.overview-time-select {
+  padding: 6px 16px;
+  border-radius: 8px;
+  border: 1px solid var(--light-grey);
+  font-family: "Jamjuree-md", sans-serif;
+  font-size: var(--font-size-des);
+  color: var(--text-main);
+  outline: none;
+  background-color: var(--white);
+}
+
+.overview-metrics-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  background-color: var(--light);
+  border: 1px solid var(--light-grey);
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.metric-box {
+  background-color: var(--white);
+  padding: 16px;
+  border-radius: 10px;
+  border: 1px solid var(--light-grey);
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.metric-label {
+  font-size: var(--font-size-des);
+  color: var(--text-muted);
+  font-weight: var(--fw-medium);
+  display: block;
+  margin-bottom: 4px;
+}
+
+.metric-value {
+  font-family: "Jamjuree-b", sans-serif;
+  font-weight: var(--fw-bold);
+  font-size: var(--font-size-h5);
+  color: var(--text-main);
+  margin-bottom: 0;
+}
+
+.growth-badge {
+  padding: 2px 8px;
+  border-radius: 50px;
+  font-size: 0.75rem;
+  font-weight: var(--fw-bold);
+}
+
+.growth-badge--up {
+  background-color: rgba(69, 181, 128, 0.15);
+  color: var(--primary-color);
+}
+
+.activity-notice-text {
+  font-size: var(--font-size-p);
+  color: var(--text-muted);
+  margin-bottom: 0;
+}
+
+.brand-text {
+  color: var(--primary-color);
+}
+
+.btn-view-all {
+  background: transparent;
+  border: 1px solid var(--primary-color);
+  color: var(--primary-color);
+  padding: 6px 14px;
+  border-radius: 6px;
+  font-family: "Jamjuree-md", sans-serif;
+  font-weight: var(--fw-medium);
+  font-size: var(--font-size-des);
+  cursor: pointer;
+  transition: all var(--transition-speed);
+}
+
+.btn-view-all:hover {
+  background-color: var(--primary-color);
+  color: var(--white);
+}
+
+.recent-orders-table-wrapper {
+  overflow-x: auto;
+}
+
+.recent-orders-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.recent-orders-table th {
+  padding: 12px 16px;
+  font-size: var(--font-size-des);
+  color: var(--text-muted);
+  border-bottom: 1px solid var(--light-grey);
+}
+
+.recent-orders-table td {
+  padding: 12px 16px;
+  font-size: var(--font-size-des);
+  color: var(--text-main);
+  border-bottom: 1px solid var(--light-grey);
+}
+
+.font-bold {
+  font-family: "Jamjuree-b", sans-serif;
+  font-weight: var(--fw-bold);
+}
+
+.order-status-tag {
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: var(--fw-semibold);
+  text-transform: capitalize;
+}
+
+.status-pending {
+  background-color: rgba(255, 230, 3, 0.2);
+  color: #a88100;
+}
+
+.status-processing,
+.status-shipping,
+.status-delivered {
+  background-color: rgba(69, 181, 128, 0.15);
+  color: var(--primary-color);
+}
+
+.admin-dashboard-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.popular-products-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin: 20px 0;
+}
+
+.popular-product-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.popular-product-img {
+  width: 48px;
+  height: 48px;
+  border-radius: 8px;
+  border: 1px solid var(--light-grey);
+  object-fit: contain;
+  padding: 4px;
+  background-color: var(--light);
+}
+
+.popular-product-info {
+  flex: 1;
+  overflow: hidden;
+}
+
+.popular-product-name {
+  font-family: "Jamjuree-b", sans-serif;
+  font-weight: var(--fw-bold);
+  font-size: var(--font-size-des);
+  color: var(--text-main);
+  margin-bottom: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.popular-product-price {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.popular-product-earnings {
+  font-family: "Jamjuree-b", sans-serif;
+  font-size: var(--font-size-des);
+  color: var(--primary-color);
+}
+
+.widget-action-button {
+  width: 100%;
+  padding: 8px 0;
+  border-radius: 8px;
+  border: 1px solid var(--light-grey);
+  background-color: var(--white);
+  color: var(--text-main);
+  font-family: "Jamjuree-md", sans-serif;
+  font-size: var(--font-size-des);
+  cursor: pointer;
+  transition: all var(--transition-speed);
+}
+
+.widget-action-button:hover {
+  border-color: var(--primary-color);
+  color: var(--primary-color);
+}
+
+.review-preview-box {
+  background-color: var(--light);
+  border-radius: 8px;
+  padding: 16px;
+  border: 1px solid var(--light-grey);
+  margin-top: 16px;
+}
+
+.review-preview-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.review-stars {
+  color: var(--warning-color);
+}
+
+.review-date {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.review-text {
+  font-size: var(--font-size-des);
+  color: var(--text-main);
+  margin-bottom: 0;
+}

@@ -245,21 +245,33 @@ export default function Header() {
                   </div>
                 </div>
 
-                <div
-                  className="header-action-item"
-                  onClick={() => navigate("/cart")}
-                >
-                  <div className="header-action-icon">
-                    <i className="fa-solid fa-cart-shopping"></i>
-                    <span className="header-action-badge">
-                      {totalCartQuantity}
-                    </span>
+                {user?.role !== "admin" ? (
+                  <div
+                    className="header-action-item"
+                    onClick={() => navigate("/cart")}
+                  >
+                    <div className="header-action-icon">
+                      <i className="fa-solid fa-cart-shopping"></i>
+                      <span className="header-action-badge">
+                        {totalCartQuantity}
+                      </span>
+                    </div>
+                    <div className="header-action-text d-none d-sm-block">
+                      <span>Giỏ hàng</span>
+                      <strong>{totalCartPrice.toLocaleString("vi-VN")} VND</strong>
+                    </div>
                   </div>
-                  <div className="header-action-text d-none d-sm-block">
-                    <span>Giỏ hàng</span>
-                    <strong>{totalCartPrice.toLocaleString("vi-VN")} VND</strong>
+                ) : (
+                  <div className="header-action-item">
+                    <div className="header-action-icon">
+                      <i className="fa-solid fa-eye"></i>
+                    </div>
+                    <div className="header-action-text d-none d-sm-block">
+                      <span>Chế độ xem</span>
+                      <strong>Admin Preview</strong>
+                    </div>
                   </div>
-                </div>
+                )}
 
                 <div
                   className="header-action-item d-lg-none"
@@ -387,15 +399,18 @@ export default function Header() {
             >
               Sản phẩm
             </li>
-            <li
-              className="slide-in-menu-item"
-              onClick={() => {
-                navigate("/cart");
-                setIsMobileMenuOpen(false);
-              }}
-            >
-              Giỏ hàng
-            </li>
+
+            {user?.role !== "admin" && (
+              <li
+                className="slide-in-menu-item"
+                onClick={() => {
+                  navigate("/cart");
+                  setIsMobileMenuOpen(false);
+                }}
+              >
+                Giỏ hàng
+              </li>
+            )}
 
             {user ? (
               <>

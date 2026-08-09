@@ -128,3 +128,62 @@ export const getMe = async (req, res, next) => {
     next(error);
   }
 };
+
+export const adminLogin = async (req, res, next) => {
+  try {
+    const { email, password } = req.body;
+
+    // Kiểm tra dữ liệu đầu vào
+    if (!email || !password) {
+      return res.status(400).json({ message: "Vui lòng nhập đầy đủ email và mật khẩu" });
+    }
+
+    const normalizedEmail = email.trim().toLowerCase();
+
+    // Tìm kiếm tài khoản trong CSDL
+    const result = await pool.query(
+      "SELECT * FROM users WHERE email = $1",
+      [normalizedEmail]
+    );
+
+    if (result.rows.length === 0) {
+      return res.status(401).json({ message: "Địa chỉ email hoặc mật khẩu không chính xác" });
+    }
+
+    const user = result.rows[0];
+
+    // Xác thực mật khẩu
+    const isPasswordValid = await bcrypt.compare(password, user.password_hash);
+    if (!isPasswordValid) {
+      return res.status(401).json({ message: "Địa chỉ email hoặc mật khẩu không chính xác" });
+    }
+
+    // Kiểm tra phân quyền hệ thống quản trị
+    if (user.role !== "admin") {
+      return res.status(403).json({
+        message: "Tài khoản của bạn không có quyền truy cập hệ thống quản trị",
+      });
+    }
+
+    // Khởi tạo JWT Token
+    const token = jwt.sign(
+      { id: user.id, role: user.role },
+      environment.jwt.secret,
+      { expiresIn: "1d" }
+    );
+
+    res.status(200).json({
+      message: "Đăng nhập hệ thống quản trị thành công",
+      token,
+      user: {
+        id: user.id,
+        firstName: user.first_name,
+        lastName: user.last_name,
+        email: user.email,
+        role: user.role,
+      },
+    });
+  } catch (error) {
+    next(error);
+  }
+};

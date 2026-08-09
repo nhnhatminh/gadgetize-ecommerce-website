@@ -1,0 +1,48 @@
+.admin-notice-bar {
+  background-color: var(--black);
+  color: var(--white);
+  padding: 8px 0;
+  border-bottom: 1px solid var(--primary-color);
+  font-size: var(--font-size-des);
+}
+
+.admin-notice-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.admin-notice-content {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.admin-notice-icon {
+  color: var(--primary-color);
+}
+
+.admin-notice-text {
+  font-family: "Jamjuree-md", sans-serif;
+  font-weight: var(--fw-medium);
+}
+
+.admin-notice-btn {
+  background-color: var(--primary-color);
+  color: var(--white);
+  border: none;
+  padding: 4px 12px;
+  border-radius: 4px;
+  font-family: "Jamjuree-b", sans-serif;
+  font-weight: var(--fw-bold);
+  font-size: var(--font-size-des);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: opacity var(--transition-speed);
+}
+
+.admin-notice-btn:hover {
+  opacity: 0.9;
+}

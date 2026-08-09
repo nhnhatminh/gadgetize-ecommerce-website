@@ -1,3 +1,4 @@
+import { useAuth } from "../../context/useAuth";
 import "../../styles/layouts/product_detail_page.css";
 
 export default function ProductInfo({
@@ -10,6 +11,8 @@ export default function ProductInfo({
   onAddToCart,
   isAdding,
 }) {
+  const { user } = useAuth();
+
   return (
     <div className="product-info-card">
       <h2 className="product-info-title">{mainProduct.name}</h2>
@@ -121,66 +124,78 @@ export default function ProductInfo({
         </li>
       </ul>
 
-      <div className="product-info-actions">
-        <div className="product-info-action-row">
-          <div className="product-quantity-selector">
+      {user?.role === "admin" ? (
+        <div className="product-info-actions">
+          <button
+            type="button"
+            className="btn-buy-now-solid"
+            onClick={() => navigate("/admin/products")}
+          >
+            <i className="fa-regular fa-pen-to-square"></i> Quản Lý Sản Phẩm Trong Admin
+          </button>
+        </div>
+      ) : (
+        <div className="product-info-actions">
+          <div className="product-info-action-row">
+            <div className="product-quantity-selector">
+              <button
+                type="button"
+                className="quantity-btn"
+                onClick={() => handleQuantityChange("decrease")}
+              >
+                <i className="fa-solid fa-minus"></i>
+              </button>
+              <input
+                type="text"
+                className="quantity-input"
+                value={quantity}
+                readOnly
+              />
+              <button
+                type="button"
+                className="quantity-btn"
+                onClick={() => handleQuantityChange("increase")}
+              >
+                <i className="fa-solid fa-plus"></i>
+              </button>
+            </div>
+
             <button
               type="button"
-              className="quantity-btn"
-              onClick={() => handleQuantityChange("decrease")}
+              className="btn-add-to-cart-outline"
+              onClick={onAddToCart}
+              disabled={isAdding}
             >
-              <i className="fa-solid fa-minus"></i>
+              {isAdding ? "Đang Thêm..." : "Thêm Vào Giỏ Hàng"}
             </button>
-            <input
-              type="text"
-              className="quantity-input"
-              value={quantity}
-              readOnly
-            />
+
             <button
               type="button"
-              className="quantity-btn"
-              onClick={() => handleQuantityChange("increase")}
+              className="btn-icon-action"
             >
-              <i className="fa-solid fa-plus"></i>
+              <i className="fa-regular fa-heart"></i>
+            </button>
+
+            <button
+              type="button"
+              className="btn-icon-action"
+            >
+              <i className="fa-solid fa-arrow-right-arrow-left"></i>
             </button>
           </div>
 
           <button
             type="button"
-            className="btn-add-to-cart-outline"
-            onClick={onAddToCart}
-            disabled={isAdding}
+            className="btn-buy-now-solid"
+            onClick={() => {
+              onAddToCart();
+              navigate("cart");
+            }}
           >
-            {isAdding ? "Đang Thêm..." : "Thêm Vào Giỏ Hàng"}
-          </button>
-
-          <button
-            type="button"
-            className="btn-icon-action"
-          >
-            <i className="fa-regular fa-heart"></i>
-          </button>
-
-          <button
-            type="button"
-            className="btn-icon-action"
-          >
-            <i className="fa-solid fa-arrow-right-arrow-left"></i>
+            Mua Ngay
           </button>
         </div>
-
-        <button
-          type="button"
-          className="btn-buy-now-solid"
-          onClick={() => {
-            onAddToCart();
-            navigate("cart");
-          }}
-        >
-          Mua Ngay
-        </button>
-      </div>
+      )}
 
       <div className="product-shipping-info">
         <div className="shipping-info-item">

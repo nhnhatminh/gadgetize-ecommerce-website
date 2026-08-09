@@ -1,0 +1,357 @@
+.admin-products-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.admin-products-title {
+  font-family: "Jamjuree-b", sans-serif;
+  font-weight: var(--fw-bold);
+  color: var(--text-main);
+  margin-bottom: 4px;
+  font-size: var(--font-size-h5);
+}
+
+.admin-add-product-btn {
+  background-color: var(--primary-color);
+  color: var(--white);
+  border: none;
+  padding: 10px 24px;
+  border-radius: 8px;
+  font-family: "Jamjuree-b", sans-serif;
+  font-weight: var(--fw-bold);
+  font-size: var(--font-size-des);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: opacity var(--transition-speed);
+}
+
+.admin-add-product-btn:hover {
+  opacity: 0.9;
+}
+
+/* Thêm min-height chống giật trang khi load dữ liệu */
+.admin-table-card {
+  background-color: var(--white);
+  border-radius: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  border: 1px solid var(--light-grey);
+  overflow: hidden;
+  min-height: 400px;
+}
+
+.admin-table-responsive {
+  overflow-x: auto;
+}
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.admin-table-header-row {
+  background-color: var(--light);
+  border-bottom: 1px solid var(--light-grey);
+}
+
+.admin-table-th {
+  padding: 12px 16px;
+  font-size: var(--font-size-des);
+  color: var(--text-muted);
+  font-weight: var(--fw-medium);
+}
+
+.admin-table-th--first {
+  padding-left: 24px;
+}
+
+.admin-table-th--last {
+  padding-right: 24px;
+}
+
+.admin-table-th--right {
+  text-align: right;
+}
+
+.admin-table-row {
+  border-bottom: 1px solid var(--light-grey);
+  transition: background-color var(--transition-speed);
+}
+
+.admin-table-row:hover {
+  background-color: #f8f9fa;
+}
+
+.admin-table-td {
+  padding: 12px 16px;
+  font-size: var(--font-size-des);
+  color: var(--text-main);
+  vertical-align: middle;
+}
+
+.admin-table-td--first {
+  padding-left: 24px;
+}
+
+.admin-table-td--last {
+  padding-right: 24px;
+}
+
+.admin-table-td--right {
+  text-align: right;
+}
+
+.admin-product-thumb {
+  width: 45px;
+  height: 45px;
+  border-radius: 6px;
+  border: 1px solid var(--light-grey);
+  background-color: var(--light);
+  object-fit: contain;
+}
+
+.admin-product-name {
+  font-family: "Jamjuree-b", sans-serif;
+  font-weight: var(--fw-bold);
+  max-width: 250px;
+}
+
+.admin-discount-badge {
+  background-color: rgba(221, 56, 66, 0.1);
+  color: var(--danger-color);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-weight: var(--fw-bold);
+}
+
+.admin-color-indicator {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.admin-color-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 1px solid var(--light-grey);
+  display: inline-block;
+}
+
+.admin-stock-status {
+  font-weight: var(--fw-bold);
+}
+
+.admin-stock-status--instock {
+  color: var(--primary-color);
+}
+
+.admin-stock-status--outstock {
+  color: var(--danger-color);
+}
+
+.admin-action-btn-edit,
+.admin-action-btn-delete {
+  padding: 4px 10px;
+  border-radius: 6px;
+  border: 1px solid var(--light-grey);
+  background-color: var(--white);
+  cursor: pointer;
+  margin-left: 4px;
+  transition: all var(--transition-speed);
+}
+
+.admin-action-btn-edit {
+  color: var(--primary-color);
+}
+
+.admin-action-btn-edit:hover {
+  border-color: var(--primary-color);
+  background-color: var(--primary-color);
+  color: var(--white);
+}
+
+.admin-action-btn-delete {
+  color: var(--danger-color);
+}
+
+.admin-action-btn-delete:hover {
+  border-color: var(--danger-color);
+  background-color: var(--danger-color);
+  color: var(--white);
+}
+
+/* Modal Styling */
+.admin-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.admin-modal-dialog {
+  width: 100%;
+  max-width: 800px;
+  padding: 16px;
+}
+
+.admin-modal-content {
+  background-color: var(--white);
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+}
+
+.admin-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 24px;
+  border-bottom: 1px solid var(--light-grey);
+}
+
+.admin-modal-title {
+  font-family: "Jamjuree-b", sans-serif;
+  font-weight: var(--fw-bold);
+  color: var(--text-main);
+  font-size: var(--font-size-h5);
+  margin-bottom: 0;
+}
+
+.admin-modal-close-btn {
+  background: transparent;
+  border: none;
+  font-size: var(--font-size-h5);
+  color: var(--text-muted);
+  cursor: pointer;
+}
+
+.admin-modal-body {
+  padding: 24px;
+  max-height: calc(100vh - 200px);
+  overflow-y: auto;
+}
+
+.admin-modal-error-alert {
+  padding: 8px 12px;
+  background-color: rgba(221, 56, 66, 0.1);
+  color: var(--danger-color);
+  border: 1px solid var(--danger-color);
+  border-radius: 6px;
+  font-size: var(--font-size-des);
+  margin-bottom: 16px;
+}
+
+.admin-form-label {
+  display: block;
+  font-size: var(--font-size-des);
+  color: var(--text-muted);
+  font-weight: var(--fw-medium);
+  margin-bottom: 6px;
+}
+
+.admin-form-input,
+.admin-form-select,
+.admin-form-textarea,
+.admin-form-file-input {
+  width: 100%;
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: 1px solid var(--light-grey);
+  font-family: "Jamjuree-r", sans-serif;
+  font-size: var(--font-size-des);
+  color: var(--text-main);
+  outline: none;
+  background-color: var(--white);
+  transition: border-color var(--transition-speed);
+}
+
+.admin-form-input:focus,
+.admin-form-select:focus,
+.admin-form-textarea:focus,
+.admin-form-file-input:focus {
+  border-color: var(--primary-color);
+}
+
+.admin-form-color-picker {
+  width: 100%;
+  height: 38px;
+  padding: 2px;
+  border-radius: 6px;
+  border: 1px solid var(--light-grey);
+  cursor: pointer;
+}
+
+.admin-img-preview-box {
+  margin-top: 8px;
+  text-align: center;
+}
+
+.admin-img-preview {
+  max-height: 120px;
+  object-fit: contain;
+  border-radius: 6px;
+  border: 1px solid var(--light-grey);
+  padding: 4px;
+  background-color: var(--light);
+}
+
+.admin-modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  padding: 16px 24px;
+  border-top: 1px solid var(--light-grey);
+}
+
+.admin-modal-cancel-btn {
+  padding: 8px 20px;
+  border-radius: 6px;
+  border: 1px solid var(--light-grey);
+  background-color: var(--white);
+  color: var(--text-main);
+  font-family: "Jamjuree-md", sans-serif;
+  cursor: pointer;
+}
+
+.admin-modal-submit-btn {
+  padding: 8px 24px;
+  border-radius: 6px;
+  border: none;
+  background-color: var(--primary-color);
+  color: var(--white);
+  font-family: "Jamjuree-b", sans-serif;
+  font-weight: var(--fw-bold);
+  cursor: pointer;
+  transition: opacity var(--transition-speed);
+}
+
+.admin-modal-submit-btn:hover {
+  opacity: 0.9;
+}
+
+.admin-table-card {
+  background-color: var(--white);
+  border-radius: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  border: 1px solid var(--light-grey);
+  overflow: hidden;
+  min-height: 400px; 
+}
+
+.admin-table-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+}

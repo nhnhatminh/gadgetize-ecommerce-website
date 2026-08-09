@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useCart } from "../../context/CartContext";
+import { useAuth } from "../../context/useAuth";
 import CartItemRow from "../../components/cart/CartItemRow";
 import CartTotals from "../../components/cart/CartTotals";
 import ShippingCalculator from "../../components/cart/ShippingCalculator";
@@ -8,6 +9,7 @@ import "../../styles/layouts/cart.css";
 
 export default function Cart() {
   const navigate = useNavigate();
+  const { user } = useAuth();
   const { cartItems, loading, updateCartItem, removeFromCart, clearCart, totalPrice, totalQuantity } = useCart();
 
   if (loading) {
@@ -15,6 +17,31 @@ export default function Cart() {
       <div className="cart-loading-screen">
         <div className="cart-loading-spinner" role="status">
           <span className="cart-loading-text">Loading...</span>
+        </div>
+      </div>
+    );
+  }
+
+  if (user?.role === "admin") {
+    return (
+      <div className="cart-page-wrapper">
+        <div className="container cart-page-container">
+          <div className="empty-cart-card">
+            <div className="empty-cart-icon">
+              <i className="fa-solid fa-user-shield"></i>
+            </div>
+            <h4 className="empty-cart-title">Chế độ Quản trị viên</h4>
+            <p className="empty-cart-subtitle">
+              Tài khoản Quản trị viên không thực hiện chức năng mua hàng. Vui lòng sử dụng tài khoản Khách hàng để trải nghiệm giỏ hàng.
+            </p>
+            <button
+              type="button"
+              className="empty-cart-explore-btn"
+              onClick={() => navigate("/admin")}
+            >
+              Truy Cập Admin Dashboard
+            </button>
+          </div>
         </div>
       </div>
     );

@@ -8,10 +8,12 @@ import ProductDetail from "./pages/ProductDetail/ProductDetail";
 import Cart from "./pages/Cart/Cart";
 import Checkout from "./pages/Checkout/Checkout";
 import Auth from "./pages/Auth/Auth";
+import AdminLogin from "./pages/Admin/AdminLogin";
+import AdminDashboard from "./pages/Admin/AdminDashboard";
 import AdminProducts from "./pages/Admin/AdminProducts";
 import AdminOrders from "./pages/Admin/AdminOrders";
-import { AuthContext } from "./context/AuthContext";
 import Profile from "./pages/Profile/Profile";
+import { AuthContext } from "./context/AuthContext";
 import "./App.css";
 
 export default function App() {
@@ -37,6 +39,8 @@ export default function App() {
         <Route path="/auth" element={<Auth />} />
       </Route>
 
+      <Route path="/admin/login" element={<AdminLogin />} />
+
       <Route
         path="/checkout"
         element={
@@ -50,32 +54,21 @@ export default function App() {
           user && user.role === "admin" ? (
             <AdminLayout />
           ) : (
-            <Navigate to="/" replace />
+            <Navigate to="/admin/login" replace />
           )
         }
       >
-        <Route
-          index
-          element={
-            <div className="admin-overview-card">
-              <h4 className="admin-overview-title">Tổng Quan Hệ Thống</h4>
-              <p className="admin-overview-desc">
-                Hạ tầng khung vỏ quản trị đã thiết lập thành công. Sẵn sàng nạp
-                dữ liệu ma trận.
-              </p>
-            </div>
-          }
-        />
+        <Route index element={<AdminDashboard />} />
         <Route path="products" element={<AdminProducts />} />
         <Route path="orders" element={<AdminOrders />} />
       </Route>
-
-      <Route path="*" element={<Navigate to="/" replace />} />
 
       <Route
         path="/profile"
         element={user ? <Profile /> : <Navigate to="/auth" replace />}
       />
+
+      <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   );
 }

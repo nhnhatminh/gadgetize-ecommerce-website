@@ -1,12 +1,13 @@
 import { useState, useEffect } from "react";
 import { adminApi } from "../../api/adminApi";
 import { productApi } from "../../api/productApi";
-import "../../styles/layouts/admin.css";
+import "../../styles/layouts/admin_products.css";
 
 export default function AdminProducts() {
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
   const [brands, setBrands] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingId, setEditingId] = useState(null);
   const [selectedFile, setSelectedFile] = useState(null);
@@ -38,23 +39,36 @@ export default function AdminProducts() {
   };
 
   useEffect(() => {
+    let isMounted = true;
+
     const fetchInitialData = async () => {
       try {
+        setLoading(true);
         const [catData, brandData, productsData] = await Promise.all([
           productApi.getCategories(),
           productApi.getBrands(),
           productApi.getProducts({ limit: 100 }),
         ]);
 
-        setCategories(catData || []);
-        setBrands(brandData || []);
-        setProducts(productsData.products || []);
+        if (isMounted) {
+          setCategories(catData || []);
+          setBrands(brandData || []);
+          setProducts(productsData?.products || []);
+        }
       } catch (error) {
         console.error("Lỗi khi tải dữ liệu khởi tạo Admin:", error);
+      } finally {
+        if (isMounted) {
+          setLoading(false);
+        }
       }
     };
 
     fetchInitialData();
+
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   const handleInputChange = (e) => {
@@ -169,8 +183,13 @@ export default function AdminProducts() {
       </div>
 
       <div className="admin-table-card">
-        <div className="admin-table-responsive">
-          <table className="admin-table">
+        {loading ? (
+          <div className="admin-table-loading">
+            <div className="dashboard-spinner"></div>
+          </div>
+        ) : (
+          <div className="admin-table-responsive">
+            <table className="admin-table">
             <thead>
               <tr className="admin-table-header-row">
                 <th className="admin-table-th admin-table-th--first">Hình ảnh</th>
@@ -250,6 +269,7 @@ export default function AdminProducts() {
             </tbody>
           </table>
         </div>
+        )}
       </div>
 
       {isModalOpen && (

@@ -330,3 +330,61 @@ export const updateOrderStatus = async (req, res, next) => {
     next(error);
   }
 };
+
+export const getDashboardStats = async (req, res, next) => {
+  try {
+    // Lấy tổng số lượng tài khoản khách hàng
+    const customersCountResult = await pool.query(
+      "SELECT COUNT(id) FROM users WHERE role = 'customer'"
+    );
+
+    // Lấy tổng doanh thu các đơn hàng hợp lệ
+    const incomeResult = await pool.query(
+      "SELECT COALESCE(SUM(final_total), 0) AS total_income FROM orders WHERE status != 'cancelled'"
+    );
+
+    // Lấy tổng số lượng đơn hàng trên hệ thống
+    const ordersCountResult = await pool.query(
+      "SELECT COUNT(id) AS total_orders FROM orders"
+    );
+
+    // Lấy danh sách 4 sản phẩm bán chạy có doanh thu cao nhất
+    const popularProductsResult = await pool.query(
+      `SELECT p.id, p.name, p.base_price, img.image_url,
+              COALESCE(SUM(oi.quantity * oi.unit_price), 0) AS earnings
+       FROM products p
+       JOIN product_variants v ON v.product_id = p.id
+       JOIN order_items oi ON oi.variant_id = v.id
+       LEFT JOIN product_images img ON img.variant_id = v.id AND img.is_primary = TRUE
+       GROUP BY p.id, p.name, p.base_price, img.image_url
+       ORDER BY earnings DESC
+       LIMIT 4`
+    );
+
+    // Lấy 4 đơn hàng phát sinh gần nhất
+    const recentOrdersResult = await pool.query(
+      `SELECT o.id, o.final_total, o.status, o.created_at, u.first_name, u.last_name
+       FROM orders o
+       JOIN users u ON o.user_id = u.id
+       ORDER BY o.created_at DESC
+       LIMIT 4`
+    );
+
+    res.status(200).json({
+      totalCustomers: parseInt(customersCountResult.rows[0].count, 10),
+      totalIncome: parseFloat(incomeResult.rows[0].total_income),
+      totalOrders: parseInt(ordersCountResult.rows[0].total_orders, 10),
+      popularProducts: popularProductsResult.rows.map((item) => ({
+        ...item,
+        base_price: parseFloat(item.base_price || 0),
+        earnings: parseFloat(item.earnings || 0),
+      })),
+      recentOrders: recentOrdersResult.rows.map((item) => ({
+        ...item,
+        final_total: parseFloat(item.final_total || 0),
+      })),
+    });
+  } catch (error) {
+    next(error);
+  }
+};

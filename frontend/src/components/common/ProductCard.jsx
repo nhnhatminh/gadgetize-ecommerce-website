@@ -1,9 +1,13 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useCart } from "../../context/CartContext";
+import { useAuth } from "../../context/useAuth";
 import "../../styles/components/product_card.css";
 
 export default function ProductCard({ product }) {
   const { addToCart } = useCart();
+  const { user } = useAuth();
+  const navigate = useNavigate();
   const [isAdding, setIsAdding] = useState(false);
 
   const handleAddToCart = async (e) => {
@@ -27,6 +31,11 @@ export default function ProductCard({ product }) {
     } finally {
       setIsAdding(false);
     }
+  };
+
+  const handleEditProduct = (e) => {
+    e.stopPropagation();
+    navigate("/admin/products");
   };
 
   return (
@@ -82,14 +91,24 @@ export default function ProductCard({ product }) {
           </span>
         </div>
 
-        <button
-          type="button"
-          className="product-add-cart-btn"
-          onClick={handleAddToCart}
-          disabled={isAdding}
-        >
-          {isAdding ? "Đang thêm..." : "Thêm vào giỏ hàng"}
-        </button>
+        {user?.role === "admin" ? (
+          <button
+            type="button"
+            className="product-edit-btn"
+            onClick={handleEditProduct}
+          >
+            <i className="fa-regular fa-pen-to-square"></i> Quản lý sản phẩm
+          </button>
+        ) : (
+          <button
+            type="button"
+            className="product-add-cart-btn"
+            onClick={handleAddToCart}
+            disabled={isAdding}
+          >
+            {isAdding ? "Đang thêm..." : "Thêm vào giỏ hàng"}
+          </button>
+        )}
       </div>
     </div>
   );

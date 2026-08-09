@@ -18,13 +18,8 @@ export default function LoginForm() {
     setIsSubmitting(true);
 
     try {
-      const response = await login(email, password);
-
-      if (response?.user?.role === "admin") {
-        navigate("/admin");
-      } else {
-        navigate("/");
-      }
+      await login(email, password);
+      navigate("/");
     } catch (err) {
       setError(
         err.response?.data?.message ||
