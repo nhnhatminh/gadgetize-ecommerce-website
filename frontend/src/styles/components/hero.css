@@ -32,7 +32,7 @@
 .top-slider-label {
   font-family: "Jamjuree-sb", sans-serif;
   font-size: var(--font-size-h6);
-  color: var(--yellow);
+  color: var(--yellow) !important;
   margin-bottom: 4px;
 }
 
@@ -46,22 +46,22 @@
 }
 
 .slider-title-highlight {
-  color: var(--primary-color);
+  color: var(--yellow);
 }
 
 .bottom-slider-label {
   font-family: "Jamjuree-r", sans-serif;
   font-weight: var(--fw-semibold);
   font-size: 1.125rem;
-  color: var(--white);
+  color: var(--white) !important;
   margin-top: 14px;
   margin-bottom: 28px;
 }
 
 .btn-shop-now {
   padding: 10px 32px;
-  background-color: var(--white);
-  color: var(--text-main);
+  background-color: var(--white) !important;
+  color: var(--text-main) !important;
   font-family: "Jamjuree-sb", sans-serif;
   font-size: var(--font-size-p);
   border-radius: 8px;
@@ -79,6 +79,7 @@
   flex-direction: column;
   gap: 24px;
 }
+
 
 .hero-side-item {
   border-radius: 16px;
@@ -107,7 +108,7 @@
 .hero-side-caption h3 {
   font-family: "Jamjuree-sb", sans-serif;
   font-size: var(--font-size-h5);
-  color: var(--white);
+  color: var(--white) !important;
   margin-bottom: 16px;
   line-height: 1.3;
 }
@@ -115,7 +116,7 @@
 .hero-side-caption p {
   font-family: "Jamjuree-md", sans-serif;
   font-size: var(--font-size-p);
-  color: var(--white);
+  color: var(--white) !important;
   margin: 0;
 }
 

@@ -21,7 +21,6 @@ export default function AdminLayout() {
 
   return (
     <div className="admin-layout">
-      {/* Sidebar quản trị viên */}
       <aside className="admin-sidebar">
         <div className="admin-sidebar-brand">
           <div className="admin-sidebar-logo-box" onClick={handleNavigateStore}>
@@ -110,7 +109,6 @@ export default function AdminLayout() {
         </div>
       </aside>
 
-      {/* Bảng điều khiển chính */}
       <div className="admin-main-panel">
         <header className="admin-header">
           <div className="admin-header-search-wrapper">

@@ -1,130 +1,18 @@
-.showcase-section {
+.showcase-section,
+.best-sellers-section {
   background-color: var(--bg-main);
-  padding-top: 50px;
-  padding-bottom: 48px;
+  padding-top: 40px;
+  padding-bottom: 40px;
 }
 
-.showcase-banner-card {
-  border-radius: 16px;
-  padding: 24px;
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  justify-content: space-between;
-  background-image: url("/images/horizontal-banner.png");
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  min-height: 450px;
-  box-shadow: inset 0 0 0 2000px rgba(0, 0, 0, 0.15);
-}
-
-.showcase-banner-badge-wrapper {
-  text-align: center;
-}
-
-.showcase-banner-badge {
-  font-family: "Jamjuree-b", sans-serif;
-  font-weight: var(--fw-bold);
-  font-size: var(--font-size-h6);
-  color: var(--text-main);
-  background-color: var(--white);
-  display: inline-block;
-  padding: 4px 16px;
-  border-radius: 50px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-  margin-bottom: 0;
-}
-
-.showcase-banner-content {
-  text-align: center;
-}
-
-.showcase-banner-heading {
-  color: var(--white);
-  font-family: "Jamjuree-b", sans-serif;
-  font-weight: var(--fw-bold);
-  margin-bottom: 8px;
-  font-size: var(--font-size-h6);
-  line-height: 1.3;
-}
-
-.showcase-banner-price {
-  color: var(--white);
-  font-family: "Jamjuree-b", sans-serif;
-  font-weight: var(--fw-bold);
-  font-size: var(--font-size-h4);
-  margin-bottom: 0;
-}
-
-.showcase-filter-header {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  align-items: center;
-  background-color: var(--white);
-  padding: 16px;
-  border-radius: 16px;
-  margin-bottom: 24px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
-  gap: 16px;
-}
-
-.showcase-filter-title {
-  margin-bottom: 0;
-  font-size: var(--font-size-h6);
-  font-weight: var(--fw-bold);
-  margin-left: 8px;
-  color: var(--text-main);
-}
-
-.showcase-filter-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.showcase-filter-item {
-  display: inline-block;
-}
-
-.showcase-filter-button {
-  border-radius: 50px;
-  padding: 6px 16px;
-  font-size: var(--font-size-des);
-  font-family: "Jamjuree-md", sans-serif;
-  font-weight: var(--fw-medium);
-  border: none;
-  background-color: transparent;
-  color: var(--text-muted);
-  cursor: pointer;
-  transition: all var(--transition-speed);
-}
-
-.showcase-filter-button--active {
-  background-color: var(--primary-color);
-  color: var(--white);
-}
-
-.showcase-product-col {
-  cursor: pointer;
-}
-
-.popular-grid-section {
-  padding: 48px 0;
-  background-color: var(--white);
-}
-
+.showcase-filter-header,
 .popular-filter-header {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
   background-color: var(--white);
-  padding: 16px;
+  padding: 16px 24px;
   border-radius: 16px;
   margin-bottom: 24px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
@@ -132,14 +20,23 @@
   gap: 16px;
 }
 
+.showcase-filter-title,
 .popular-filter-title {
   margin-bottom: 0;
   font-size: var(--font-size-h6);
+  font-family: "Jamjuree-b", sans-serif;
   font-weight: var(--fw-bold);
-  margin-left: 8px;
   color: var(--text-main);
 }
 
+.showcase-header-right,
+.popular-header-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.showcase-filter-list,
 .popular-filter-list {
   display: flex;
   flex-wrap: wrap;
@@ -149,10 +46,7 @@
   margin: 0;
 }
 
-.popular-filter-item {
-  display: inline-block;
-}
-
+.showcase-filter-button,
 .popular-filter-button {
   border-radius: 50px;
   padding: 6px 16px;
@@ -166,11 +60,164 @@
   transition: all var(--transition-speed);
 }
 
+.showcase-filter-button--active,
 .popular-filter-button--active {
   background-color: var(--primary-color);
   color: var(--white);
 }
 
+.showcase-pagination-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background-color: var(--light);
+  padding: 4px 8px;
+  border-radius: 20px;
+  border: 1px solid var(--light-grey);
+}
+
+.pagination-arrow-btn {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 1px solid var(--light-grey);
+  background-color: var(--white);
+  color: var(--text-main);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 0.75rem;
+  transition: all var(--transition-speed);
+}
+
+.pagination-arrow-btn:hover:not(:disabled) {
+  background-color: var(--primary-color);
+  color: var(--white);
+  border-color: var(--primary-color);
+}
+
+.pagination-arrow-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.pagination-page-indicator {
+  font-size: 0.75rem;
+  font-family: "Jamjuree-b", sans-serif;
+  color: var(--text-muted);
+  padding: 0 4px;
+}
+
+.popular-view-all-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-main);
+  font-family: "Jamjuree-b", sans-serif;
+  font-size: var(--font-size-des);
+  font-weight: var(--fw-bold);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: color var(--transition-speed);
+}
+
+.popular-view-all-btn:hover {
+  color: var(--primary-color);
+}
+
+.showcase-product-col,
 .popular-product-col {
   cursor: pointer;
+}
+
+.flash-sale-banner-section {
+  padding: 24px 0;
+  background-color: var(--white);
+}
+
+.flash-sale-banner-card {
+  background-image: url("/images/green-bg-banner.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  border-radius: 16px;
+  padding: 20px 80px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 150px;
+  position: relative;
+  overflow: hidden;
+}
+
+.flash-sale-banner-card > :nth-child(2) {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-40%);
+}
+
+.flash-sale-left-text {
+  max-width: 30%;
+}
+
+.flash-sale-title {
+  font-family: "Jamjuree-b", sans-serif;
+  font-weight: var(--fw-bold);
+  font-size: 32px;
+  color: var(--white);
+  line-height: 1.2;
+  margin-bottom: 6px;
+}
+
+.flash-sale-subtitle {
+  font-family: "Jamjuree-b", sans-serif;
+  font-weight: var(--fw-bold);
+  font-size: 26px;
+  color: var(--white);
+  margin-bottom: 0;
+}
+
+.flash-sale-center-img {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 20px;
+}
+
+.flash-sale-phone-image {
+  max-height: 130px;
+  object-fit: contain;
+}
+
+.flash-sale-right-img {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.flash-sale-badge-image {
+  max-height: 100px;
+  object-fit: contain;
+}
+
+@media (max-width: 992px) {
+  .flash-sale-banner-card {
+    flex-direction: column;
+    text-align: center;
+    gap: 16px;
+    padding: 24px;
+  }
+  .flash-sale-title {
+    font-size: 24px;
+  }
+  .flash-sale-subtitle {
+    font-size: 20px;
+  }
+}
+
+.popular-grid-section {
+  padding: 40px 0;
+  background-color: var(--white);
 }

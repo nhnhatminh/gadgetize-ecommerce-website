@@ -19,6 +19,10 @@
   src: url("/fonts/BaiJamjuree-Light.ttf");
 }
 
+html {
+  font-size: 18px;
+}
+
 :root {
   --dark-green: #006937;
   --light-green: #45b580;

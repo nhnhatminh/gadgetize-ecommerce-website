@@ -3,19 +3,24 @@ import ProductCard from "../common/ProductCard";
 import { productApi } from "../../api/productApi";
 import "../../styles/components/showcase.css";
 
-export default function PopularGrid({ navigate }) {
+export default function BestSellers({ navigate }) {
+  const [activeCategory, setActiveCategory] = useState("all");
   const [products, setProducts] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
 
   useEffect(() => {
-    const fetchPopularProducts = async () => {
+    const fetchBestSellers = async () => {
       try {
-        const data = await productApi.getProducts({
+        const params = {
           limit: 5,
           page: currentPage,
-          sort: "newest",
-        });
+          sort: "rating",
+        };
+        if (activeCategory !== "all") {
+          params.category = activeCategory;
+        }
+        const data = await productApi.getProducts(params);
 
         const formatted = (data.products || []).map((p) => ({
           id: p.id,
@@ -36,20 +41,48 @@ export default function PopularGrid({ navigate }) {
         setProducts(formatted);
         setTotalPages(data.meta?.totalPages || 1);
       } catch (error) {
-        console.error("Lỗi khi tải danh sách sản phẩm phổ biến:", error);
+        console.error("Lỗi khi tải danh sách sản phẩm bán chạy:", error);
       }
     };
 
-    fetchPopularProducts();
-  }, [currentPage]);
+    fetchBestSellers();
+  }, [activeCategory, currentPage]);
+
+  const handleCategoryChange = (category) => {
+    setActiveCategory(category);
+    setCurrentPage(1);
+  };
 
   return (
-    <section className="popular-grid-section">
+    <section className="best-sellers-section">
       <div className="container">
-        <div className="popular-filter-header">
-          <h3 className="popular-filter-title">Sản Phẩm Phổ Biến</h3>
+        <div className="showcase-filter-header">
+          <h3 className="showcase-filter-title">Sản Phẩm Bán Chạy</h3>
 
-          <div className="popular-header-right">
+          <div className="showcase-header-right">
+            <ul className="showcase-filter-list" role="tablist">
+              {[
+                { key: "all", label: "Tất Cả Sản Phẩm" },
+                { key: "laptop", label: "Laptop" },
+                { key: "keyboard", label: "Bàn Phím" },
+                { key: "mouse", label: "Chuột" },
+                { key: "headphone", label: "Tai Nghe" },
+              ].map((tab) => (
+                <li className="showcase-filter-item" key={tab.key}>
+                  <button
+                    className={`showcase-filter-button ${
+                      activeCategory === tab.key
+                        ? "showcase-filter-button--active"
+                        : ""
+                    }`}
+                    onClick={() => handleCategoryChange(tab.key)}
+                  >
+                    • {tab.label}
+                  </button>
+                </li>
+              ))}
+            </ul>
+
             {totalPages > 1 && (
               <div className="showcase-pagination-controls">
                 <button
@@ -75,21 +108,13 @@ export default function PopularGrid({ navigate }) {
                 </button>
               </div>
             )}
-
-            <button
-              type="button"
-              className="popular-view-all-btn"
-              onClick={() => navigate("products")}
-            >
-              Hiển Thị Tất Cả <i className="fa-solid fa-arrow-right"></i>
-            </button>
           </div>
         </div>
 
         <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-5 g-3">
           {products.map((prod) => (
             <div
-              className="col popular-product-col"
+              className="col showcase-product-col"
               key={prod.id}
               onClick={() => navigate("product-detail", prod.slug)}
             >
